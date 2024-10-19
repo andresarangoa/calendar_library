@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+/* Add global font-family */
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+.calendar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  border: 0.5px solid #ccc; // Outer border for the entire grid
+  border-bottom-left-radius: 10px; // Rounded bottom-left corner
+  border-bottom-right-radius: 10px; // Rounded bottom-right corner
+  overflow: hidden; // Prevents children from overflowing
+}
+
+.day-header {
+  width: 14.28%; // Each header takes up 1/7th of the width
+  text-align: center;
+  font-weight: 600;
+  border-top: 0.5px solid #d6d6d6;
+  border-right: 0.5px solid #d6d6d6;
+  padding: 0.5rem;
+  color: #3c4655;
+  box-sizing: border-box;
+  background-color: #ffffff; // Subtle background color
+
+  // Remove left border for the first header
+  &:first-child {
+    border-left: none;
+  }
+}
+
+.calendar-navigation {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  gap: 10px; // Space between buttons
+  border: 0.5px solid #ccc;
+  border-radius: 10px;
+
+  .arrow-button {
+    background-color: transparent;
+    color: gray; // Gray arrow color
+    border: none; // No border
+    font-size: 1rem; // Increase font size for better visibility
+    cursor: pointer;
+
+    &:hover {
+      color: darkgray; // Darker gray on hover
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .today-button {
+    background-color: transparent; // Transparent background
+    color: black; // Black text color
+    border: none; // No border
+    font-size: 1rem; // Normal font size
+    cursor: pointer;
+    padding: 0.5rem 0.75rem; // Adjust padding
+    font-weight: bold;
+
+    &:hover {
+      color: gray; // Change to gray on hover
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+}
+
+button {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Nunito', sans-serif; // Apply Nunito font
+
+  &:hover {
+    background-color: #0056b3; // Darker on hover
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.day-cell {
+  width: 14.28%; // Each day cell takes up 1/7th of the width
+  height: 8rem;
+  border-top: 0.3px solid #d6d6d6;
+  border-right: 0.3px solid #d6d6d6;
+  padding: 0.9rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 12px;
+
+  // Remove left border for the first column cells
+  &:nth-child(7n+1) {
+    border-left: none;
+  }
+
+  // Remove bottom border for the last row of cells
+  &:nth-last-child(-n+7) {
+    border-bottom: none;
+  }
+
+  // Add bottom-left radius for the first cell of the last row
+  &:nth-last-child(7) {
+    border-bottom-left-radius: 10px;
+  }
+
+  // Add bottom-right radius for the last cell of the last row
+  &:last-child {
+    border-bottom-right-radius: 10px;
+  }
+}
+
+.other-month {
+  background-color: #f9fafb; // Slightly lighter gray for better visibility
+  color: #7a7a7a;
+}
+
+.current-day {
+  
+}
+
+.vertical-separator {
+  width: 1px;
+  height: 24px; // Adjust height as needed
+  background-color: #ccc; // Light gray color for the separator
+  margin: 0 10px; // Space around the separator
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #3c4655;
+  border: 0.3px solid #d6d6d6;
+  padding: 1.5rem 1rem; // Add padding for better spacing
+  background-color: #f9fafb; // Add a light background color for visibility
+  border-top-left-radius: 10px; // Rounded top-left corner
+  border-top-right-radius: 10px; // Rounded top-right corner
+  font-family: 'Nunito', sans-serif; // Apply Nunito font
+
+  .month-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0 1rem;
+  }
+  
+  .controls-right {
+    display: flex;
+    align-items: center;
+    gap: 10px; // Space between controls
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+
+    &-button {
+
+      min-width: 10rem;
+      color: black; // Black text color
+      font-size: 1rem; // Normal font size
+      cursor: pointer;
+      padding: 0.5rem 0.75rem; // Adjust padding
+      font-weight: bold;
+      background-color: #ffffff;
+      transition: background-color 0.3s;
+      font-family: 'Nunito', sans-serif; // Apply Nunito font
+      border: 0.5px solid #ccc;
+      border-radius: 10px;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+
+    &-content {
+      display: none;
+      position: absolute;
+      top: 2.5rem;
+      left: 0;
+      background-color: #fff;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: 'Nunito', sans-serif; // Apply Nunito font
+
+      &.show {
+        display: block;
+      }
+    }
+
+    &-item {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif; // Apply Nunito font
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+
+    .arrow-down {
+      display: inline-block;
+      margin-left: 5px; // Space between text and arrow
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid gray; // Arrow color
+    }
+  }
+}
+
+.add-event-button {
+  padding: 0.7rem 0.75rem;
+  border: none;
+  background-color: black; // Green for add event
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Nunito', sans-serif; // Apply Nunito font
+
+  &:hover {
+    background-color: #ffff; // Darker on hover
+    border: 1px solid #000;
+    color: #000;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
+//EventCalendar 
+.current-day {
+  span{
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    border-radius: 100%;
+  }
+}
+
+.event-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden; // Prevents overflow if the content is too long
+}
+
+.event-title {
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.775rem;
+  color: #000;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem; // Adjust font size for small screens
+  }
+}
+
+.event-time {
+  width: 60%;
+  text-align: right; // Aligns the time to the right
+  font-size: 0.675rem;
+  color: #000;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem; // Adjust font size for small screens
+  }
+}
