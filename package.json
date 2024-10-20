@@ -2,6 +2,19 @@
   "name": "@farango/calendar_library",
   "version": "0.0.14",
   "main": "dist/index.js",
+  "author": "Andrés Arango",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "calendar",
+    "event-calendar",
+    "react-component",
+    "responsive-calendar",
+    "monthly-calendar",
+    "date-picker",
+    "event-management",
+    "scss"
+  ],
   "scripts": {
     "build": "babel src --out-dir dist",
     "demo": "webpack serve --config webpack.demo.js",

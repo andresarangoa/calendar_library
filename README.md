@@ -6,11 +6,9 @@ The **Event Calendar** is a simple and responsive React component that displays 
 
 The **Event Calendar** component provides a visual representation of a calendar month, where users can see events for each day. It highlights the current day, handles long event titles by truncating them, and separates event times to ensure a clean layout.
 
-
 ## Preview
 
 ![Event Calendar Preview](https://raw.githubusercontent.com/andresarangoa/calendar_library/refs/heads/main/assets/preview.png)
-
 
 ### Key Features
 
@@ -21,10 +19,7 @@ The **Event Calendar** component provides a visual representation of a calendar 
   - Event titles are truncated with ellipses to prevent overflow.
   - Each event occupies a single line, with the title taking up **60%** of the width and the time taking up **40%**.
 - **Responsive Design**: Adjusts the layout and font size based on screen size to maintain readability and usability.
-
-# EventCalendar Library
-
-## Usage
+- **Customizable Title and Button**: Allows setting custom titles for the calendar and the "Add Event" button.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -32,17 +27,23 @@ The **Event Calendar** component provides a visual representation of a calendar 
   - [Basic Usage](#basic-usage)
   - [Customizing Styles](#customizing-styles)
   - [Visibility Options](#visibility-options)
+  - [Additional Props](#additional-props)
 - [Props](#props)
   - [eventsData](#eventsdata)
   - [styles](#styles)
+  - [title](#title)
+  - [titleButton](#titlebutton)
+  - [onSelectedEvent](#onselectedevent)
+  - [addEvent](#addevent)
 - [Examples](#examples)
 
 ## Installation 
 
-Install the @farango/calendar_library package:
+Install the `@farango/calendar_library` package:
 
-bash
+```bash
 npm install @farango/calendar_library
+```
 
 ### Basic Usage
 
@@ -69,26 +70,25 @@ const App = () => {
 export default App;
 ```
 
-# Event Calendar
+## Customizing Styles
 
-Customizing Styles
-You can customize the appearance of the calendar by passing a styles object as a prop:
+You can customize the appearance of the calendar by passing a `styles` object as a prop:
 
 ```jsx
 const customStyles = {
-  colorActualDay: '#FF5733',  // Color for the current day
-  colorFontTitle: '#1E90FF',  // Color for calendar title
-  colorFontButtons: '#2ECC71',  // Color for buttons
-  colorFontNameDays: '#34495E',  // Color for day names
-  colorFontDays: '#000',  // Color for days text
-  sizeFontAppoinment: '1rem',  // Font size for event titles
-  sizeFontButtons: '0.9rem',  // Font size for buttons
-  sizeFontNameDays: '0.8rem',  // Font size for day names
-  sizeFontDays: '0.85rem',  // Font size for days
-  bgHeader: '#E0E0E0',  // Background color for the header
-  bgDaysNames: '#F8F8F8',  // Background color for day names row
-  bgCells: '#FFFFFF',  // Background color for calendar cells
-  bgActualDay: '#FFC107',  // Background color for the current day
+  colorActualDay: '#FF5733',
+  colorFontTitle: '#1E90FF',
+  colorFontButtons: '#2ECC71',
+  colorFontNameDays: '#34495E',
+  colorFontDays: '#000',
+  sizeFontAppointment: '1rem',
+  sizeFontButtons: '0.9rem',
+  sizeFontNameDays: '0.8rem',
+  sizeFontDays: '0.85rem',
+  bgHeader: '#E0E0E0',
+  bgDaysNames: '#F8F8F8',
+  bgCells: '#FFFFFF',
+  bgActualDay: '#FFC107',
   visibilityOptions: {
     todayButton: true,
     dropdownFilter: true,
@@ -101,10 +101,8 @@ const customStyles = {
 <EventCalendar eventsData={events} styles={customStyles} />
 ```
 
-
-# EventCalendar Component Documentation
-
 ## Visibility Options
+
 The component allows you to toggle visibility for specific elements:
 - **todayButton**: Shows/hides the "Today" button.
 - **dropdownFilter**: Shows/hides the filter dropdown.
@@ -112,15 +110,62 @@ The component allows you to toggle visibility for specific elements:
 - **header**: Shows/hides the calendar header.
 - **daysNames**: Shows/hides the row of day names.
 
+## Additional Props
+
+### `title`
+- **Type**: String
+- **Default**: `"Event Calendar"`
+- **Description**: Sets a custom title for the calendar.
+- **Example**:
+  ```jsx
+  <EventCalendar title="My Custom Calendar" />
+  ```
+
+### `titleButton`
+- **Type**: String
+- **Default**: `"Add Event"`
+- **Description**: Sets a custom label for the "Add Event" button.
+- **Example**:
+  ```jsx
+  <EventCalendar titleButton="Create New Event" />
+  ```
+
+### `onSelectedEvent`
+- **Type**: Function
+- **Default**: `() => {}`
+- **Description**: Callback function triggered when an event is selected.
+- **Example**:
+  ```jsx
+  const handleEventSelection = (event) => {
+    console.log('Selected Event:', event);
+  };
+
+  <EventCalendar onSelectedEvent={handleEventSelection} />
+  ```
+
+### `addEvent`
+- **Type**: Function
+- **Default**: `() => {}`
+- **Description**: Callback function triggered when the "Add Event" button is clicked.
+- **Example**:
+  ```jsx
+  const handleAddEvent = () => {
+    console.log('Add Event clicked');
+  };
+
+  <EventCalendar addEvent={handleAddEvent} />
+  ```
+
 ## Props
 
 ### `eventsData`
 - **Type**: Array
-- **Default**: []
+- **Default**: `[]`
 - **Description**: An array of event objects. Each event should have:
-  - `date` (in YYYY-MM-DD format)
+  - `date` (in ```Y-MM-DD format)
   - `title` (string)
   - `time` (string)
+
 - **Example**:
   ```javascript
   const events = [
@@ -129,26 +174,11 @@ The component allows you to toggle visibility for specific elements:
   ];
   ```
 
-  # EventCalendar Styles Documentation
-
-## Styles
+### `styles`
 
 - **Type**: Object
 - **Default**: See `defaultStyles` in the component
 - **Description**: An object to customize the appearance of the calendar. It contains properties for colors, font sizes, background colors, and visibility options.
-- **Example**:
-  ```javascript
-  const styles = {
-    colorActualDay: '#FF0000',
-    colorFontTitle: '#0000FF',
-    bgHeader: '#EFEFEF',
-    visibilityOptions: {
-      addEventButton: false,
-    },
-  };
-  ```
-
-# EventCalendar Usage Examples
 
 ## Examples
 
@@ -157,36 +187,21 @@ The component allows you to toggle visibility for specific elements:
 <EventCalendar eventsData={events} />
 ```
 
-# EventCalendar Examples and Licensing
-
-## Examples
-
 ### Example 2: Calendar with Custom Styles
 ```jsx
-<EventCalendar eventsData={events} styles={customStyles} /> 
+<EventCalendar eventsData={events} styles={customStyles} />
 ```
 
-# EventCalendar Examples and Licensing
-
-## Examples
-
-### Example 3: Toggle Visibility of "Add Event" Button
+### Example 3: Custom Title and Add Event Callback
 ```jsx
-const styles = {
-  visibilityOptions: {
-    addEventButton: false,
-  },
-};
-
-<EventCalendar eventsData={events} styles={styles} />
+<EventCalendar
+  title="Team Calendar"
+  titleButton="Schedule Event"
+  addEvent={() => alert('Add Event clicked')}
+/>
 ```
 
-# License and Author Information
+## License and Author Information
 
-## License
-- **Type**: MIT License
-
-## Author
-- **Name**: Andrés Arango
-
-Feel free to reach out for any issues or improvements.
+### License
+- **Type**: MIT Lic
