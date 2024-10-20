@@ -1,6 +1,6 @@
 {
   "name": "@farango/calendar_library",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
