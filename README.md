@@ -6,6 +6,12 @@ The **Event Calendar** is a simple and responsive React component that displays 
 
 The **Event Calendar** component provides a visual representation of a calendar month, where users can see events for each day. It highlights the current day, handles long event titles by truncating them, and separates event times to ensure a clean layout.
 
+
+## Preview
+
+![Event Calendar Preview](./assets/preview.png)
+
+
 ### Key Features
 
 - **Monthly View**: Displays a complete month with days and events.
@@ -124,7 +130,8 @@ The component allows you to toggle visibility for specific elements:
   const events = [
     { date: '2024-10-21', title: 'Meeting', time: '10:00 AM' },
     { date: '2024-10-22', title: 'Workshop', time: '2:00 PM' },
-  ];```
+  ];
+  ```
 
   # EventCalendar Styles Documentation
 
@@ -160,7 +167,8 @@ The component allows you to toggle visibility for specific elements:
 
 ### Example 2: Calendar with Custom Styles
 ```jsx
-<EventCalendar eventsData={events} styles={customStyles} /> ```
+<EventCalendar eventsData={events} styles={customStyles} /> 
+```
 
 # EventCalendar Examples and Licensing
 

@@ -18,7 +18,7 @@ import { EventCalendar } from '../src/components/eventcalendar/EventCalendar';
 function App() {
   return (
     <div style={{ padding: '0 100px' }}>
-        <EventCalendar eventsData={defaultEventsData} styles={{  colorActualDay: 'red',}} />
+        <EventCalendar eventsData={defaultEventsData}/>
 
     </div>
   );
