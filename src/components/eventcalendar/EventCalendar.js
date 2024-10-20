@@ -2,21 +2,66 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { CalendarGrid } from './CalendarGrid';
 import './CalendarGrid.scss';
+import { CellRender } from './cellRender/CellRender'; 
 
-export function EventCalendar() {
+const defaultStyles = {
+  colorActualDay: '#fff',
+  colorFontTitle: '#000',
+  colorFontButtons: '#000',
+  colorFontNameDays: '#000',
+  colorFontDays: '#000',
+  sizeFontAppoinment: '0.85rem',
+  sizeFontButtons: '1rem',
+  sizeFontNameDays: '0.85rem',
+  sizeFontDays: '0.9rem',
+  bgHeader: '#f9fafb',
+  bgDaysNames: '#f0f0f0',
+  bgCells: '#fff',
+  bgActualDay: '#000',
+  visibilityOptions: {
+    todayButton: true,
+    dropdownFilter: true,
+    addEventButton: true,
+    header: true,
+    daysNames: true,
+  },
+};
+
+export function EventCalendar({eventsData = [], styles= defaultStyles}) {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  // Sample event data
-  const eventsData = [
-    { date: '2024-10-03', title: 'Design review', time: '10AM' },
-    { date: '2024-10-03', title: 'Sales meeting', time: '2PM' },
-    { date: '2024-10-05', title: 'Sam\'s birthday party', time: '2PM' },
-    { date: '2024-10-07', title: 'Date night', time: '6PM' },
-    { date: '2024-10-09', title: 'Hockey game', time: '7PM' },
-    { date: '2024-10-22', title: 'Maple syrup museum', time: '3PM' },
-    { date: '2024-10-30', title: 'Cinema with friends', time: '9PM' }
-  ];
+  const {
+    colorActualDay,
+    colorFontTitle,
+    colorFontButtons,
+    colorFontNameDays,
+    colorFontDays,
+    sizeFontAppoinment,
+    sizeFontButtons,
+    sizeFontNameDays,
+    sizeFontDays,
+    bgHeader,
+    bgDaysNames,
+    bgCells,
+    bgActualDay,
+    visibilityOptions,
+  } = styles;
 
+  const customStyles = {
+    '--current-day-bg': bgActualDay,
+    '--current-day-color': colorActualDay,
+    '--event-title-color': colorFontTitle,
+    '--event-title-font-size': sizeFontAppoinment,
+    '--button-color': colorFontButtons,
+    '--button-font-size': sizeFontButtons,
+    '--name-days-font-color': colorFontNameDays,
+    '--name-days-font-size': sizeFontNameDays,
+    '--days-font-color': colorFontDays,
+    '--days-font-size': sizeFontDays,
+    '--calendar-header-bg': bgHeader,
+    '--days-names-bg': bgDaysNames,
+    '--calendar-cells-bg': bgCells,
+  };
   // Select event handler
   const onSelect = (day) => {
     const currentDate = dayjs(day).format('YYYY-MM-DD');
@@ -24,34 +69,12 @@ export function EventCalendar() {
     setSelectedEvent(event || null);
   };
   // Renders each cell of the calendar
-  const cellRender = (day) => {
-    const currentDate = dayjs(day).format('YYYY-MM-DD');
-    const today = dayjs().format('YYYY-MM-DD'); // Get current date
-    const events = eventsData.filter((event) => event.date === currentDate);
-
-    return (
-      <div
-        className={`cell-container ${events.length ? 'event-cell' : ''}`}
-        onClick={() => onSelect(day)}
-      >
-        {/* Add the 'current-day' class if it's today */}
-        <div className={`day-number ${currentDate === today ? 'current-day' : ''}`}>
-          <span>{day.format('D')}</span>
-        </div>
-
-        {/* Events below the day number */}
-        {events.map((event, index) => (
-          <div key={index} className="event-wrapper">
-            <div className="event-title">{event.title}</div>
-            <div className="event-time">{event.time}</div>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  const cellRender = (day) => (
+    <CellRender day={day} eventsData={eventsData} onSelect={onSelect} />
+  );
 
   return (
-    <div className="p-6">
+    <div className="p-6" style={customStyles}>
       <h2 className="text-2xl font-bold mb-4">Event Calendar</h2>
       <CalendarGrid cellRender={cellRender} />
       {selectedEvent && (

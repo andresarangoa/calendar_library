@@ -6,27 +6,26 @@ body {
 }
 
 .calendar-grid {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  border: 0.5px solid #ccc; // Outer border for the entire grid
-  border-bottom-left-radius: 10px; // Rounded bottom-left corner
-  border-bottom-right-radius: 10px; // Rounded bottom-right corner
-  overflow: hidden; // Prevents children from overflowing
+  display: var(--display, flex);
+  flex-wrap: var(--flex-wrap, wrap);
+  width: var(--width, 100%);
+  border: var(--border, 0.5px solid #ccc);
+  border-bottom-left-radius: var(--border-bottom-left-radius, 10px);
+  border-bottom-right-radius: var(--border-bottom-right-radius, 10px);
+  overflow: var(--overflow, hidden);
 }
 
 .day-header {
-  width: 14.28%; // Each header takes up 1/7th of the width
+  width: var(--day-header-width, 14.28%);
   text-align: center;
   font-weight: 600;
-  border-top: 0.5px solid #d6d6d6;
-  border-right: 0.5px solid #d6d6d6;
-  padding: 0.5rem;
-  color: #3c4655;
+  border-top: var(--day-header-border-top, 0.5px solid #d6d6d6);
+  border-right: var(--day-header-border-right, 0.5px solid #d6d6d6);
+  padding: var(--day-header-padding, 0.5rem);
+  color: var(--day-header-color, #3c4655);
   box-sizing: border-box;
-  background-color: #ffffff; // Subtle background color
+  background-color: var(--day-header-bg, #ffffff);
 
-  // Remove left border for the first header
   &:first-child {
     border-left: none;
   }
@@ -35,20 +34,20 @@ body {
 .calendar-navigation {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  gap: 10px; // Space between buttons
-  border: 0.5px solid #ccc;
-  border-radius: 10px;
+  background-color: var(--calendar-nav-bg, #ffffff);
+  gap: var(--calendar-nav-gap, 10px);
+  border: var(--calendar-nav-border, 0.5px solid #ccc);
+  border-radius: var(--calendar-nav-radius, 10px);
 
   .arrow-button {
     background-color: transparent;
-    color: gray; // Gray arrow color
-    border: none; // No border
-    font-size: 1rem; // Increase font size for better visibility
+    color: var(--arrow-button-color, gray);
+    border: none;
+    font-size: var(--arrow-button-font-size, 1rem);
     cursor: pointer;
 
     &:hover {
-      color: darkgray; // Darker gray on hover
+      color: var(--arrow-button-hover-color, darkgray);
     }
 
     &:focus {
@@ -57,36 +56,35 @@ body {
   }
 
   .today-button {
-    background-color: transparent; // Transparent background
-    color: black; // Black text color
-    border: none; // No border
-    font-size: 1rem; // Normal font size
+    background-color: transparent;
+    color: var(--today-button-color, black);
+    border: none;
+    font-size: var(--today-button-font-size, 1rem);
     cursor: pointer;
-    padding: 0.5rem 0.75rem; // Adjust padding
+    padding: var(--today-button-padding, 0.5rem 0.75rem);
     font-weight: bold;
 
     &:hover {
-      color: gray; // Change to gray on hover
+      color: var(--today-button-hover-color, gray);
     }
 
     &:focus {
       outline: none;
     }
   }
-
 }
 
 button {
-  padding: 0.5rem 0.75rem;
+  padding: var(--button-padding, 0.5rem 0.75rem);
   border: none;
-  color: white;
-  border-radius: 4px;
+  color: var(--button-color, white);
+  border-radius: var(--button-radius, 4px);
   cursor: pointer;
   transition: background-color 0.3s;
-  font-family: 'Nunito', sans-serif; // Apply Nunito font
+  font-family: var(--button-font, 'Nunito', sans-serif);
 
   &:hover {
-    background-color: #0056b3; // Darker on hover
+    background-color: var(--button-hover-bg, #0056b3);
   }
 
   &:focus {
@@ -95,76 +93,68 @@ button {
 }
 
 .day-cell {
-  width: 14.28%; // Each day cell takes up 1/7th of the width
-  height: 8rem;
-  border-top: 0.3px solid #d6d6d6;
-  border-right: 0.3px solid #d6d6d6;
-  padding: 0.9rem;
+  width: var(--day-cell-width, 14.28%);
+  height: var(--day-cell-height, 8rem);
+  border-top: var(--day-cell-border-top, 0.3px solid #d6d6d6);
+  border-right: var(--day-cell-border-right, 0.3px solid #d6d6d6);
+  padding: var(--day-cell-padding, 0.9rem);
   box-sizing: border-box;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  font-size: 12px;
+  font-size: var(--day-cell-font-size, 12px);
 
-  // Remove left border for the first column cells
   &:nth-child(7n+1) {
     border-left: none;
   }
 
-  // Remove bottom border for the last row of cells
   &:nth-last-child(-n+7) {
     border-bottom: none;
   }
 
-  // Add bottom-left radius for the first cell of the last row
   &:nth-last-child(7) {
-    border-bottom-left-radius: 10px;
+    border-bottom-left-radius: var(--day-cell-bottom-left-radius, 10px);
   }
 
-  // Add bottom-right radius for the last cell of the last row
   &:last-child {
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: var(--day-cell-bottom-right-radius, 10px);
   }
 }
 
 .other-month {
-  background-color: #f9fafb; // Slightly lighter gray for better visibility
-  color: #7a7a7a;
-}
-
-.current-day {
-  
+  background-color: var(--other-month-bg, #f9fafb);
+  color: var(--other-month-color, #7a7a7a);
 }
 
 .vertical-separator {
   width: 1px;
-  height: 24px; // Adjust height as needed
-  background-color: #ccc; // Light gray color for the separator
-  margin: 0 10px; // Space around the separator
+  height: var(--separator-height, 24px);
+  background-color: var(--separator-color, #ccc);
+  margin: var(--separator-margin, 0 10px);
 }
 
 .calendar-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #3c4655;
-  border: 0.3px solid #d6d6d6;
-  padding: 1.5rem 1rem; // Add padding for better spacing
-  background-color: #f9fafb; // Add a light background color for visibility
-  border-top-left-radius: 10px; // Rounded top-left corner
-  border-top-right-radius: 10px; // Rounded top-right corner
-  font-family: 'Nunito', sans-serif; // Apply Nunito font
+  color: var(--calendar-controls-color, #3c4655);
+  border: var(--calendar-controls-border, 0.3px solid #d6d6d6);
+  padding: var(--calendar-controls-padding, 1.5rem 1rem);
+  background-color: var(--calendar-controls-bg, #f9fafb);
+  border-top-left-radius: var(--calendar-controls-radius, 10px);
+  border-top-right-radius: var(--calendar-controls-radius, 10px);
+  font-family: var(--calendar-controls-font, 'Nunito', sans-serif);
 
   .month-title {
-    font-size: 1.25rem;
+    font-size: var(--month-title-size, 1.25rem);
     font-weight: bold;
-    margin: 0 1rem;
+    margin: var(--month-title-margin, 0 1rem);
   }
   
   .controls-right {
     display: flex;
     align-items: center;
-    gap: 10px; // Space between controls
+    gap: var(--controls-gap, 10px);
   }
 
   .dropdown {
@@ -172,21 +162,20 @@ button {
     display: inline-block;
 
     &-button {
-
-      min-width: 10rem;
-      color: black; // Black text color
-      font-size: 1rem; // Normal font size
+      min-width: var(--dropdown-min-width, 10rem);
+      color: var(--dropdown-color, black);
+      font-size: var(--dropdown-font-size, 1rem);
       cursor: pointer;
-      padding: 0.5rem 0.75rem; // Adjust padding
+      padding: var(--dropdown-padding, 0.5rem 0.75rem);
       font-weight: bold;
-      background-color: #ffffff;
+      background-color: var(--dropdown-bg, #ffffff);
       transition: background-color 0.3s;
-      font-family: 'Nunito', sans-serif; // Apply Nunito font
-      border: 0.5px solid #ccc;
-      border-radius: 10px;
+      font-family: var(--dropdown-font, 'Nunito', sans-serif);
+      border: var(--dropdown-border, 0.5px solid #ccc);
+      border-radius: var(--dropdown-radius, 10px);
 
       &:hover {
-        background-color: #f0f0f0;
+        background-color: var(--dropdown-hover-bg, #f0f0f0);
       }
     }
 
@@ -195,13 +184,13 @@ button {
       position: absolute;
       top: 2.5rem;
       left: 0;
-      background-color: #fff;
-      min-width: 160px;
+      background-color: var(--dropdown-content-bg, #fff);
+      min-width: var(--dropdown-content-width, 160px);
       box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
       z-index: 1;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-family: 'Nunito', sans-serif; // Apply Nunito font
+      border: var(--dropdown-content-border, 1px solid #ccc);
+      border-radius: var(--dropdown-content-radius, 4px);
+      font-family: var(--dropdown-content-font, 'Nunito', sans-serif);
 
       &.show {
         display: block;
@@ -209,42 +198,32 @@ button {
     }
 
     &-item {
-      padding: 0.5rem 1rem;
+      padding: var(--dropdown-item-padding, 0.5rem 1rem);
       cursor: pointer;
-      font-family: 'Nunito', sans-serif; // Apply Nunito font
+      font-family: var(--dropdown-item-font, 'Nunito', sans-serif);
 
       &:hover {
-        background-color: #f0f0f0;
+        background-color: var(--dropdown-item-hover-bg, #f0f0f0);
       }
-    }
-
-    .arrow-down {
-      display: inline-block;
-      margin-left: 5px; // Space between text and arrow
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid gray; // Arrow color
     }
   }
 }
 
 .add-event-button {
-  padding: 0.7rem 0.75rem;
+  padding: var(--add-event-button-padding, 0.7rem 0.75rem);
   border: none;
-  background-color: black; // Green for add event
-  color: white;
-  border-radius: 10px;
+  background-color: var(--add-event-button-bg, black);
+  color: var(--add-event-button-color, white);
+  border-radius: var(--add-event-button-radius, 10px);
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
-  font-family: 'Nunito', sans-serif; // Apply Nunito font
+  font-family: var(--add-event-button-font, 'Nunito', sans-serif);
 
   &:hover {
-    background-color: #ffff; // Darker on hover
-    border: 1px solid #000;
-    color: #000;
+    background-color: var(--add-event-button-hover-bg, #fff);
+    border: var(--add-event-button-hover-border, 1px solid #000);
+    color: var(--add-event-button-hover-color, #000);
   }
 
   &:focus {
@@ -252,14 +231,13 @@ button {
   }
 }
 
-
 //EventCalendar 
 .current-day {
-  span{
-    background-color: #000;
-    color: #fff;
-    padding: 10px;
-    border-radius: 100%;
+  span {
+    background-color: var(--current-day-bg, #000);
+    color: var(--current-day-color, #fff);
+    padding: var(--current-day-padding, 10px);
+    border-radius: var(--current-day-radius, 100%);
   }
 }
 
@@ -272,25 +250,25 @@ button {
 }
 
 .event-title {
-  width: 90%;
+  width: var(--event-title-width, 90%);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.775rem;
-  color: #000;
+  font-size: var(--event-title-font-size, 0.775rem);
+  color: var(--event-title-color, #000);
 
   @media (max-width: 768px) {
-    font-size: 0.75rem; // Adjust font size for small screens
+    font-size: var(--event-title-font-size-small, 0.75rem); // Adjust font size for small screens
   }
 }
 
 .event-time {
-  width: 60%;
+  width: var(--event-time-width, 60%);
   text-align: right; // Aligns the time to the right
-  font-size: 0.675rem;
-  color: #000;
+  font-size: var(--event-time-font-size, 0.675rem);
+  color: var(--event-time-color, #000);
 
   @media (max-width: 768px) {
-    font-size: 0.75rem; // Adjust font size for small screens
+    font-size: var(--event-time-font-size-small, 0.75rem); // Adjust font size for small screens
   }
 }
