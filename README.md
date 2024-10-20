@@ -205,3 +205,6 @@ The component allows you to toggle visibility for specific elements:
 
 ### License
 - **Type**: MIT Lic
+
+### Author
+- **Name**: Andrés Arango
