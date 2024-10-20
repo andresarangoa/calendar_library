@@ -162,7 +162,7 @@ The component allows you to toggle visibility for specific elements:
 - **Type**: Array
 - **Default**: `[]`
 - **Description**: An array of event objects. Each event should have:
-  - `date` (in ```Y-MM-DD format)
+  - `date` (in YYYY-MM-DD format)
   - `title` (string)
   - `time` (string)
 
