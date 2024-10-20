@@ -9,7 +9,7 @@ The **Event Calendar** component provides a visual representation of a calendar 
 
 ## Preview
 
-![Event Calendar Preview](./assets/preview.png)
+![Event Calendar Preview](https://raw.githubusercontent.com/andresarangoa/calendar_library/refs/heads/main/assets/preview.png)
 
 
 ### Key Features
@@ -21,10 +21,6 @@ The **Event Calendar** component provides a visual representation of a calendar 
   - Event titles are truncated with ellipses to prevent overflow.
   - Each event occupies a single line, with the title taking up **60%** of the width and the time taking up **40%**.
 - **Responsive Design**: Adjusts the layout and font size based on screen size to maintain readability and usability.
-
-## Installation
-
-To use the **Event Calendar** component in your project, clone the repository and install the dependencies:
 
 # EventCalendar Library
 
@@ -41,7 +37,7 @@ To use the **Event Calendar** component in your project, clone the repository an
   - [styles](#styles)
 - [Examples](#examples)
 
-## Installation
+## Installation 
 
 Install the @farango/calendar_library package:
 
