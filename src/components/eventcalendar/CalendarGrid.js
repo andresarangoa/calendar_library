@@ -21,7 +21,7 @@ const generateMonthDays = (month) => {
   return days;
 };
 
-export function CalendarGrid({ cellRender }) {
+export function CalendarGrid({ cellRender, titleButton = "Add Event", onAddEventClicked = () => {}}) {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const [viewMode, setViewMode] = useState('monthly');
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -76,7 +76,7 @@ export function CalendarGrid({ cellRender }) {
 
           <div className="vertical-separator"></div>
 
-          <button className="add-event-button">Add Event</button>
+          <button onClick={()=>onAddEventClicked()} className="add-event-button">{titleButton}</button>
         </div>
       </div>
 

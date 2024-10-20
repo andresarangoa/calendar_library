@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { CalendarGrid } from './CalendarGrid';
 import './CalendarGrid.scss';
-import { CellRender } from './cellRender/CellRender'; 
+import { CellRender } from './cellRender/CellRender';
 
 const defaultStyles = {
   colorActualDay: '#fff',
@@ -27,31 +27,37 @@ const defaultStyles = {
   },
 };
 
-export function EventCalendar({eventsData = [], styles= defaultStyles}) {
-  const [selectedEvent, setSelectedEvent] = useState(null);
-
+export default function EventCalendar({
+  eventsData = [],
+  styles = defaultStyles,
+  title = 'Event Calendar',
+  titleButton = 'Add Event',
+  onSelectedEvent = () => {},
+  addEvent = () => {},
+}) {
+  // Destructure and provide default values from styles
   const {
-    colorActualDay,
-    colorFontTitle,
-    colorFontButtons,
-    colorFontNameDays,
-    colorFontDays,
-    sizeFontAppoinment,
-    sizeFontButtons,
-    sizeFontNameDays,
-    sizeFontDays,
-    bgHeader,
-    bgDaysNames,
-    bgCells,
-    bgActualDay,
-    visibilityOptions,
+    colorActualDay = '',
+    colorFontTitle = '',
+    colorFontButtons = '',
+    colorFontNameDays = '',
+    colorFontDays = '',
+    sizeFontAppointment = '',
+    sizeFontButtons = '',
+    sizeFontNameDays = '',
+    sizeFontDays = '',
+    bgHeader = '',
+    bgDaysNames = '',
+    bgCells = '',
+    bgActualDay = '',
   } = styles;
 
+  // Create custom CSS variables for styling
   const customStyles = {
     '--current-day-bg': bgActualDay,
     '--current-day-color': colorActualDay,
     '--event-title-color': colorFontTitle,
-    '--event-title-font-size': sizeFontAppoinment,
+    '--event-title-font-size': sizeFontAppointment,
     '--button-color': colorFontButtons,
     '--button-font-size': sizeFontButtons,
     '--name-days-font-color': colorFontNameDays,
@@ -62,35 +68,27 @@ export function EventCalendar({eventsData = [], styles= defaultStyles}) {
     '--days-names-bg': bgDaysNames,
     '--calendar-cells-bg': bgCells,
   };
+
   // Select event handler
-  const onSelect = (day) => {
-    const currentDate = dayjs(day).format('YYYY-MM-DD');
-    const event = eventsData.find((event) => event.date === currentDate);
-    setSelectedEvent(event || null);
+  const handleSelectEvent = (day) => {
+    const formattedDate = dayjs(day).format('YYYY-MM-DD');
+    const event = eventsData.find((event) => event.date === formattedDate) || null;
+    onSelectedEvent(event);
   };
+
   // Renders each cell of the calendar
-  const cellRender = (day) => (
-    <CellRender day={day} eventsData={eventsData} onSelect={onSelect} />
+  const renderCell = (day) => (
+    <CellRender day={day} eventsData={eventsData} onSelect={handleSelectEvent} />
   );
 
   return (
     <div className="p-6" style={customStyles}>
-      <h2 className="text-2xl font-bold mb-4">Event Calendar</h2>
-      <CalendarGrid cellRender={cellRender} />
-      {selectedEvent && (
-        <div className="mt-4 p-4 border rounded bg-gray-100">
-          <h3 className="text-xl font-semibold mb-2">Selected Event</h3>
-          <p>
-            <strong>{selectedEvent.title}</strong> - {selectedEvent.time}
-          </p>
-          <button
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            onClick={() => alert(`Event: ${selectedEvent.title} at ${selectedEvent.time}`)}
-          >
-            View Event
-          </button>
-        </div>
-      )}
+      <h2 className="text-2xl font-bold mb-4">{title}</h2>
+      <CalendarGrid
+        cellRender={renderCell}
+        titleButton={titleButton}
+        onAddEventClicked={addEvent}
+      />
     </div>
   );
 }
