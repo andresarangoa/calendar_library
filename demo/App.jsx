@@ -5,14 +5,15 @@ import { EventCalendar } from '../src';
 
 // Sample event data
 const defaultEventsData = [
-  { date: '2024-10-03', title: 'Design review', time: '10AM' },
-  { date: '2024-10-03', title: 'Sales meeting', time: '2PM' },
-  { date: '2024-10-05', title: 'Sam\'s birthday party', time: '2PM' },
-  { date: '2024-10-07', title: 'Date night', time: '6PM' },
-  { date: '2024-10-09', title: 'Hockey game', time: '7PM' },
-  { date: '2024-10-22', title: 'Maple syrup museum', time: '3PM' },
-  { date: '2024-10-30', title: 'Cinema with friends', time: '9PM' }
+  { date: '2024-10-03', title: 'Design review', time: '10:00', endTime: '11:00' },
+  { date: '2024-10-03', title: 'Sales meeting', time: '14:00', endTime: '15:30' },
+  { date: '2024-10-05', title: 'Sam\'s birthday party', time: '14:00', endTime: '17:00' },
+  { date: '2024-10-07', title: 'Date night', time: '18:00', endTime: '20:00' },
+  { date: '2024-10-09', title: 'Hockey game', time: '19:00', endTime: '21:00' },
+  { date: '2024-10-22', title: 'Maple syrup museum', time: '15:00', endTime: '16:30' },
+  { date: '2024-10-30', title: 'Cinema with friends', time: '21:00', endTime: '23:00' }
 ];
+
 
 
 function App() {

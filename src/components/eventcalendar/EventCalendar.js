@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { CalendarGrid } from './CalendarGrid';
 import './CalendarGrid.scss';
-import { CellRender } from './cellRender/CellRender';
+import { MonthlyCellRender } from './cellRender/MonthlyCellRender';
+import { WeeklyCellRender } from './cellRender/WeeklyCellRender';
 
 const defaultStyles = {
   colorActualDay: '#fff',
@@ -77,15 +78,19 @@ export default function EventCalendar({
   };
 
   // Renders each cell of the calendar
-  const renderCell = (day) => (
-    <CellRender day={day} eventsData={eventsData} onSelect={handleSelectEvent} />
+  const montlyRenderCell = (day) => (
+    <MonthlyCellRender day={day} eventsData={eventsData} onSelect={handleSelectEvent} />
+  );
+  const weeklyRenderCell = (day, interval) => (
+    <WeeklyCellRender day={day} interval={interval} eventsData={eventsData} onSelect={handleSelectEvent} />
   );
 
   return (
     <div className="p-6" style={customStyles}>
       <h2 className="text-2xl font-bold mb-4">{title}</h2>
       <CalendarGrid
-        cellRender={renderCell}
+        montlyRenderCell={montlyRenderCell}
+        weeklyRenderCell={weeklyRenderCell}
         titleButton={titleButton}
         onAddEventClicked={addEvent}
       />

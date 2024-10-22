@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 // CalendarCell Component
-export const CellRender = ({ day, eventsData, onSelect }) => {
+export const MonthlyCellRender = ({ day, eventsData, onSelect }) => {
   const currentDate = dayjs(day).format('YYYY-MM-DD');
   const today = dayjs().format('YYYY-MM-DD'); // Get current date
   const events = eventsData.filter((event) => event.date === currentDate);

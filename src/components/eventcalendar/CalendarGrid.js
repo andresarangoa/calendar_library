@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek'; // Import the ISO week plugin
 import './CalendarGrid.scss';
+import MonthlyCalendar from './montlyCalendar/MonthlyCalendar';
+import WeeklyView from './weeklyView/WeeklyView';
 
 // Extend dayjs with ISO week support
 dayjs.extend(isoWeek);
@@ -21,7 +23,7 @@ const generateMonthDays = (month) => {
   return days;
 };
 
-export function CalendarGrid({ cellRender, titleButton = "Add Event", onAddEventClicked = () => {}}) {
+export function CalendarGrid({ montlyRenderCell, weeklyRenderCell, titleButton = "Add Event", onAddEventClicked = () => { } }) {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const [viewMode, setViewMode] = useState('monthly');
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -76,27 +78,22 @@ export function CalendarGrid({ cellRender, titleButton = "Add Event", onAddEvent
 
           <div className="vertical-separator"></div>
 
-          <button onClick={()=>onAddEventClicked()} className="add-event-button">{titleButton}</button>
+          <button onClick={() => onAddEventClicked()} className="add-event-button">{titleButton}</button>
         </div>
       </div>
 
       {/* Calendar Grid */}
-      <div className="calendar-grid">
-        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => (
-          <div key={index} className="day-header">
-            {day}
-          </div>
-        ))}
-        {days.map((day, index) => (
-          <div
-            key={index}
-            className={`day-cell ${!isCurrentMonth(day) ? 'other-month' : ''} ${day.isSame(dayjs(), 'day') ? 'current-day' : ''
-              }`}
-          >
-            {cellRender(day)}
-          </div>
-        ))}
-      </div>
+      {viewMode === 'monthly' ? (
+        <MonthlyCalendar currentMonth={currentMonth} cellRender={montlyRenderCell} />
+      ) : viewMode === 'weekly' ? (
+        <WeeklyView cellRender={weeklyRenderCell} />
+      ) : viewMode === 'daily' ? (
+        <></>
+        // <DailyView currentDate={currentMonth} cellRender={cellRender} />
+      ) : viewMode === 'yearly' ? (
+        <></>
+        // <YearlyView currentYear={currentMonth.year()} cellRender={cellRender} />
+      ) : null}
     </div>
   );
 }

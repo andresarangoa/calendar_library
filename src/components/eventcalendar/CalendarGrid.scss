@@ -9,6 +9,7 @@ body {
   display: var(--display, flex);
   flex-wrap: var(--flex-wrap, wrap);
   width: var(--width, 100%);
+  min-width: 500px;
   border: var(--border, 0.5px solid #ccc);
   border-bottom-left-radius: var(--border-bottom-left-radius, 10px);
   border-bottom-right-radius: var(--border-bottom-right-radius, 10px);
@@ -38,6 +39,7 @@ body {
   gap: var(--calendar-nav-gap, 10px);
   border: var(--calendar-nav-border, 0.5px solid #ccc);
   border-radius: var(--calendar-nav-radius, 10px);
+  min-width: 0.5rem;
 
   .arrow-button {
     background-color: transparent;
@@ -45,6 +47,7 @@ body {
     border: none;
     font-size: var(--arrow-button-font-size, 1rem);
     cursor: pointer;
+    min-width: 0.1rem;
 
     &:hover {
       color: var(--arrow-button-hover-color, darkgray);
@@ -63,6 +66,7 @@ body {
     cursor: pointer;
     padding: var(--today-button-padding, 0.5rem 0.75rem);
     font-weight: bold;
+    min-width: 0.1rem;
 
     &:hover {
       color: var(--today-button-hover-color, gray);
@@ -70,6 +74,24 @@ body {
 
     &:focus {
       outline: none;
+    }
+  }
+
+  /* Adjust padding for tablets (768px and smaller) */
+  @media (max-width: 768px) {
+    .today-button {
+      padding: var(--today-button-padding-sm, 0.4rem 0.6rem);
+      /* Reduced padding for tablets */
+    }
+  }
+
+  /* Adjust padding for smaller screens (480px and smaller) */
+  @media (max-width: 480px) {
+    .today-button {
+      padding: var(--today-button-padding-xs, 0.3rem 0.5rem);
+      /* Reduced padding for smaller screens */
+      font-size: var(--today-button-font-size-xs, 0.9rem);
+      /* Decreased font size for smaller screens */
     }
   }
 }
@@ -104,20 +126,39 @@ button {
   justify-content: flex-start;
   font-size: var(--day-cell-font-size, 12px);
 
-  &:nth-child(7n+1) {
+  .day-cell:nth-child(7n+1) {
     border-left: none;
   }
 
-  &:nth-last-child(-n+7) {
+  .day-cell:nth-last-child(-n+7) {
     border-bottom: none;
   }
 
-  &:nth-last-child(7) {
+  .day-cell:nth-last-child(7) {
     border-bottom-left-radius: var(--day-cell-bottom-left-radius, 10px);
   }
 
-  &:last-child {
+  .day-cell:last-child {
     border-bottom-right-radius: var(--day-cell-bottom-right-radius, 10px);
+  }
+
+}
+
+/* Reduce height for tablets (768px and smaller) */
+@media (max-width: 768px) {
+  .day-cell {
+    height: var(--day-cell-height-sm, 6rem);
+    /* Adjust to a smaller height */
+  }
+}
+
+/* Further reduce height for smaller screens (480px and smaller) */
+@media (max-width: 480px) {
+  .day-cell {
+    height: var(--day-cell-height-xs, 4rem);
+    /* Adjust to an even smaller height */
+    font-size: var(--day-cell-font-size-xs, 10px);
+    /* Reduce font size */
   }
 }
 
@@ -145,6 +186,8 @@ button {
   border-top-right-radius: var(--calendar-controls-radius, 10px);
   font-family: var(--calendar-controls-font, 'Nunito', sans-serif);
 
+  min-width: 468px;
+
   .month-title {
     font-size: var(--month-title-size, 1.25rem);
     font-weight: bold;
@@ -162,7 +205,7 @@ button {
     display: inline-block;
 
     &-button {
-      min-width: var(--dropdown-min-width, 10rem);
+      min-width: var(--dropdown-min-width, 1rem);
       color: var(--dropdown-color, black);
       font-size: var(--dropdown-font-size, 1rem);
       cursor: pointer;
@@ -271,4 +314,114 @@ button {
   @media (max-width: 768px) {
     font-size: var(--event-time-font-size-small, 0.75rem); // Adjust font size for small screens
   }
+}
+
+///
+/// 
+/// weekly view
+/// 
+.weekly-calendar-grid {
+  display: flex;
+  flex-direction: row;
+  width: var(--width, 100%);
+  min-width: 500px;
+  color: var(--calendar-controls-color, #3c4655);
+
+  .weekly-calendar-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .time-header {
+    flex: 0 0 2rem;
+    border-right: var(--day-header-border-right, 0.3px solid #d6d6d6);
+    border-left: var(--day-header-border-right, 0.3px solid #d6d6d6);
+    border-bottom: var(--day-header-border-right, 0.3px solid #d6d6d6);
+  }
+
+  .day-header-weekly {
+    width: var(--day-header-width, 100%);
+    text-align: center;
+    font-weight: 600;
+    border-top: var(--day-header-border-top, 0, 3px solid #d6d6d6);
+    border-bottom: var(--day-header-border-top, 0.3px solid #d6d6d6);
+    border-right: var(--day-header-border-right, 0.3px solid #d6d6d6);
+    border-left: var(--day-header-border-right, 0.3px solid #d6d6d6);
+    padding: var(--day-header-padding, 1rem 0rem);
+    box-sizing: border-box;
+    background-color: var(--day-header-bg, #ffffff);
+
+    &:first-child {
+      border-left: none;
+    }
+  }
+
+  .week-row {
+    display: flex;
+    flex-direction: row;
+    /* Arrange rows horizontally */
+    width: 100%;
+  }
+
+  .hour-column {
+    flex: 0 0 4rem;
+    /* Fixed width for time column */
+    display: flex;
+    flex-direction: column;
+    /* Arrange hours vertically */
+  }
+
+  .hour-cell {
+    flex: 0 0 3.4rem;
+    /* Adjust height for each hour cell */
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    padding: 0 0;
+    /* Ajuste de padding a cero */
+    border-right: 0.3px solid #d6d6d6;
+    border-left: 0.3px solid #d6d6d6;
+    background-color: var(--day-header-bg, #ffffff);
+    box-sizing: border-box;
+
+    span {
+
+      color: var(--day-header-color, #6a727f);
+      transform: translateY(-10px);
+      font-size: var(--month-title-size, 0.8rem);
+      font-weight: bold;
+      /* Mueve el texto hacia arriba 5px */
+    }
+  }
+
+  .hour-cell:first-child {
+    padding-top: 0rem;
+    /* Add desired top padding to the first hour cell */
+    border-bottom: 0.3px solid #d6d6d6;
+  }
+
+  .hour-cell:last-child {
+    padding-top: 0rem;
+    /* Add desired top padding to the first hour cell */
+    border-bottom: 0.3px solid #d6d6d6;
+  }
+
+  .day-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .day-hour-cell,
+  .half-hour-cell {
+    flex: 0 0 3.4rem;
+    /* Altura uniforme para 30 minutos */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: 0.3px solid #d6d6d6;
+    box-sizing: border-box;
+  }
+
+  
 }
