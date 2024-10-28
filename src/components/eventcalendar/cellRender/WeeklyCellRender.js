@@ -18,9 +18,6 @@ export const WeeklyCellRender = ({ day, eventsData, onSelect, interval }) => {
     const [eventHour, eventMinute] = event.time.split(':').map(Number);
     const eventDateTime = eventDate.hour(eventHour).minute(eventMinute);
 
-    console.log(`Event: ${event.title}, Event Date Time: ${eventDateTime.format()}`);
-    console.log(`Current Date Time: ${currentDateTime.format()}`);
-
     // Compare all components explicitly to avoid timezone issues
     return (
       eventDateTime.year() === currentDateTime.year() &&
