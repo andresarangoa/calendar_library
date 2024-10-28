@@ -8,7 +8,7 @@ The **Event Calendar** component provides a visual representation of a calendar 
 
 ## Preview
 
-![Event Calendar Preview](https://raw.githubusercontent.com/andresarangoa/calendar_library/refs/heads/main/assets/preview.png)
+![Event Calendar Preview](https://raw.githubusercontent.com/andresarangoa/calendar_library/refs/heads/main/assets/preview.gif)
 
 ### Key Features
 
