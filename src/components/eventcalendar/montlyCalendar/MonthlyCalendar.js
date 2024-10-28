@@ -22,14 +22,17 @@ const generateMonthDays = (month) => {
 };
 
 // New MonthlyCalendar Component
-export const MonthlyCalendar = ({ currentMonth, cellRender }) => {
+export const MonthlyCalendar = ({ currentMonth, cellRender, size }) => {
   const days = generateMonthDays(currentMonth);
 
   // Check if the day is in the current month
   const isCurrentMonth = (day) => day.isSame(currentMonth, 'month');
+  
+  // Inline styles based on the size prop
+  const containerStyle = size ? { width: size.width, height: size.height } : {};
 
   return (
-    <div className="calendar-grid">
+    <div className="calendar-grid" style={containerStyle}>
       {/* Weekday Headers */}
       {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => (
         <div key={index} className="day-header">

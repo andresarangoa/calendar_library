@@ -4,6 +4,7 @@ import isoWeek from 'dayjs/plugin/isoWeek'; // Import the ISO week plugin
 import './CalendarGrid.scss';
 import MonthlyCalendar from './montlyCalendar/MonthlyCalendar';
 import WeeklyView from './weeklyView/WeeklyView';
+import DailyView from './dailyView/DailyView';
 
 // Extend dayjs with ISO week support
 dayjs.extend(isoWeek);
@@ -27,10 +28,6 @@ export function CalendarGrid({ montlyRenderCell, weeklyRenderCell, titleButton =
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const [viewMode, setViewMode] = useState('monthly');
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
-  const days = generateMonthDays(currentMonth);
-
-  const isCurrentMonth = (day) => day.isSame(currentMonth, 'month');
 
   const handlePrevMonth = () => setCurrentMonth(currentMonth.subtract(1, 'month'));
   const handleNextMonth = () => setCurrentMonth(currentMonth.add(1, 'month'));
@@ -88,7 +85,7 @@ export function CalendarGrid({ montlyRenderCell, weeklyRenderCell, titleButton =
       ) : viewMode === 'weekly' ? (
         <WeeklyView cellRender={weeklyRenderCell} />
       ) : viewMode === 'daily' ? (
-        <></>
+        <DailyView cellRender={weeklyRenderCell} montlyRenderCell={montlyRenderCell}></DailyView>
         // <DailyView currentDate={currentMonth} cellRender={cellRender} />
       ) : viewMode === 'yearly' ? (
         <></>
