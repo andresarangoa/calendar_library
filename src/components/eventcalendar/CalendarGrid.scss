@@ -299,7 +299,7 @@ button {
   text-overflow: ellipsis;
   font-size: var(--event-title-font-size, 0.775rem);
   color: var(--event-title-color, #000);
-
+  margin-top: 10px;
   @media (max-width: 768px) {
     font-size: var(--event-title-font-size-small, 0.75rem); // Adjust font size for small screens
   }
@@ -310,7 +310,7 @@ button {
   text-align: right; // Aligns the time to the right
   font-size: var(--event-time-font-size, 0.675rem);
   color: var(--event-time-color, #000);
-
+  margin-top: 10px;
   @media (max-width: 768px) {
     font-size: var(--event-time-font-size-small, 0.75rem); // Adjust font size for small screens
   }

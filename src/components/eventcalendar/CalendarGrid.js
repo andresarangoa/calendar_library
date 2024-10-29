@@ -24,7 +24,13 @@ const generateMonthDays = (month) => {
   return days;
 };
 
-export function CalendarGrid({ montlyRenderCell, weeklyRenderCell, titleButton = "Add Event", onAddEventClicked = () => { } }) {
+export function CalendarGrid({ 
+  montlyRenderCell, 
+  weeklyRenderCell, 
+  titleButton = "Add Event", 
+  onAddEventClicked = () => {}, 
+  hiddenViews = [] // New prop to specify hidden views
+}) {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const [viewMode, setViewMode] = useState('monthly');
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -36,6 +42,10 @@ export function CalendarGrid({ montlyRenderCell, weeklyRenderCell, titleButton =
     setViewMode(mode);
     setDropdownVisible(false);
   };
+
+  // Define available views
+  const availableViews = ['monthly', 'yearly', 'weekly', 'daily']
+    .filter(view => !hiddenViews.includes(view)); // Filter out hidden views
 
   return (
     <div>
@@ -61,7 +71,7 @@ export function CalendarGrid({ montlyRenderCell, weeklyRenderCell, titleButton =
               <span className="arrow-down"></span>
             </button>
             <div className={`dropdown-content ${dropdownVisible ? 'show' : ''}`}>
-              {['monthly', 'yearly', 'weekly', 'daily'].map((mode) => (
+              {availableViews.map((mode) => (
                 <div
                   key={mode}
                   className="dropdown-item"
@@ -85,11 +95,9 @@ export function CalendarGrid({ montlyRenderCell, weeklyRenderCell, titleButton =
       ) : viewMode === 'weekly' ? (
         <WeeklyView cellRender={weeklyRenderCell} />
       ) : viewMode === 'daily' ? (
-        <DailyView cellRender={weeklyRenderCell} montlyRenderCell={montlyRenderCell}></DailyView>
-        // <DailyView currentDate={currentMonth} cellRender={cellRender} />
+        <DailyView cellRender={weeklyRenderCell} montlyRenderCell={montlyRenderCell} />
       ) : viewMode === 'yearly' ? (
         <></>
-        // <YearlyView currentYear={currentMonth.year()} cellRender={cellRender} />
       ) : null}
     </div>
   );

@@ -19,7 +19,7 @@ const defaultEventsData = [
 function App() {
   return (
     <div style={{ padding: '0 100px' }}>
-      <EventCalendar eventsData={defaultEventsData} addEvent={()=> alert('ring')}  onSelectedEvent={(event)=> alert(event.title)} />
+      <EventCalendar eventsData={defaultEventsData} addEvent={()=> alert('ring')}  onSelectedEvent={(event)=> alert(event.title)} hiddenViews={['yearly']} />
 
     </div>
   );
