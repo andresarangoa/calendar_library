@@ -32,6 +32,7 @@ export default function EventCalendar({
   onSelectedEvent = () => {},
   addEvent = () => {},
   visibilityOptions = {},
+  onDailyEvent=() => {} 
 }) {
   // Destructure and provide default values from styles
   const {
@@ -110,7 +111,7 @@ export default function EventCalendar({
     <MonthlyCellRender day={day} eventsData={eventsData} onSelect={handleSelectEvent} />
   );
   const weeklyRenderCell = (day, interval) => (
-    <WeeklyCellRender day={day} interval={interval} eventsData={eventsData} onSelect={handleSelectEvent}  />
+    <WeeklyCellRender day={day} interval={interval} eventsData={eventsData} onSelect={handleSelectEvent}  className={"weekly"}/>
   );
 
   return (
@@ -122,6 +123,7 @@ export default function EventCalendar({
         titleButton={titleButton}
         onAddEventClicked={addEvent}
         visibilityOptions={mergedVisibilityOptions}
+        onDailyEvent={onDailyEvent}
       />
     </div>
   );

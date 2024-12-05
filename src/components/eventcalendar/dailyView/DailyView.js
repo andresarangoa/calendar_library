@@ -35,7 +35,7 @@ const visibilityOptions = {
     }
 }
 // New WeeklyView Component
-const DayView = ({ cellRender, montlyRenderCell }) => {
+const DayView = ({ cellRender, onDailyEvent }) => {
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
     const [currentWeek, setCurrentWeek] = useState(dayjs().startOf('isoWeek'));
     const daysOfWeek = generateWeekDays(currentWeek);
@@ -95,8 +95,8 @@ const DayView = ({ cellRender, montlyRenderCell }) => {
                         ))}
                     </div>
                     <div className='calendar-pick'>
-                        <EventCalendar eventsData={[]} addEvent={() => alert('ring')} title='' styles={customStyles} onSelectedEvent={(event) => alert(event.title)} visibilityOptions={visibilityOptions}/>
-                        {/* <MonthlyCalendar currentMonth={currentMonth} cellRender={montlyRenderCell}   size={{ width: '10px', height: '700px' }} /> */}
+                        <EventCalendar eventsData={[]} addEvent={() => alert('ring')} title='' styles={customStyles} onSelectedEvent={onDailyEvent} visibilityOptions={visibilityOptions}/>
+                   
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 
-export const WeeklyCellRender = ({ day, eventsData, onSelect, interval }) => {
+export const WeeklyCellRender = ({ day, eventsData, onSelect, interval, className ="" }) => {
   // Calculate the date and time for the specific cell
   const dayJsObj = dayjs(day);
   const currentDateTime = dayJsObj.hour(interval.hour).minute(interval.half ? 30 : 0);
@@ -43,10 +43,10 @@ export const WeeklyCellRender = ({ day, eventsData, onSelect, interval }) => {
             borderRadius: '4px',
           }}
         >
-          <div className="event-title" style={{ fontWeight: 'bold', color: '#1890FF' }}>
+          <div className={`event-title ${className} `} style={{ fontWeight: 'bold', color: '#1890FF' }}>
             {event.title}
           </div>
-          <div className="event-time">{`${event.time} - ${event.endTime}`}</div>
+          <div className={`event-title ${className} `} >{`${event.time} - ${event.endTime}`}</div>
         </div>
       ))}
 

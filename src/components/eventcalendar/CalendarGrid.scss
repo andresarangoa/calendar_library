@@ -401,15 +401,18 @@ button {
 }
 
 .event-time {
-  width: var(--event-time-width, 25%);
+  width: var(--event-time-width, 30%);
   text-align: right; // Aligns the time to the right
   font-size: var(--event-time-font-size, 0.675rem);
   color: var(--event-time-color, #686767);
   font-weight: var(--event-time-font-weight, bold);
-  margin-top: 10px;
+  margin-top: 0.8rem;
   margin-left: var(--event-title-spacing, 0.2rem);
   @media (max-width: 768px) {
     font-size: var(--event-time-font-size-small, 0.75rem); // Adjust font size for small screens
+  }
+  .weekly{
+    margin-top: 0.2rem;
   }
 }
 

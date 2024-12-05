@@ -30,6 +30,7 @@ export function CalendarGrid({
   titleButton = "Add Event",
   onAddEventClicked = () => { },
   visibilityOptions = [],
+  onDailyEvent 
 }) {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const [viewMode, setViewMode] = useState('monthly');
@@ -108,7 +109,7 @@ export function CalendarGrid({
       ) : viewMode === 'weekly' ? (
         <WeeklyView cellRender={weeklyRenderCell} />
       ) : viewMode === 'daily' ? (
-        <DailyView cellRender={weeklyRenderCell} montlyRenderCell={montlyRenderCell} />
+        <DailyView cellRender={weeklyRenderCell} montlyRenderCell={montlyRenderCell} onDailyEvent={onDailyEvent}/>
       ) : viewMode === 'yearly' ? (
         <></>
       ) : null}
