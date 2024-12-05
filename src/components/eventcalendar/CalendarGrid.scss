@@ -6,34 +6,6 @@ body {
 }
 
 
-
-.day-header {
-  width: calc(var(--day-header-width, 100%) / 7); // Dynamically adjust width for 7 columns
-  text-align: center;
-  font-weight: 600;
-
-  border-right: var(--day-header-border-right, 0.5px solid #d6d6d6);
-  padding: var(--day-header-padding, 0.5rem);
-  color: var(--day-header-color, #3c4655);
-  box-sizing: border-box;
-  background-color: var(--day-header-bg, #ffffff);
-
-  // Remove the right border for every 7th child (last cell in each row)
-  &:nth-child(7n) {
-    border-right: none;
-  }
-
-  // Remove the left border for the first cell
-  &:first-child {
-    border-left: none;
-  }
-
-  // Ensure the very last child also doesn’t have a right border
-  &:last-child {
-    border-right: none;
-  }
-}
-
 .calendar-navigation {
   display: flex;
   align-items: center;
@@ -117,54 +89,108 @@ button {
 }
 
 .calendar-grid {
-  display: var(--display, flex);
-  flex-wrap: var(--flex-wrap, wrap);
-  width: var(--width, 100%);
-  min-width: 9rem;
-  border: var(--border, 0.5px solid #ccc);
-  border-bottom-left-radius: var(--border-bottom-left-radius, 10px);
-  border-bottom-right-radius: var(--border-bottom-right-radius, 10px);
-  overflow: var(--overflow, hidden);
-  
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr)); // Equal columns, responsive width
+  grid-template-rows: minmax(2rem, 2rem) repeat(6, 9rem);// First row larger, others consistent
+  width: 100%; // Full width of the container
+  max-width: 100rem; // Limit the maximum width
+  gap: 0; // No gaps between grid items
+  margin: 0 0; // Center the grid
+  background-color: var(--calendar-bg, #ffffff);
+  align-items: stretch; // Ensure items stretch to fill rows
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(7, minmax(0, 1fr)); // Adjust for medium screens
+    grid-template-rows: minmax(2rem, 2rem) repeat(auto-fill, 4rem);
+    min-height: 20rem;
+  }
+
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(7, minmax(0, 1fr)); // Adjust for medium screens
+    grid-template-rows: minmax(2rem, auto) repeat(auto-fill, minmax(2rem, auto));
+    min-height: 0;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(7, minmax(0, 1fr)); // Adjust for small screens
+    grid-template-rows: minmax(2rem, auto) repeat(auto-fill, minmax(1rem, auto));
+    // min-height: 2rem;
+  }
 }
+
+.day-header {
+  width: 100%;
+  padding: var(--day-cell-padding, 0.5rem);
+  border: 0.5px solid #d6d6d6; // Add consistent borders for all cells
+  border-top: 0.5px solid #d6d6d6;
+  border-right: 0.5px solid #d6d6d6;
+  box-sizing: border-box; // Include border
+}
+
 
 .day-cell {
-  width: calc(var(--day-cell-width, 100%) / 7); // Dynamically adjust width for 7 columns
-  aspect-ratio: 1 / 1; // Forces square cells
-  height: auto; // Dynamically adjust height from width
-  border-top: var(--day-cell-border-top, 0.3px solid #d6d6d6);
-  border-right: var(--day-cell-border-right, 0.3px solid #d6d6d6);
+  width: 100%; // Automatically inherit column width from the grid
+  height: 100%; // Let height adjust dynamically
+  border: 0.5px solid #d6d6d6; // Add consistent borders for all cells
+  border-top: 0.5px solid #d6d6d6;
+  border-right: 0.5px solid #d6d6d6;
+  box-sizing: border-box; // Include borders in the box size
   padding: var(--day-cell-padding, 0.5rem);
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
+
   background-color: var(--calendar-cells-bg, white);
-  font-size: var(--day-cell-font-size, 12px);
 
-  // Remove the right border for the last cell in each row
-  &:nth-child(7n) {
-    border-right: none;
-  }
-
-  // Styling for edges
-  &:nth-child(7n+1) {
-    border-left: none;
-  }
-
-  &:nth-last-child(-n+7) {
-    border-bottom: none;
-  }
-
-  &:nth-last-child(7) {
-    border-bottom-left-radius: var(--day-cell-bottom-left-radius, 10px);
-  }
-
-  &:last-child {
-    border-bottom-right-radius: var(--day-cell-bottom-right-radius, 10px);
-  }
 }
+
+
+// .calendar-grid {
+//   display: var(--display, flex);
+//   flex-wrap: var(--flex-wrap, wrap);
+//   width: var(--width, 100%);
+//   min-width: 9rem;
+//   border: var(--border, 0.5px solid #ccc);
+//   border-bottom-left-radius: var(--border-bottom-left-radius, 10px);
+//   border-bottom-right-radius: var(--border-bottom-right-radius, 10px);
+//   overflow: var(--overflow, hidden);
+
+// }
+
+// .day-cell {
+//   width: calc(var(--day-cell-width, 100%) / 7); // Dynamically adjust width for 7 columns
+//   aspect-ratio: 1 / 1; // Forces square cells
+//   border-top: var(--day-cell-border-top, 0.3px solid #d6d6d6);
+//   border-right: var(--day-cell-border-right, 0.3px solid #d6d6d6);
+//   padding: var(--day-cell-padding, 0.5rem);
+//   box-sizing: border-box;
+//   display: flex;
+//   align-items: flex-start;
+//   justify-content: flex-start;
+//   flex-direction: column;
+//   background-color: var(--calendar-cells-bg, white);
+//   font-size: var(--day-cell-font-size, 12px);
+
+//   // Remove the right border for the last cell in each row
+//   &:nth-child(7n) {
+//     border-right: none;
+//   }
+
+//   // Styling for edges
+//   &:nth-child(7n+1) {
+//     border-left: none;
+//   }
+
+//   &:nth-last-child(-n+7) {
+//     border-bottom: none;
+//   }
+
+//   &:nth-last-child(7) {
+//     border-bottom-left-radius: var(--day-cell-bottom-left-radius, 10px);
+//   }
+
+//   &:last-child {
+//     border-bottom-right-radius: var(--day-cell-bottom-right-radius, 10px);
+//   }
+// }
 
 // Media queries for responsiveness
 @media (min-width: 1024px) {
@@ -187,6 +213,7 @@ button {
     font-size: var(--day-cell-font-size-small, 8px); // Reduce font size further
   }
 }
+
 // .day-cell {
 //   width: calc(90% / 7); // Divide the container width into 7 equal columns
 //   aspect-ratio: 1 / 1; // Maintain square cells
@@ -254,7 +281,7 @@ button {
 
 .calendar-controls {
   display: flex;
-  
+
   justify-content: space-between;
   align-items: center;
   color: var(--calendar-controls-color, #3c4655);
@@ -277,12 +304,13 @@ button {
     display: flex;
     align-items: center;
     gap: var(--controls-gap, 10px);
-  
+
     // Hide the controls on smaller screens
     @media (max-width: 480px) {
       display: none; // Hide the controls by default
     }
   }
+
   .dropdown {
     position: relative;
     display: inline-block;
@@ -362,17 +390,23 @@ button {
   span {
     background-color: var(--current-day-bg, #000);
     color: var(--current-day-color, #fff);
-    padding: var(--current-day-padding, 0); /* Remove padding */
+    padding: var(--current-day-padding, 0);
+    /* Remove padding */
     border-radius: var(--current-day-radius, 50%);
-    display: inline-block; /* Ensure proper alignment */
-    text-align: center; /* Center text inside */
-    line-height: var(--current-day-size, 30px); /* Match height for vertical centering */
+    display: inline-block;
+    /* Ensure proper alignment */
+    text-align: center;
+    /* Center text inside */
+    line-height: var(--current-day-size, 30px);
+    /* Match height for vertical centering */
     width: var(--current-day-size, 30px);
     height: var(--current-day-size, 30px);
     font-size: var(--current-day-font-size, 14px);
     vertical-align: middle;
-    position: relative; /* Allow top adjustment */
-    top: -5px; /* Move up by 10px */
+    position: relative;
+    /* Allow top adjustment */
+    top: -5px;
+    /* Move up by 10px */
   }
 }
 
@@ -395,6 +429,7 @@ button {
   color: var(--event-title-color, #000);
   margin-top: 10px;
   padding-right: var(--event-title-spacing, 0.1rem);
+
   @media (max-width: 768px) {
     font-size: var(--event-title-font-size-small, 0.75rem); // Adjust font size for small screens
   }
@@ -408,15 +443,17 @@ button {
   font-weight: var(--event-time-font-weight, bold);
   margin-top: 0.8rem;
   margin-left: var(--event-title-spacing, 0.2rem);
+
   @media (max-width: 768px) {
     font-size: var(--event-time-font-size-small, 0.75rem); // Adjust font size for small screens
   }
-  .weekly{
+
+  .weekly {
     margin-top: 0.2rem;
   }
 }
 
-.event-cell{
+.event-cell {
   width: 100%;
 }
 
@@ -542,6 +579,7 @@ button {
   color: var(--calendar-controls-color, #3c4655);
   border-right: var(--day-header-border-right, 0.3px solid #d6d6d6);
   border-bottom: var(--day-header-border-right, 0.3px solid #d6d6d6);
+
   .daily-calendar-content {
     display: flex;
     flex-direction: column;
@@ -552,21 +590,33 @@ button {
     flex-direction: row;
     width: 100%;
   }
-  
+
   .daily-appointments {
     flex: 0 0 65%;
     display: flex;
     flex-direction: column;
   }
-  
+
   .calendar-pick {
-    flex: 0 0 30%; /* Adjust flex-basis to 25% for smaller width */
-    max-width: 90%; /* Set a maximum width for the element */
-    height: 100%; /* Adjust height as needed */
+    flex: 0 0 70%;
+    /* Adjust flex-basis to 25% for smaller width */
+    width: auto;
+    /* Set a maximum width for the element */
+    height: 100%;
+    /* Adjust height as needed */
     display: flex;
-    padding: 2rem;
-    flex-direction: column;
-    overflow: hidden; /* Hide overflow content */
+    padding: 3rem;
+    flex-direction: row;
+    overflow: hidden;
+
+    /* Hide overflow content */
+    .calendar-grid {
+      grid-template-rows: minmax(1rem, 2rem) repeat(auto-fill, 3.8rem);
+
+
+ 
+    }
+
   }
 
   .time-header {
@@ -659,6 +709,4 @@ button {
     border: 0.3px solid #d6d6d6;
     box-sizing: border-box;
   }
-
-  
 }
