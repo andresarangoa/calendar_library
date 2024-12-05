@@ -19,13 +19,9 @@ const defaultStyles = {
   bgDaysNames: '#f0f0f0',
   bgCells: '#fff',
   bgActualDay: '#000',
-  visibilityOptions: {
-    todayButton: true,
-    dropdownFilter: true,
-    addEventButton: true,
-    header: true,
-    daysNames: true,
-  },
+  eventTitleSpacing: '0.1rem',
+  eventTimeColor: '#686767',
+  eventTitleColor:'#000',
 };
 
 export default function EventCalendar({
@@ -35,7 +31,7 @@ export default function EventCalendar({
   titleButton = 'Add Event',
   onSelectedEvent = () => {},
   addEvent = () => {},
-  hiddenViews = []
+  visibilityOptions = {},
 }) {
   // Destructure and provide default values from styles
   const {
@@ -52,7 +48,35 @@ export default function EventCalendar({
     bgDaysNames = '',
     bgCells = '',
     bgActualDay = '',
+    eventTitleSpacing = '',
+    eventTimeColor = '',
+    eventTitleColor= '',
+    
   } = styles;
+
+  const defaultVisibilityOptions = {
+    todayButton: true,
+    dropdownFilter: true,
+    addEventButton: true,
+    header: true,
+    daysNames: true,
+    filters: {
+      yearly: true,
+      monthly: true,
+      weekly: true,
+      daily: true,
+    },
+  };
+
+    // Deep merge custom visibilityOptions with defaultVisibilityOptions
+    const mergedVisibilityOptions = {
+      ...defaultVisibilityOptions, // Top-level merge
+      ...visibilityOptions, // Overwrite top-level keys
+      filters: {
+        ...defaultVisibilityOptions.filters, // Nested merge for filters
+        ...visibilityOptions.filters, // Overwrite specific filter keys
+      },
+    };
 
   // Create custom CSS variables for styling
   const customStyles = {
@@ -69,6 +93,9 @@ export default function EventCalendar({
     '--calendar-header-bg': bgHeader,
     '--days-names-bg': bgDaysNames,
     '--calendar-cells-bg': bgCells,
+    '--event-title-spacing,':eventTitleSpacing,
+    '--event-title-color':eventTitleColor,
+    '--event-time-color': eventTimeColor,
   };
 
   // Select event handler
@@ -83,7 +110,7 @@ export default function EventCalendar({
     <MonthlyCellRender day={day} eventsData={eventsData} onSelect={handleSelectEvent} />
   );
   const weeklyRenderCell = (day, interval) => (
-    <WeeklyCellRender day={day} interval={interval} eventsData={eventsData} onSelect={handleSelectEvent}  hiddenViews={['weekly', 'yearly']}/>
+    <WeeklyCellRender day={day} interval={interval} eventsData={eventsData} onSelect={handleSelectEvent}  />
   );
 
   return (
@@ -94,7 +121,7 @@ export default function EventCalendar({
         weeklyRenderCell={weeklyRenderCell}
         titleButton={titleButton}
         onAddEventClicked={addEvent}
-        hiddenViews={hiddenViews}
+        visibilityOptions={mergedVisibilityOptions}
       />
     </div>
   );

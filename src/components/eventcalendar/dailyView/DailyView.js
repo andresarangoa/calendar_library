@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import '../CalendarGrid.scss';
 import MonthlyCalendar from '../montlyCalendar/MonthlyCalendar';
+import EventCalendar from '../EventCalendar';
 // Extend dayjs with ISO week support
 dayjs.extend(isoWeek);
 
@@ -15,8 +16,26 @@ const generateWeekDays = (startOfWeek) => {
     return days;
 };
 
+const customStyles = {
+
+    bgActualDay: '#1376f4',
+
+};
+
+const visibilityOptions = {
+    todayButton: true,
+    dropdownFilter: false,
+    addEventButton: false,
+    header: false,
+    daysNames: true,
+    filters: {
+        yearly: false,
+        daily: false,
+
+    }
+}
 // New WeeklyView Component
-const DayView = ({ cellRender, montlyRenderCell}) => {
+const DayView = ({ cellRender, montlyRenderCell }) => {
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
     const [currentWeek, setCurrentWeek] = useState(dayjs().startOf('isoWeek'));
     const daysOfWeek = generateWeekDays(currentWeek);
@@ -76,7 +95,8 @@ const DayView = ({ cellRender, montlyRenderCell}) => {
                         ))}
                     </div>
                     <div className='calendar-pick'>
-                        <MonthlyCalendar currentMonth={currentMonth} cellRender={montlyRenderCell}   size={{ width: '10px', height: '700px' }} />
+                        <EventCalendar eventsData={[]} addEvent={() => alert('ring')} title='' styles={customStyles} onSelectedEvent={(event) => alert(event.title)} visibilityOptions={visibilityOptions}/>
+                        {/* <MonthlyCalendar currentMonth={currentMonth} cellRender={montlyRenderCell}   size={{ width: '10px', height: '700px' }} /> */}
                     </div>
                 </div>
             </div>

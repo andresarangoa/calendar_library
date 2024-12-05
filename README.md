@@ -72,6 +72,26 @@ export default App;
 
 ## Customizing Styles
 
+| **Property**              | **Description**                                           | **Default**           |
+|---------------------------|-----------------------------------------------------------|-----------------------|
+| `colorActualDay`          | Sets the background color of the current day.             | `#FFC107`             | 
+| `colorFontTitle`          | Changes the font color of the calendar title.             | `#1E90FF`            |
+| `colorFontButtons`        | Changes the font color of buttons.                        | `#2ECC71`            |
+| `colorFontNameDays`       | Changes the font color of the day names (Mon, Tue, etc.). | `#34495E`            |
+| `colorFontDays`           | Changes the font color of the calendar days.              | `#000`               |
+| `sizeFontAppointment`     | Adjusts the font size of event titles.                    | `1rem`               |
+| `sizeFontButtons`         | Adjusts the font size of buttons.                         | `0.9rem`             |
+| `sizeFontNameDays`        | Adjusts the font size of the day names.                   | `0.8rem`             |
+| `sizeFontDays`            | Adjusts the font size of the calendar days.               | `0.85rem`            |
+| `bgHeader`                | Sets the background color of the header.                  | `#E0E0E0`            |
+| `bgDaysNames`             | Sets the background color of the day names row.           | `#F8F8F8`            |
+| `bgCells`                 | Sets the background color of the calendar cells.          | `#FFFFFF`            |
+| `bgActualDay`             | Sets the background color of the current day.             | `#FFC107`            |
+| `eventTitleSpacing`       | Adjusts spacing between event titles and their times.     | `''` (default)       |
+| `eventTimeColor`          | Sets the font color of event times.                       | `#000`               |
+| `eventTitleColor`         | Sets the font color of event titles.                      | `#000`               |
+
+
 You can customize the appearance of the calendar by passing a `styles` object as a prop:
 
 ```jsx

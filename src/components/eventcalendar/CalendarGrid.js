@@ -24,17 +24,17 @@ const generateMonthDays = (month) => {
   return days;
 };
 
-export function CalendarGrid({ 
-  montlyRenderCell, 
-  weeklyRenderCell, 
-  titleButton = "Add Event", 
-  onAddEventClicked = () => {}, 
-  hiddenViews = [] // New prop to specify hidden views
+export function CalendarGrid({
+  montlyRenderCell,
+  weeklyRenderCell,
+  titleButton = "Add Event",
+  onAddEventClicked = () => { },
+  visibilityOptions = [],
 }) {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const [viewMode, setViewMode] = useState('monthly');
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
+  const { filters: visibilityFilters } = visibilityOptions;
   const handlePrevMonth = () => setCurrentMonth(currentMonth.subtract(1, 'month'));
   const handleNextMonth = () => setCurrentMonth(currentMonth.add(1, 'month'));
   const handleToday = () => setCurrentMonth(dayjs().startOf('month'));
@@ -42,10 +42,9 @@ export function CalendarGrid({
     setViewMode(mode);
     setDropdownVisible(false);
   };
-
   // Define available views
-  const availableViews = ['monthly', 'yearly', 'weekly', 'daily']
-    .filter(view => !hiddenViews.includes(view)); // Filter out hidden views
+  const availableViews = Object.keys(visibilityFilters) // Get keys like ['yearly', 'monthly', 'weekly', 'daily']
+    .filter((view) => visibilityFilters[view]) // Keep views with `true` in `viewConfig`
 
   return (
     <div>
@@ -56,36 +55,50 @@ export function CalendarGrid({
 
         {/* Right Aligned: Navigation, Dropdown, and Add Event */}
         <div className="controls-right">
-          <div className="calendar-navigation">
-            <button className="arrow-button" onClick={handlePrevMonth}>{"<"}</button>
-            <button className="today-button" onClick={handleToday}>Today</button>
-            <button className="arrow-button" onClick={handleNextMonth}>{">"}</button>
-          </div>
+          {
 
-          <div className="dropdown">
-            <button
-              className="dropdown-button"
-              onClick={() => setDropdownVisible(!dropdownVisible)}
-            >
-              {viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} view
-              <span className="arrow-down"></span>
-            </button>
-            <div className={`dropdown-content ${dropdownVisible ? 'show' : ''}`}>
-              {availableViews.map((mode) => (
-                <div
-                  key={mode}
-                  className="dropdown-item"
-                  onClick={() => handleViewChange(mode)}
+            (visibilityOptions?.todayButton == true) ? (
+              <div className="calendar-navigation">
+                <button className="arrow-button" onClick={handlePrevMonth}>{"<"}</button>
+                <button className="today-button" onClick={handleToday}>Today</button>
+                <button className="arrow-button" onClick={handleNextMonth}>{">"}</button>
+              </div>
+            ) : null
+          }
+          {
+            (visibilityOptions?.dropdownFilter == true) ? (
+              <div className="dropdown">
+
+                <button
+                  className="dropdown-button"
+                  onClick={() => setDropdownVisible(!dropdownVisible)}
                 >
-                  {mode.charAt(0).toUpperCase() + mode.slice(1)}
+                  {viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} view
+                  <span className="arrow-down"></span>
+                </button>
+                <div className={`dropdown-content ${dropdownVisible ? 'show' : ''}`}>
+                  {availableViews.map((mode) => (
+                    <div
+                      key={mode}
+                      className="dropdown-item"
+                      onClick={() => handleViewChange(mode)}
+                    >
+                      {mode.charAt(0).toUpperCase() + mode.slice(1)}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>) : null
+          }
 
-          <div className="vertical-separator"></div>
+          {
+            visibilityOptions?.addEventButton ? (
+              <>
+                <div className="vertical-separator"></div>
+                <button onClick={() => onAddEventClicked()} className="add-event-button">{titleButton}</button>
+              </>
+            ) : null
+          }
 
-          <button onClick={() => onAddEventClicked()} className="add-event-button">{titleButton}</button>
         </div>
       </div>
 

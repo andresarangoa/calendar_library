@@ -1,9 +1,12 @@
 {
   "name": "@farango/calendar_library",
-  "version": "0.0.20",
+  "version": "0.0.27",
   "main": "dist/index.js",
   "author": "Andrés Arango",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "react",
     "calendar",
