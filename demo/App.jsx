@@ -6,7 +6,7 @@ import '../assets/style.scss'
 
 // Sample event data
 const defaultEventsData = [
-  { date: '2024-12-03', title: 'Design review', time: '10:00', endTime: '11:00', numberEvents:2 },
+  { date: '2024-12-03', title: 'MINOXIDIL TREATMENT', time: '10:00', endTime: '11:00', numberEvents:2 },
   { date: '2024-12-02', title: 'Sales meeting', time: '14:00', endTime: '15:30' },
   { date: '2024-12-04', title: 'Sam\'s birthday party', time: '14:00', endTime: '17:00' },
   { date: '2024-12-28', title: 'Date night', time: '18:00', endTime: '20:00' },

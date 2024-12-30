@@ -420,7 +420,7 @@ button {
 }
 
 .event-title {
-  width: var(--event-title-width, 100%);
+  width: var(--event-title-width, 70%);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -436,13 +436,13 @@ button {
 }
 
 .event-time {
-  width: var(--event-time-width, 30%);
+  width: var(--event-time-width, 40%);
   text-align: right; // Aligns the time to the right
   font-size: var(--event-time-font-size, 0.675rem);
   color: var(--event-time-color, #686767);
   font-weight: var(--event-time-font-weight, bold);
   margin-top: 0.8rem;
-  margin-left: var(--event-title-spacing, 0.2rem);
+  margin-left: var(--event-title-spacing, 0.1rem);
 
   @media (max-width: 768px) {
     font-size: var(--event-time-font-size-small, 0.75rem); // Adjust font size for small screens
@@ -714,8 +714,10 @@ button {
 
 .event-title-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* Ensures title and time are spaced out */
+  align-items: center; /* Vertically center the items */
+  width: 100%; /* Ensures the container takes up the full width */
+  flex-wrap: wrap; /* Allows the elements to wrap if needed */
 }
 
 .event-circle {
