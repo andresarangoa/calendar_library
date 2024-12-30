@@ -52,6 +52,7 @@ export default function EventCalendar({
     eventTitleSpacing = '',
     eventTimeColor = '',
     eventTitleColor= '',
+    eventNumberBackground=''
     
   } = styles;
 
@@ -96,6 +97,7 @@ export default function EventCalendar({
     '--calendar-cells-bg': bgCells,
     '--event-title-spacing,':eventTitleSpacing,
     '--event-title-color':eventTitleColor,
+    '--background-number-events':eventNumberBackground,
     '--event-time-color': eventTimeColor,
   };
 

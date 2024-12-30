@@ -707,6 +707,26 @@ button {
     align-items: center;
     justify-content: flex-start;
     border: 0.3px solid #d6d6d6;
+    background-color: var(--calendar-cells-bg, white);
     box-sizing: border-box;
   }
+}
+
+.event-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-circle {
+  margin-top: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background-color: var(--background-number-events , #f39c12);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
 }

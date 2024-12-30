@@ -87,6 +87,7 @@ export default App;
 | `bgDaysNames`             | Sets the background color of the day names row.           | `#F8F8F8`            |
 | `bgCells`                 | Sets the background color of the calendar cells.          | `#FFFFFF`            |
 | `bgActualDay`             | Sets the background color of the current day.             | `#FFC107`            |
+| `eventNumberBackground`   | Sets the background color of the number of events.             | `#FFC107`            |
 | `eventTitleSpacing`       | Adjusts spacing between event titles and their times.     | `''` (default)       |
 | `eventTimeColor`          | Sets the font color of event times.                       | `#000`               |
 | `eventTitleColor`         | Sets the font color of event titles.                      | `#000`               |
@@ -189,7 +190,7 @@ The component allows you to toggle visibility for specific elements:
 - **Example**:
   ```javascript
   const events = [
-    { date: '2024-10-21', title: 'Meeting', time: '10:00 AM' },
+    { date: '2024-10-21', title: 'Meeting', time: '10:00 AM', numberEvents:2 },
     { date: '2024-10-22', title: 'Workshop', time: '2:00 PM' },
   ];
   ```

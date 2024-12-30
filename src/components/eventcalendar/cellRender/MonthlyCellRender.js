@@ -1,7 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
 
-// CalendarCell Component
 export const MonthlyCellRender = ({ day, eventsData, onSelect }) => {
   const currentDate = dayjs(day).format('YYYY-MM-DD');
   const today = dayjs().format('YYYY-MM-DD'); // Get current date
@@ -20,7 +19,16 @@ export const MonthlyCellRender = ({ day, eventsData, onSelect }) => {
       {/* Display events */}
       {events.map((event, index) => (
         <div key={index} className="event-wrapper">
-          <div className="event-title">{event.title}</div>
+          <div className="event-title-container">
+            <div className="event-title">{event.title}</div>
+
+            {/* Show number of events if greater than 0 */}
+            {event.numberEvents > 0 && (
+              <div className="event-circle">
+                <span>{event.numberEvents}</span>
+              </div>
+            )}
+          </div>
           <div className="event-time">{event.time}</div>
         </div>
       ))}
