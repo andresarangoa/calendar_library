@@ -48,4 +48,13 @@ module.exports = {
     react: 'react',
     'react-dom': 'react-dom',
   },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'), // Serve static files from 'dist'
+    },
+    compress: true,  // Enable gzip compression for everything served
+    port: 3000,      // The port where the dev server will run
+    historyApiFallback: true, // Fallback to index.html for SPA routes
+    open: true,      // Automatically open the app in the default browser
+  },
 };
