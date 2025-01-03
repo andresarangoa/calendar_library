@@ -222,6 +222,62 @@ The component allows you to toggle visibility for specific elements:
 />
 ```
 
+# `AvailabilityView` Component Documentation
+
+## Overview
+
+The `AvailabilityView` component is a React-based weekly calendar interface designed to display availability, allow time slot selection, and showcase user profile information. It integrates with an `EventCalendar` for managing appointments.
+
+## Props
+
+- **`availability`**: *(Array)*  
+  Default: `availabilityList`  
+  A list of available time slots, each with a `time` and `available` status.
+
+- **`profileInfo`**: *(Object)*  
+  Default: `defaultProfileInfo`  
+  Contains user profile details: `image` (URL), `name`, `subtitle`, and `shortText`.
+
+- **`onDailyEvent`**: *(Function)*  
+  Default: `() => {}`  
+  Callback triggered when a daily event is selected.
+
+- **`handleTimeSlotSelect`**: *(Function)*  
+  Default: `(timeSlot) => alert('You selected: ' + timeSlot.time)`  
+  Callback triggered when a time slot is clicked.
+
+## Usage
+
+### Basic Example
+
+```jsx
+import React from 'react';
+import AvailabilityView from './AvailabilityView';
+
+const profile = {
+  image: 'https://via.placeholder.com/150',
+  name: 'John Doe',
+  subtitle: 'Personal Trainer',
+  shortText: 'Helping you reach your fitness goals.',
+};
+
+const availability = [
+  { time: '9:00 AM', available: true },
+  { time: '10:00 AM', available: false },
+  { time: '11:00 AM', available: true },
+];
+
+const App = () => (
+  <AvailabilityView 
+    profileInfo={profile} 
+    availability={availability} 
+    onDailyEvent={(event) => console.log('Selected Event:', event)}
+  />
+);
+
+export default App;
+```
+
 ## License and Author Information
 
 ### License
