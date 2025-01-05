@@ -91,7 +91,7 @@ button {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr)); // Equal columns, responsive width
-  grid-template-rows: minmax(2rem, 2rem) repeat(6, 9rem);// First row larger, others consistent
+  grid-template-rows: minmax(2rem, 2rem) repeat(6, 9rem); // First row larger, others consistent
   width: 100%; // Full width of the container
   max-width: 100rem; // Limit the maximum width
   gap: 0; // No gaps between grid items
@@ -571,33 +571,44 @@ button {
 /// daily view
 /// 
 ///
-.daily-calendar-grid {
-  display: flex;
-  flex-direction: row;
-  width: var(--width, 100%);
-  min-width: 500px;
-  color: var(--calendar-controls-color, #3c4655);
-  border-right: var(--day-header-border-right, 0.3px solid #d6d6d6);
-  border-bottom: var(--day-header-border-right, 0.3px solid #d6d6d6);
+.daily--calendar {
+  &__grid {
+    // background-color: #0056b3;
+    display: grid;
+    grid-template-columns:5% 2fr 1fr;
+    width: var(--width, 100%);
+    min-width: 500px;
+    color: var(--calendar-controls-color, #3c4655);
+    border-right: var(--day-header-border-right, 0.3px solid #d6d6d6);
+    border-bottom: var(--day-header-border-right, 0.3px solid #d6d6d6);
 
-  .daily-calendar-content {
+  }
+  &__hour-column {
+    flex: 0 0 4rem;
+    /* Fixed width for time column */
+    display: flex;
+    flex-direction: column;
+    /* Arrange hours vertically */
+  }
+
+  &__daily-calendar-content {
     display: flex;
     flex-direction: column;
   }
 
-  .daily-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-  }
+  // .daily-container {
+  //   display: flex;
+  //   flex-direction: row;
+  //   width: 100%;
+  // }
 
-  .daily-appointments {
+  &__daily-appointments {
     flex: 0 0 65%;
     display: flex;
     flex-direction: column;
   }
 
-  .calendar-pick {
+  &__calendar-pick {
     flex: 0 0 70%;
     /* Adjust flex-basis to 25% for smaller width */
     width: auto;
@@ -612,21 +623,18 @@ button {
     /* Hide overflow content */
     .calendar-grid {
       grid-template-rows: minmax(1rem, 2rem) repeat(auto-fill, 3.8rem);
-
-
- 
     }
 
   }
 
-  .time-header {
+  &__time-header {
     flex: 0 0 2rem;
     border-right: var(--day-header-border-right, 0.3px solid #d6d6d6);
     border-left: var(--day-header-border-right, 0.3px solid #d6d6d6);
     border-bottom: var(--day-header-border-right, 0.3px solid #d6d6d6);
   }
 
-  .day-header-daily {
+  &__day-header-daily {
     width: var(--day-header-width, 100%);
     text-align: center;
     font-weight: 600;
@@ -650,15 +658,7 @@ button {
     width: 100%;
   }
 
-  .hour-column {
-    flex: 0 0 4rem;
-    /* Fixed width for time column */
-    display: flex;
-    flex-direction: column;
-    /* Arrange hours vertically */
-  }
-
-  .hour-cell {
+  &__hour-cell {
     flex: 0 0 3.4rem;
     /* Adjust height for each hour cell */
     display: flex;
@@ -681,26 +681,26 @@ button {
     }
   }
 
-  .hour-cell:first-child {
+  &__hour-cell:first-child {
     padding-top: 0rem;
     /* Add desired top padding to the first hour cell */
     border-bottom: 0.3px solid #d6d6d6;
   }
 
-  .hour-cell:last-child {
+  &__hour-cell:last-child {
     padding-top: 0rem;
     /* Add desired top padding to the first hour cell */
     border-bottom: 0.3px solid #d6d6d6;
   }
 
-  .day-column {
+  &__day-column {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
 
-  .day-hour-cell,
-  .half-hour-cell {
+  &__day-hour-cell,
+  &__half-hour-cell {
     flex: 0 0 3.4rem;
     /* Altura uniforme para 30 minutos */
     display: flex;
@@ -714,10 +714,14 @@ button {
 
 .event-title-container {
   display: flex;
-  justify-content: space-between; /* Ensures title and time are spaced out */
-  align-items: center; /* Vertically center the items */
-  width: 100%; /* Ensures the container takes up the full width */
-  flex-wrap: wrap; /* Allows the elements to wrap if needed */
+  justify-content: space-between;
+  /* Ensures title and time are spaced out */
+  align-items: center;
+  /* Vertically center the items */
+  width: 100%;
+  /* Ensures the container takes up the full width */
+  flex-wrap: wrap;
+  /* Allows the elements to wrap if needed */
 }
 
 .event-circle {
@@ -725,10 +729,56 @@ button {
   width: 16px;
   height: 16px;
   border-radius: 100%;
-  background-color: var(--background-number-events , #f39c12);
+  background-color: var(--background-number-events, #f39c12);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 10px;
+}
+
+
+.calendar--public {
+  display: grid;
+  grid-template-columns: 1fr 1fr 20%; /* Three-column layout */
+  min-height: 700px; /* Set a consistent height */
+  border-radius: 20px; /* Rounded corners for card effect */
+  border: 0.3px solid #e6e5e5; /* Light border for subtle separation */
+  background-color: #fff; /* White background for card-like appearance */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  overflow: hidden; 
+
+  &--first-column {
+    display: flex;
+    flex-direction: row;
+    max-height: 600px;
+   
+  }
+
+  &--second-column {
+    border-right: 0.3px solid #e6e5e5;
+    border-left: 0.3px solid #e6e5e5;
+    flex: 0 0 70%;
+    /* Adjust flex-basis to 25% for smaller width */
+    width: auto;
+    /* Set a maximum width for the element */
+    height: 86.2%;
+    /* Adjust height as needed */
+    display: flex;
+    justify-content: start;
+    padding: 3rem;
+    flex-direction: column;
+    overflow: hidden;
+
+    h3 {
+      align-self: start;
+    }
+
+    /* Hide overflow content */
+    .calendar-grid {
+      grid-template-rows: minmax(1rem, 2rem) repeat(auto-fill, 3.8rem);
+    }
+
+  }
+
 }
