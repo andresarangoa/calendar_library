@@ -49,6 +49,7 @@ const visibilityOptions = {
 const defaultProfileInfo = {
     image: "https://avatars.githubusercontent.com/u/146370544?v=4",
     name: "John Doe",
+    service:"EVO Introduction Call",
     subtitle: "Fitness Coach",
     shortText: "Helping you reach your fitness goals."
 }
@@ -83,18 +84,20 @@ const AvailabilityView = ({ availability = availabilityList, profileInfo = defau
                     <ProfileHeader
                         image={profileInfo.image}// Replace with actual image URL
                         name={profileInfo.name}
+                        service={profileInfo.service}
                         subtitle={profileInfo.subtitle}
                         shortText={profileInfo.shortText}
                     />
                 </div>
 
                 <div className="calendar--public--second-column">
+                    <h3>Select a Date & time</h3>
                     <EventCalendar eventsData={[]} addEvent={() => alert('ring')} title='' styles={customStyles} onSelectedEvent={onDailyEvent} visibilityOptions={visibilityOptions} />
                 </div>
 
                 {/* Day Columns */}
-                <div className="daily-container">
-                    <div className='daily-appointments'>
+                <div className="calendar--public--third-column">
+                    <div className='calendar--public--third-column__daily'>
                         <DailyAppointments
                             availability={availability}
                             onTimeSlotSelect={handleTimeSlotSelect}

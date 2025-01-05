@@ -10,12 +10,12 @@ const groupByRows = (array, itemsPerRow) => {
   return grouped;
 };
 
-const DailyAppointments = ({ availability, onTimeSlotSelect }) => {
+const DailyAppointments = ({ availability,time, onTimeSlotSelect }) => {
   const groupedAvailability = groupByRows(availability, 4); // Group into rows of 4
 
   return (
     <div className="daily-appointments">
-      <h3>Select a Time Slot</h3>
+      <h5>{time?time: "Select a Time Slot" }</h5>
       {groupedAvailability.map((row, rowIndex) => (
         <div className="time-slot-row" key={rowIndex}>
           {row.map((timeSlot, index) => (

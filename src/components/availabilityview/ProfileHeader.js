@@ -1,7 +1,14 @@
 import React from 'react';
 import './DailyAppointments.scss'; // Correct SCSS import
-
-const ProfileHeader = ({ image, name, subtitle, shortText }) => {
+import { FaClock, FaVideo } from "react-icons/fa";
+const ProfileHeader = ({ image,
+    name,
+    subtitle,
+    service,
+    shortText,
+    subtitleIcon = <FaClock />, // Default clock icon
+    shortTextIcon = <FaVideo />, // Default video icon
+}) => {
     return (
         <div className="profile--header">
             {/* Image Box */}
@@ -22,9 +29,18 @@ const ProfileHeader = ({ image, name, subtitle, shortText }) => {
 
             {/* Details */}
             <div className="profile--header__details">
-                <h3 className="profile--header__name">{name}</h3>
-                <p className="profile--header__subtitle">{subtitle}</p>
-                <p className="profile--header__shorttext">{shortText}</p>
+                <h3 className="profile--header__name">
+                    {name}
+                    <span className="profile--header__service">{service}</span>
+                </h3>
+                <p className="profile--header__subtitle">
+                    {subtitleIcon} {/* Display the subtitle icon */}
+                    {subtitle}
+                </p>
+                <p className="profile--header__shorttext">
+                    {shortTextIcon} {/* Display the short text icon */}
+                    {shortText}
+                </p>
             </div>
         </div>
     );

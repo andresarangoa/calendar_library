@@ -58,27 +58,27 @@ const DayView = ({ cellRender, onDailyEvent }) => {
     return (
         <div>
             {/* Weekly Calendar Grid */}
-            <div className="daily-calendar-grid">
+            <div className="daily--calendar__grid">
                 {/* Time Column */}
-                <div className="hour-column">
+                <div className="daily--calendar__hour-column">
                     {/* Celda vacía para la media hora antes de las 00:00 */}
-                    <div className="hour-cell empty-cell"></div>
-                    <div className="hour-cell empty-cell"></div>
+                    <div className="daily--calendar__hour-cell daily--calendar__empty-cell"></div>
+                    <div className="daily--calendar__hour-cell daily--calendar__empty-cell"></div>
 
                     {/* Intervalos de 30 minutos menos uno al final */}
                     {halfHourIntervals.slice(0, -1).map((interval, index) => (
-                        <div key={index} className="hour-cell">
+                        <div key={index} className="daily--calendar__hour-cell">
                             <span>{!interval.half ? `${interval.hour}:00` : ''}</span>
                         </div>
                     ))}
                 </div>
 
                 {/* Day Columns */}
-                <div className="daily-container">
-                    <div className='daily-appointments'>
+                <div className="daily--calendar__container">
+                    <div className='daily--calendar__daily-appointments'>
                         {daysOfWeek.map((day, colIndex) => (
-                            <div key={colIndex} className="day-column">
-                                <div className="day-header-daily">
+                            <div key={colIndex} className="daily--calendar__day-column">
+                                <div className="daily--calendar__day-header-daily">
                                     {day.format('ddd, DD')}
                                 </div>
 
@@ -86,7 +86,7 @@ const DayView = ({ cellRender, onDailyEvent }) => {
                                 {halfHourIntervals.map((interval, rowIndex) => (
                                     <div
                                         key={rowIndex}
-                                        className={interval.half ? "half-hour-cell" : "day-hour-cell"}
+                                        className={interval.half ? "daily--calendar__half-hour-cell" : "daily--calendar__day-hour-cell"}
                                     >
                                         {cellRender(day, interval)}
                                     </div>
@@ -94,10 +94,11 @@ const DayView = ({ cellRender, onDailyEvent }) => {
                             </div>
                         ))}
                     </div>
-                    <div className='calendar-pick'>
+                </div>
+
+                <div className='daily--calendar__calendar-pick'>
                         <EventCalendar eventsData={[]} addEvent={() => alert('ring')} title='' styles={customStyles} onSelectedEvent={onDailyEvent} visibilityOptions={visibilityOptions}/>
                    
-                    </div>
                 </div>
             </div>
         </div>

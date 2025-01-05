@@ -10,6 +10,7 @@ The **Event Calendar** component provides a visual representation of a calendar 
 
 ![Event Calendar Preview](https://raw.githubusercontent.com/andresarangoa/calendar_library/refs/heads/main/assets/preview.gif)
 
+
 ### Key Features
 
 - **Monthly View**: Displays a complete month with days and events.
@@ -223,6 +224,9 @@ The component allows you to toggle visibility for specific elements:
 ```
 
 # `AvailabilityView` Component Documentation
+
+
+![Public Calendar Preview](https://raw.githubusercontent.com/andresarangoa/calendar_library/refs/heads/main/assets/public_calendar.png)
 
 ## Overview
 
