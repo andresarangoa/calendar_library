@@ -31,7 +31,7 @@ const availabilityList = [
     { time: '02:00 PM', available: false },
     { time: '03:00 PM', available: true },
     { time: '04:00 PM', available: true },
-  ];
+];
 
 const visibilityOptions = {
     todayButton: true,
@@ -47,13 +47,13 @@ const visibilityOptions = {
 }
 
 const defaultProfileInfo = {
-    image:"https://avatars.githubusercontent.com/u/146370544?v=4",
-    name:"John Doe",
-    subtitle:"Fitness Coach",
-    shortText:"Helping you reach your fitness goals."
+    image: "https://avatars.githubusercontent.com/u/146370544?v=4",
+    name: "John Doe",
+    subtitle: "Fitness Coach",
+    shortText: "Helping you reach your fitness goals."
 }
 // New WeeklyView Component
-const AvailabilityView = ({ availability=availabilityList, profileInfo=defaultProfileInfo, onDailyEvent, handleTimeSlotSelect =(timeSlot)=>{ alert(`You selected: ${timeSlot.time}`);} }) => {
+const AvailabilityView = ({ availability = availabilityList, profileInfo = defaultProfileInfo, onDailyEvent, handleTimeSlotSelect = (timeSlot) => { alert(`You selected: ${timeSlot.time}`); } }) => {
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
     const [currentWeek, setCurrentWeek] = useState(dayjs().startOf('isoWeek'));
     const daysOfWeek = generateWeekDays(currentWeek);
@@ -77,15 +77,19 @@ const AvailabilityView = ({ availability=availabilityList, profileInfo=defaultPr
     return (
         <div>
             {/* Weekly Calendar Grid */}
-            <div className="public-available-calendar-grid ">
+            <div className="calendar--public">
                 {/* Time Column */}
-                <div className="hour-column">
+                <div className="calendar--public--first-column">
                     <ProfileHeader
-                        image={profileInfo.image }// Replace with actual image URL
-                        name={profileInfo.name }
-                        subtitle={profileInfo.subtitle }
-                        shortText={profileInfo.shortText }
+                        image={profileInfo.image}// Replace with actual image URL
+                        name={profileInfo.name}
+                        subtitle={profileInfo.subtitle}
+                        shortText={profileInfo.shortText}
                     />
+                </div>
+
+                <div className="calendar--public--second-column">
+                    <EventCalendar eventsData={[]} addEvent={() => alert('ring')} title='' styles={customStyles} onSelectedEvent={onDailyEvent} visibilityOptions={visibilityOptions} />
                 </div>
 
                 {/* Day Columns */}
@@ -96,11 +100,8 @@ const AvailabilityView = ({ availability=availabilityList, profileInfo=defaultPr
                             onTimeSlotSelect={handleTimeSlotSelect}
                         />
                     </div>
-                    <div className='calendar-pick'>
-                        <EventCalendar eventsData={[]} addEvent={() => alert('ring')} title='' styles={customStyles} onSelectedEvent={onDailyEvent} visibilityOptions={visibilityOptions} />
-
-                    </div>
                 </div>
+
             </div>
         </div>
     );
