@@ -1,6 +1,6 @@
 {
   "name": "@farango/calendar_library",
-  "version": "0.0.41",
+  "version": "0.0.43",
   "main": "dist/index.js",
   "author": "Andrés Arango",
   "license": "MIT",

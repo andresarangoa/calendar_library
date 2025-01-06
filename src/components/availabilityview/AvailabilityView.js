@@ -91,7 +91,7 @@ const AvailabilityView = ({ availability = availabilityList, profileInfo = defau
                 </div>
 
                 <div className="calendar--public--second-column">
-                    <h3>Select a Date & time</h3>
+                    <h3 className="calendar--public--second-column__title">Select a Date & time</h3>
                     <EventCalendar eventsData={[]} addEvent={() => alert('ring')} title='' styles={customStyles} onSelectedEvent={onDailyEvent} visibilityOptions={visibilityOptions} />
                 </div>
 

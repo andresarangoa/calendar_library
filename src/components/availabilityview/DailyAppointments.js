@@ -15,7 +15,7 @@ const DailyAppointments = ({ availability,time, onTimeSlotSelect }) => {
 
   return (
     <div className="daily-appointments">
-      <h5>{time?time: "Select a Time Slot" }</h5>
+      <h5 className="daily-appointments__title">{time?time: "Select a Time Slot" }</h5>
       {groupedAvailability.map((row, rowIndex) => (
         <div className="time-slot-row" key={rowIndex}>
           {row.map((timeSlot, index) => (

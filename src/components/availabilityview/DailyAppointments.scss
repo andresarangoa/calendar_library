@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  h5{
+  &__title{
     align-self: flex-start;
     padding-left: 2.6rem;
+    font-weight: 800;
   }
 }
 

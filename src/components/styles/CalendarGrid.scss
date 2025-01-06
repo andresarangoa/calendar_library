@@ -765,13 +765,14 @@ button {
     height: 86.2%;
     /* Adjust height as needed */
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     padding: 3rem;
     flex-direction: column;
     overflow: hidden;
 
-    h3 {
-      align-self: start;
+    &__title {
+      align-self: flex-start;
+      font-weight: 800;
     }
 
     /* Hide overflow content */
