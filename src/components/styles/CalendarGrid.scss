@@ -782,4 +782,24 @@ button {
 
   }
 
+    /* Media Query for Phone Sizes */
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr; /* Switch to a single-column layout */
+  
+      &--first-column,
+      &--second-column {
+        width: 100%; /* Ensure columns stretch across the full width */
+        height: auto; /* Adjust height for content */
+        padding: 0rem; /* Adjust padding for smaller screens */
+      }
+  
+      &--second-column {
+        border: none; /* Remove borders for a cleaner mobile design */
+        padding: 0.3rem;
+      }
+  
+      .calendar-grid {
+        grid-template-rows: auto; /* Let rows adapt naturally on smaller screens */
+      }
+    }
 }
