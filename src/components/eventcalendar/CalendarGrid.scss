@@ -575,7 +575,7 @@ button {
   &__grid {
     // background-color: #0056b3;
     display: grid;
-    grid-template-columns:5% 2fr 1fr;
+    grid-template-columns: 5% 2fr 1fr;
     width: var(--width, 100%);
     min-width: 500px;
     color: var(--calendar-controls-color, #3c4655);
@@ -583,6 +583,7 @@ button {
     border-bottom: var(--day-header-border-right, 0.3px solid #d6d6d6);
 
   }
+
   &__hour-column {
     flex: 0 0 4rem;
     /* Fixed width for time column */
@@ -740,19 +741,25 @@ button {
 
 .calendar--public {
   display: grid;
-  grid-template-columns: 1fr 1fr 20%; /* Three-column layout */
-  min-height: 700px; /* Set a consistent height */
-  border-radius: 20px; /* Rounded corners for card effect */
-  border: 0.3px solid #e6e5e5; /* Light border for subtle separation */
-  background-color: #fff; /* White background for card-like appearance */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  overflow: hidden; 
+  grid-template-columns: 1fr 1fr 20%;
+  /* Three-column layout */
+  min-height: 700px;
+  /* Set a consistent height */
+  border-radius: 20px;
+  /* Rounded corners for card effect */
+  border: 0.3px solid #e6e5e5;
+  /* Light border for subtle separation */
+  background-color: #fff;
+  /* White background for card-like appearance */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
+  overflow: hidden;
 
   &--first-column {
     display: flex;
     flex-direction: row;
     max-height: 600px;
-   
+
   }
 
   &--second-column {
@@ -770,6 +777,60 @@ button {
     flex-direction: column;
     overflow: hidden;
 
+    h3 {
+      align-self: start;
+    }
+
+    /* Hide overflow content */
+    .calendar-grid {
+      grid-template-rows: minmax(1rem, 2rem) repeat(auto-fill, 3.8rem);
+    }
+
+  }
+
+}
+
+.calendar--public--two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* Three-column layout */
+  min-height: 700px;
+  /* Set a consistent height */
+  border-radius: 20px;
+  /* Rounded corners for card effect */
+  border: 0.3px solid #e6e5e5;
+  /* Light border for subtle separation */
+  background-color: #fff;
+  /* White background for card-like appearance */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
+  overflow: hidden;
+
+
+
+  &--fourth-column {
+    border-left: 0.3px solid #e6e5e5;
+    flex: 0 0 70%;
+    /* Adjust flex-basis to 25% for smaller width */
+    width: auto;
+    /* Set a maximum width for the element */
+    height: 86.2%;
+    /* Adjust height as needed */
+    display: flex;
+    justify-content: start;
+    padding: 3rem;
+    padding-left: 100px;
+    flex-direction: column;
+    overflow: hidden;
+
+    &__button {
+      // Styles for the button
+      color: #000;
+      font-size:20px;
+      padding-left: 0px;
+      align-self: start;
+   
+    }
     h3 {
       align-self: start;
     }

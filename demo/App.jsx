@@ -1,9 +1,9 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { createRoot } from 'react-dom/client';
 import { EventCalendar, AvailabilityView } from '../src';
 // import {  AvailabilityView } from '../dist'
 import '../assets/style.scss'
-
+import dayjs from 'dayjs';
 // Sample event data
 const defaultEventsData = [
   { date: '2024-12-03', title: 'MINOXIDIL TREATMENT', time: '10:00', endTime: '11:00', numberEvents: 2 },
@@ -29,7 +29,17 @@ const visibilityOptions = {
   },
 }
 
+
+
 function App() {
+  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const handleTimeSlotSelect = (timeSlot) => {
+    setSelectedTime(timeSlot.time);
+    setSelectedDate(dayjs().format('YYYY-MM-DD')); // Assuming the current date
+    console.log('Time Slot Selected:', timeSlot);
+};
   return (
     <>
       <div className='container'>
@@ -38,7 +48,7 @@ function App() {
 
       </div>
       <div className="container">
-        <AvailabilityView />
+        <AvailabilityView date={selectedDate} time={selectedTime} handleTimeSlotSelect={handleTimeSlotSelect}/>
       </div>
     </>
   );
