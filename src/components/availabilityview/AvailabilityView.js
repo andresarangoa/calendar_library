@@ -60,7 +60,19 @@ const AvailabilityView = ({ date: externalDate,
     profileInfo = defaultProfileInfo,
     onDailyEvent, handleTimeSlotSelect = (timeSlot) => { alert(`You selected: ${timeSlot.time}`); } },
     onGoBack = undefined,
-    CustomForm = DefaultForm) => {
+    CustomForm = DefaultForm,
+    handleFormSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form Submitted:', formData);
+        alert('Form submitted successfully!');
+    },
+    initialValues = {
+        name: '',
+        phone: '',
+        email: '',
+        date: externalDate,
+        time: externalTime,
+    }) => {
 
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
     const [currentWeek, setCurrentWeek] = useState(dayjs().startOf('isoWeek'));
@@ -89,11 +101,7 @@ const AvailabilityView = ({ date: externalDate,
     const handleToday = () => setCurrentWeek(dayjs().startOf('isoWeek'));
 
     const isParamsPassed = selectedTime && selectedDate;
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form Submitted:', formData);
-        alert('Form submitted successfully!');
-    };
+
     return (
         <div>
             <div className={`calendar--public ${isParamsPassed ? 'calendar--public--two-columns' : ''}`}>
@@ -157,13 +165,7 @@ const AvailabilityView = ({ date: externalDate,
                         <h3>Details for Selected Time and Date</h3>
 
                         <CustomForm onFinish={handleFormSubmit}
-                            initialValues={{
-                                name: '',
-                                phone: '',
-                                email: '',
-                                date: selectedDate,
-                                time: selectedTime,
-                            }} />
+                            initialValues={initialValues} />
 
                     </div>
                 )}
