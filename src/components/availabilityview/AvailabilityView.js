@@ -8,7 +8,7 @@ import DailyAppointments from './DailyAppointments';
 import ProfileHeader from './ProfileHeader';
 import { Form, Input, Button } from 'antd';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-
+import DefaultForm from './Form/DefaultForm';
 // Extend dayjs with ISO week support
 dayjs.extend(isoWeek);
 
@@ -59,7 +59,8 @@ const AvailabilityView = ({ date: externalDate,
     time: externalTime, availability = availabilityList,
     profileInfo = defaultProfileInfo,
     onDailyEvent, handleTimeSlotSelect = (timeSlot) => { alert(`You selected: ${timeSlot.time}`); } },
-    onGoBack = undefined,) => {
+    onGoBack = undefined,
+    CustomForm = DefaultForm) => {
 
     const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
     const [currentWeek, setCurrentWeek] = useState(dayjs().startOf('isoWeek'));
@@ -155,67 +156,15 @@ const AvailabilityView = ({ date: externalDate,
                         </Button>
                         <h3>Details for Selected Time and Date</h3>
 
-                        <Form
-                            name="contactForm"
-                            layout="vertical"
-                            onFinish={handleFormSubmit}
+                        <CustomForm onFinish={handleFormSubmit}
                             initialValues={{
                                 name: '',
                                 phone: '',
                                 email: '',
                                 date: selectedDate,
                                 time: selectedTime,
-                            }}
-                        >
-                            <Form.Item
-                                label="Name"
-                                name="name"
-                                rules={[
-                                    { required: true, message: 'Please input your name!' },
-                                ]}
-                            >
-                                <Input placeholder="Enter your name" />
-                            </Form.Item>
+                            }} />
 
-                            <Form.Item
-                                label="Phone"
-                                name="phone"
-                                rules={[
-                                    { required: true, message: 'Please input your phone number!' },
-                                    {
-                                        pattern: /^[0-9]{10,}$/,
-                                        message: 'Please enter a valid phone number!',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder="Enter your phone number" />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Email"
-                                name="email"
-                                rules={[
-                                    { required: true, message: 'Please input your email!' },
-                                    { type: 'email', message: 'Please enter a valid email!' },
-                                ]}
-                            >
-                                <Input placeholder="Enter your email" />
-                            </Form.Item>
-
-                            <Form.Item label="Date" name="date">
-                                <Input disabled />
-                            </Form.Item>
-
-                            <Form.Item label="Time" name="time">
-                                <Input disabled />
-                            </Form.Item>
-
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
-                            </Form.Item>
-                        </Form>
                     </div>
                 )}
             </div>

@@ -55,6 +55,7 @@
 
   &__image {
     width: 150px;
+    border:1px solid #d6d6d6;
     align-self: center;
     height: 150px; /* Optional: Set height for consistency */
     object-fit: cover; /* Ensure image maintains aspect ratio */
