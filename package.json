@@ -19,6 +19,7 @@
     "scss"
   ],
   "scripts": {
+    "start": "webpack serve --mode development --config webpack.demo.js --open",
     "build": "webpack --mode production",
     "demo": "webpack serve --config webpack.demo.js",
     "test": "echo \"Error: no test specified\" && exit 1"

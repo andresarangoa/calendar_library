@@ -27,7 +27,7 @@ const generateMonthDays = (month) => {
 export function CalendarGrid({
   montlyRenderCell,
   weeklyRenderCell,
-  titleButton = "Add Event",
+  titleButton = "+ Add Event",
   onAddEventClicked = () => { },
   visibilityOptions = [],
   onDailyEvent 

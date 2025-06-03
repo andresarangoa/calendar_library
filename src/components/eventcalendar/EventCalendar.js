@@ -28,7 +28,7 @@ export default function EventCalendar({
   eventsData = [],
   styles = defaultStyles,
   title = 'Event Calendar',
-  titleButton = 'Add Event',
+  titleButton = '+ Add Event',
   onSelectedEvent = () => {},
   addEvent = () => {},
   visibilityOptions = {},
