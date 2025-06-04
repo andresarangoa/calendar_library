@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import '../CalendarGrid.scss';
+import '../../styles/CalendarGrid.scss';
 
 // Extend dayjs with ISO week support
 dayjs.extend(isoWeek);

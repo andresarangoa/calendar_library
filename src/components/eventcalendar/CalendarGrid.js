@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek'; // Import the ISO week plugin
-import './CalendarGrid.scss';
+import '../styles/CalendarGrid.scss';
 import MonthlyCalendar from './montlyCalendar/MonthlyCalendar';
 import WeeklyView from './weeklyView/WeeklyView';
 import DailyView from './dailyView/DailyView';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { CalendarGrid } from './CalendarGrid';
-import './CalendarGrid.scss';
+import '../styles/CalendarGrid.scss';
 import { MonthlyCellRender } from './cellRender/MonthlyCellRender';
 import { WeeklyCellRender } from './cellRender/WeeklyCellRender';
 import { DailyCellRender } from './cellRender/DailyCellRender';
