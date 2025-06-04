@@ -1,67 +1,70 @@
-const path = require('path');
+// webpack.config.js
+const path = require("path");
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
+  mode: "development",
+  entry: "./src/index.js",
+
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
-    libraryTarget: 'umd',
-    library: 'calendarLibrary',
-    globalObject: 'this',
+    path: path.resolve(__dirname, "dist"),
+    filename: "index.js",
+    library: "calendarLibrary",
+    libraryTarget: "umd",
+    globalObject: "this",
   },
+
   module: {
     rules: [
+      /* ── JS / JSX ───────────────────────*/
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-          },
-        },
+        use: "babel-loader",
       },
+
+      /* ── Plain CSS  (Tailwind entry file) */
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
+
+      /* ── SCSS  ───────────────────────────*/
       {
-        test: /\.scss$/, // This is for SCSS files
+        test: /\.scss$/,
         use: [
-          'style-loader',  // Injects CSS into the DOM
-          'css-loader',    // Turns CSS into CommonJS
+          "style-loader",
+          "css-loader",
+          "postcss-loader",   // runs Tailwind + Autoprefixer
           {
-            loader: 'sass-loader', // Compiles SCSS to CSS
-            options: {
-              sourceMap: true, // Optional: Enables source maps for debugging
-            },
+            loader: "sass-loader",
+            options: { sourceMap: true },
           },
         ],
       },
+
+      /* ── Images ─────────────────────────*/
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: '../assets/[name][ext]',
-        },
+        type: "asset/resource",
+        generator: { filename: "../assets/[name][ext]" },
       },
     ],
   },
+
   resolve: {
-    extensions: ['.js', '.jsx', '.scss'], // Add .scss to extensions
+    extensions: [".js", ".jsx", ".scss", ".css"],
   },
+
   externals: {
-    react: 'react',
-    'react-dom': 'react-dom',
+    react: "react",
+    "react-dom": "react-dom",
   },
+
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'), // Serve static files from 'dist'
-    },
-    compress: true,  // Enable gzip compression for everything served
-    port: 3000,      // The port where the dev server will run
-    historyApiFallback: true, // Fallback to index.html for SPA routes
-    open: true,      // Automatically open the app in the default browser
+    static: { directory: path.join(__dirname, "dist") },
+    compress: true,
+    port: 3000,
+    historyApiFallback: true,
+    open: true,
   },
 };

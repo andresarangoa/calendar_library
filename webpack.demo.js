@@ -48,6 +48,6 @@ module.exports = {
     compress: true,
     port: 3000,
     hot: true, // Enable hot module replacement
-    open: true, // Automatically open the browser
+    open: true, // Automatically open the browsera
   },
 };

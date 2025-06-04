@@ -1,6 +1,7 @@
 html, body {
     margin: 0;      /* gets rid of the white strip */
     padding: 0;
+    box-sizing: initial;
   }
 .container{
     padding:2% 10%;

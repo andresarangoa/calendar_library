@@ -65,7 +65,7 @@ function App() {
     console.log('Time Slot Selected:', timeSlot);
   };
   return (
-    <>
+    <div>
       <div className='container'>
         <EventCalendar eventsData={defaultEventsData} addEvent={() => alert('ring')}
           styles={customStyles} onSelectedEvent={(event) => alert(event.title)} onDailyEvent={(event) => alert("little month", event)} visibilityOptions={visibilityOptions} />
@@ -74,7 +74,7 @@ function App() {
       <div className="container">
         <AvailabilityView date={selectedDate} time={selectedTime} handleTimeSlotSelect={handleTimeSlotSelect} />
       </div>
-    </>
+    </div>
   );
 }
 
