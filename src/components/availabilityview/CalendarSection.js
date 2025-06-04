@@ -47,54 +47,54 @@ const CalendarSection = ({ onDateSelect, selectedDate }) => {
     const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   
     return (
-      <div className="h-full bg-white/5 backdrop-blur-xl p-8">
+      <div className="cal-h-full cal-bg-white/5 cal-backdrop-blur-xl cal-p-8">
         {/* Calendar Header */}
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-xl font-medium text-gray-900">
+        <div className="cal-flex cal-items-center cal-justify-between cal-mb-8">
+          <h2 className="cal-text-xl cal-font-medium cal-text-gray-900">
             {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
           </h2>
-          <div className="flex items-center gap-1">
+          <div className="cal-flex cal-items-center cal-gap-1">
             <button 
               onClick={() => navigateMonth(-1)}
-              className="p-2 bg-transparent hover:shadow-lg rounded-lg transition-all"
+              className="cal-p-2 cal-bg-transparent hover:cal-shadow-lg cal-rounded-lg cal-transition-all"
             >
-              <ChevronLeft size={16} className="text-gray-600" />
+              <ChevronLeft size={16} className="cal-text-gray-600" />
             </button>
             <button 
               onClick={() => navigateMonth(1)}
-              className="p-2 bg-transparent hover:shadow-lg rounded-lg transition-all"
+              className="cal-p-2 cal-bg-transparent hover:cal-shadow-lg cal-rounded-lg cal-transition-all"
             >
-              <ChevronRight size={16} className="text-gray-600" />
+              <ChevronRight size={16} className="cal-text-gray-600" />
             </button>
           </div>
         </div>
   
         {/* Calendar Grid */}
-        <div className="grid grid-cols-7 gap-2">
+        <div className="cal-grid cal-grid-cols-7 cal-gap-2">
           {/* Week day headers */}
           {weekDays.map((day) => (
-            <div key={day} className="text-center text-sm font-medium text-gray-900 py-3">
+            <div key={day} className="cal-text-center cal-text-sm cal-font-medium cal-text-gray-900 cal-py-3">
               {day}
             </div>
           ))}
   
           {/* Calendar days */}
           {days.map((day, index) => (
-            <div key={index} className="aspect-square flex items-center justify-center">
+            <div key={index} className="cal-aspect-square cal-flex cal-items-center cal-justify-center">
               {day && (
                 <button
                   onClick={() => handleDateClick(day)}
-                  className={`w-10 h-10 flex items-center justify-center text-sm font-medium rounded-full transition-all relative ${
+                  className={`cal-w-10 cal-h-10 cal-flex cal-items-center cal-justify-center cal-text-sm cal-font-medium cal-rounded-full cal-transition-all cal-relative ${
                     selectedDate && selectedDate.getDate() === day && 
                     selectedDate.getMonth() === currentDate.getMonth() &&
                     selectedDate.getFullYear() === currentDate.getFullYear()
-                      ? 'bg-gray-900 text-white'
-                      : 'bg-transparent text-gray-700 hover:border hover:border-gray-300'
+                      ? 'cal-bg-gray-900 cal-text-white'
+                      : 'cal-bg-transparent cal-text-gray-700 hover:cal-border hover:cal-border-gray-300'
                   }`}
                 >
                   {day}
                   {day === 14 && (
-                    <div className="absolute bottom-1 w-1 h-1 bg-gray-400 rounded-full"></div>
+                    <div className="cal-absolute cal-bottom-1 cal-w-1 cal-h-1 cal-bg-gray-400 cal-rounded-full"></div>
                   )}
                 </button>
               )}

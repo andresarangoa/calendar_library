@@ -98,10 +98,10 @@ const BookingCalendar = ({
 
   /* ───── render ───── */
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-7xl bg-white/10 backdrop-blur-xl
-                      rounded-3xl shadow-2xl overflow-hidden border border-white/20">
-        <div className="min-h-[610px]">
+    <div className="cal-min-h-screen cal-flex cal-items-center cal-justify-center cal-p-4">
+      <div className="cal-w-full cal-max-w-7xl cal-bg-white/10 cal-backdrop-blur-xl
+                      cal-rounded-3xl cal-shadow-2xl cal-overflow-hidden cal-border cal-border-white/20">
+        <div className="cal-min-h-[610px]">
           {showForm ? (
             <CustomForm
               selectedDate={selectedDate}
@@ -111,14 +111,14 @@ const BookingCalendar = ({
               initialValues={initialValues}
             />
           ) : (
-            <div className="grid grid-cols-12 h-full">
+            <div className="cal-grid cal-grid-cols-12 cal-h-full">
               {/* profile (3/12) */}
-              <div className="col-span-3">
+              <div className="cal-col-span-3">
                 <ProfileSection {...profileInfo} />
               </div>
 
               {/* calendar (6/12) */}
-              <div className="col-span-6">
+              <div className="cal-col-span-6">
                 <CalendarSection
                   selectedDate={selectedDate}
                   onDateSelect={handleDateSelect}
@@ -126,7 +126,7 @@ const BookingCalendar = ({
               </div>
 
               {/* slots (3/12) */}
-              <div className="col-span-3">
+              <div className="cal-col-span-3">
                 <TimeSlotSection
                   selectedDate={selectedDate}
                   selectedTime={selectedTime}

@@ -14,14 +14,14 @@ const TimeSlotSection = ({ selectedDate, onTimeSelect, selectedTime, timeSlots =
     };
   
     return (
-      <div className="h-full bg-white/5 backdrop-blur-xl p-6 flex flex-col">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+      <div className="cal-h-full cal-bg-white/5 cal-backdrop-blur-xl cal-p-6 cal-flex cal-flex-col">
+        <h3 className="cal-text-lg cal-font-semibold cal-text-gray-800 cal-mb-4">
           {formatDate(selectedDate)}
         </h3>
         
         {/* Hide scrollbar completely and fix button width */}
         <div 
-          className="max-h-[530px] overflow-y-auto -mr-6 pr-6"
+          className="cal-max-h-[530px] cal-overflow-y-auto cal--mr-6 cal-pr-6"
           style={{
             scrollbarWidth: 'none', /* Firefox */
             msOverflowStyle: 'none', /* IE and Edge */
@@ -32,15 +32,15 @@ const TimeSlotSection = ({ selectedDate, onTimeSelect, selectedTime, timeSlots =
               display: none; /* Chrome, Safari, Opera */
             }
           `}</style>
-          <div className="space-y-2 pr-2">
+          <div className="cal-space-y-2 cal-pr-2">
             {timeSlots.map((time, index) => (
               <button
                 key={index}
                 onClick={() => onTimeSelect(time)}
-                className={`w-full p-3 text-sm font-medium rounded-lg border transition-all backdrop-blur-sm ${
+                className={`cal-w-full cal-p-3 cal-text-sm cal-font-medium cal-rounded-lg cal-border cal-transition-all cal-backdrop-blur-sm ${
                   selectedTime === time
-                    ? 'bg-purple-600 text-white border-purple-600'
-                    : 'bg-white/40 text-gray-700 border-white/30 hover:border-white/50 hover:bg-white/60'
+                    ? 'cal-bg-purple-600 cal-text-white cal-border-purple-600'
+                    : 'cal-bg-white/40 cal-text-gray-700 cal-border-white/30 hover:cal-border-white/50 hover:cal-bg-white/60'
                 }`}
               >
                 {time}

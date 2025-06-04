@@ -8,36 +8,40 @@ const ProfileSection = ({
     subtitle,
     shortText
 }) => (
-    <div className="bg-white/10 backdrop-blur-xl p-6 text-gray-800 flex flex-col h-full border-r border-white/20">
+    <div className="cal-bg-white/10 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r cal-border-white/20">
         {/* Logo */}
-        <div className="mb-6">
-            <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mb-4">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                    <div className="w-4 h-4 border-2 border-black rounded-sm"></div>
+        <div className="cal-mb-6">
+            <div className="cal-w-16 cal-h-16 cal-rounded-full cal-flex cal-items-center cal-justify-center cal-mb-4">
+                <div className="cal-w-8 cal-h-8 cal-bg-white cal-rounded-full cal-flex cal-items-center cal-justify-center">
+                    <img
+                        src={image}
+                        alt={name}
+                        className="cal-w-16 cal-h-16 cal-rounded-full cal-object-cover cal-mb-4 cal-border-2 cal-border-black"
+                    />
                 </div>
             </div>
-            <h2 className="text-xl font-bold mb-1">{service}</h2>
+            <h2 className="cal-text-xl cal-font-bold cal-mb-1">{service}</h2>
         </div>
 
         {/* Duration */}
-        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+        <div className="cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600 cal-mb-4">
             <Clock size={16} />
             <span>30mins</span>
         </div>
 
         {/* Title */}
-        <div className="mb-6">
-            <h1 className="text-2xl font-bold leading-tight mb-2 text-gray-800">
-            {`Schedule a Meeting with ${name}`}
+        <div className="cal-mb-6">
+            <h1 className="cal-text-2xl cal-font-bold cal-leading-tight cal-mb-2 cal-text-gray-800">
+                {`Schedule a Meeting with ${name}`}
             </h1>
-            <p className="text-gray-600 text-sm leading-relaxed">
-            {shortText}
+            <p className="cal-text-gray-600 cal-text-sm cal-leading-relaxed">
+                {shortText}
             </p>
         </div>
 
         {/* Copy Link Button */}
-        <div className="mt-auto pb-2">
-            <button className="flex items-center my-10 justify-center gap-1 w-40 py-2 bg-white/40 backdrop-blur-sm rounded-lg text-gray-800 hover:text-gray-900 hover:bg-white/60 transition-all font-medium text-sm shadow-lg border border-white/30">
+        <div className="cal-mt-auto cal-pb-2">
+            <button className="cal-flex cal-items-center cal-my-10 cal-justify-center cal-gap-1 cal-w-40 cal-py-2 cal-bg-white/40 cal-backdrop-blur-sm cal-rounded-lg cal-text-gray-800 hover:cal-text-gray-900 hover:cal-bg-white/60 cal-transition-all cal-font-medium cal-text-sm cal-shadow-lg cal-border cal-border-white/30">
                 <Copy size={14} />
                 Copy Link
             </button>
