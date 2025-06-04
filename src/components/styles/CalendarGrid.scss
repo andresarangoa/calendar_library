@@ -1,4 +1,8 @@
+
+@use './event-pill' as *; 
+@use './event-daily-pill' as *; 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
 
 /* Add global font-family */
 body {
@@ -10,7 +14,7 @@ body {
   align-items: center;
   background-color: var(--calendar-nav-bg, #ffffff);
   gap: var(--calendar-nav-gap, 10px);
-  box-shadow: 0 2px 5px rgba(0,0,0,.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
   border-radius: var(--calendar-nav-radius, 10px);
   min-width: 0.5rem;
 
@@ -150,7 +154,9 @@ button {
   &:last-child {
     border-right: 0.5px solid #d6d6d6;
   }
-  &:nth-child(-n + 7) {       // first 7 cells → first row
+
+  &:nth-child(-n + 7) {
+    // first 7 cells → first row
     border-top: none;
     border: none;
   }
@@ -166,7 +172,7 @@ button {
 
   @media (max-width: 768px) {
     padding: var(--day-cell-padding-sm, 4px);
-    
+
     .day-number {
       font-size: var(--day-number-font-size-sm, 12px);
     }
@@ -174,16 +180,21 @@ button {
 
   @media (max-width: 480px) {
     padding: var(--day-cell-padding-xs, 2px);
-    
+
     .day-number {
       font-size: var(--day-number-font-size-xs, 10px);
     }
+  }
+
+  /* default version that relies on the CSS variable set inline */
+  .event-wrapper {
+    @include event-pill(var(--event-color));
   }
 }
 
 .other-month {
   background-color: var(--other-month-bg, #f9fafb);
-  
+
   .day-number {
     color: var(--other-month-color, #9ca3af);
   }
@@ -265,8 +276,9 @@ button {
   .dropdown {
     position: relative;
     display: inline-block;
+
     &-button {
-      box-shadow: 0 2px 5px rgba(0,0,0,.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
       min-width: var(--dropdown-min-width, 1rem);
       color: var(--dropdown-color, black);
       font-size: var(--dropdown-font-size, 1rem);
@@ -340,53 +352,17 @@ button {
 }
 
 // Event styles
-.event-wrapper {
-  /* layout */
-  display: flex;
-  align-items: center;
-  margin-top: 4px;
-  gap: .25rem;
-  padding: 4px 8px 4px 12px;     // room for the left bar
-  border-radius: 5px;
-  position: relative;
-  overflow: hidden;
-
-  /* ---- colour magic ---- */
-  /* clean flat background with slight transparency */
-  background: color-mix(in srgb, var(--event-color) 20%, white);
-  border: 1px solid var(--bg-dark);
-
-  /* coloured bar on the left */
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto 0 0;           // full height, stuck to the left
-    width: 4px;
-    border-radius: 2px;
-    background: var(--event-color);
-  }
 
 
-
-  &.event-green::before {
-    background-color: #10b981;
-  }
-  
-  &.event-purple::before {
-    background-color: #8b5cf6;
-  }
-  
-  &.event-orange::before {
-    background-color: #f59e0b;
-  }
+.day-number+.event-wrapper {
+  /* adjacent-sibling selector  */
+  margin-top: 15px;
+  /* ← your special offset     */
 }
 
-.day-number + .event-wrapper {          /* adjacent-sibling selector  */
-  margin-top: 15px;                     /* ← your special offset     */
-}
-
-.day-number.current-day + .event-wrapper {
-  margin-top: 0;   /* override the default 9 px */
+.day-number.current-day+.event-wrapper {
+  margin-top: 0;
+  /* override the default 9 px */
 }
 
 .event-title {
@@ -451,42 +427,14 @@ button {
 // Weekly view styles
 .weekly-calendar-grid {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: var(--width, 100%);
   min-width: 500px;
   color: var(--calendar-controls-color, #374151);
   border: 1px solid var(--calendar-border, #e5e7eb);
-  border-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   overflow: hidden;
-
-  .weekly-calendar-content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .time-header {
-    flex: 0 0 2rem;
-    border-right: 1px solid var(--day-header-border-right, #e5e7eb);
-    border-bottom: 1px solid var(--day-header-border-right, #e5e7eb);
-    background-color: var(--day-header-bg, #f9fafb);
-  }
-
-  .day-header-weekly {
-    width: 100%;
-    text-align: center;
-    font-weight: 600;
-    border-bottom: 1px solid var(--day-header-border-top, #e5e7eb);
-    border-right: 1px solid var(--day-header-border-right, #e5e7eb);
-    padding: var(--day-header-padding, 16px 8px);
-    box-sizing: border-box;
-    background-color: var(--day-header-bg, #f9fafb);
-    font-size: 0.875rem;
-    color: var(--day-header-color, #374151);
-
-    &:last-child {
-      border-right: none;
-    }
-  }
 
   .week-row {
     display: flex;
@@ -494,130 +442,297 @@ button {
     width: 100%;
   }
 
-  .hour-column {
+  .time-header {
     flex: 0 0 4rem;
+    height: 64px;
+    border-right: 1px solid var(--day-header-border-right, #e5e7eb);
+    border-bottom: 1px solid var(--day-header-border-right, #e5e7eb);
+    background-color: var(--day-header-bg, #ffffff);
+    padding: var(--day-header-padding, 16px 8px);
+    box-sizing: border-box;
+  }
+
+  .day-header-weekly {
+    flex: 1;
+    height: 64px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 1px solid var(--day-header-border-top, #e5e7eb);
+    border-right: 1px solid var(--day-header-border-right, #e5e7eb);
+    padding: var(--day-header-padding, 16px 8px);
+    box-sizing: border-box;
+    background-color: var(--day-header-bg, #ffffff);
+    font-size: 0.875rem;
+    color: var(--day-header-color, #374151);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    .day-name {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .day-number {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+
+      &.current-day {
+        background: #1376f4;
+        color: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+    }
   }
 
   .hour-cell {
-    flex: 0 0 3.4rem;
+    flex: 0 0 4rem;
+    height: 3.4rem;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     padding: 4px 0;
     border-right: 1px solid var(--calendar-border, #e5e7eb);
     border-bottom: 1px solid var(--calendar-border, #e5e7eb);
-    background-color: var(--day-header-bg, #f9fafb);
+    background-color: var(--day-header-bg, #ffffff);
     box-sizing: border-box;
 
     span {
       color: var(--day-header-color, #6b7280);
       font-size: 0.75rem;
       font-weight: 500;
+      line-height: 1;
     }
-  }
-
-  .day-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
   }
 
   .day-hour-cell,
   .half-hour-cell {
-    flex: 0 0 3.4rem;
+    flex: 1;
+    height: 3.4rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
-    border: 1px solid var(--calendar-border, #e5e7eb);
+    border-right: 1px solid var(--calendar-border, #e5e7eb);
+    border-bottom: 1px solid var(--calendar-border, #e5e7eb);
     background-color: var(--calendar-cells-bg, white);
     box-sizing: border-box;
-    padding: 4px;
-  }
-}
+    padding: 2px 4px;
+    position: relative;
 
-// Daily view styles
-.daily--calendar {
-  &__grid {
-    display: grid;
-    grid-template-columns: 5% 2fr 1fr;
-    width: 100%;
-    min-width: 500px;
-    color: var(--calendar-controls-color, #374151);
-    border: 1px solid var(--calendar-border, #e5e7eb);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  &__hour-column {
-    flex: 0 0 4rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__daily-calendar-content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__daily-appointments {
-    flex: 0 0 65%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__calendar-pick {
-    flex: 0 0 70%;
-    width: auto;
-    height: 100%;
-    display: flex;
-    padding: 3rem;
-    flex-direction: row;
-    overflow: hidden;
-
-    .calendar-grid {
-      grid-template-rows: auto repeat(auto-fill, 3.8rem);
+    &:hover {
+      background-color: var(--calendar-cells-hover-bg, #f9fafb);
     }
-  }
-
-  &__time-header {
-    flex: 0 0 2rem;
-    border-right: 1px solid var(--calendar-border, #e5e7eb);
-    border-bottom: 1px solid var(--calendar-border, #e5e7eb);
-    background-color: var(--day-header-bg, #f9fafb);
-  }
-
-  &__day-header-daily {
-    width: 100%;
-    text-align: center;
-    font-weight: 600;
-    border-bottom: 1px solid var(--calendar-border, #e5e7eb);
-    border-right: 1px solid var(--calendar-border, #e5e7eb);
-    padding: var(--day-header-padding, 16px 8px);
-    box-sizing: border-box;
-    background-color: var(--day-header-bg, #f9fafb);
 
     &:last-child {
       border-right: none;
     }
   }
 
+  .half-hour-cell {
+    border-bottom: 1px dashed var(--calendar-border-light, #f3f4f6);
+  }
+
+  // Cell container for events
+  .cell-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    
+    &.event-cell {
+      // Optional: Add subtle background for cells with events
+      // background-color: var(--calendar-cells-event-bg, #fafbff);
+    }
+  }
+
+  // Calendar event styling for weekly view
+  .calendar-event-pill {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    min-height: 1.5rem;
+    box-sizing: border-box;
+    
+    // Beautiful background with subtle opacity
+    background: color-mix(in srgb, var(--event-color, #8b5cf6) 15%, white);
+    border-radius: 5px;
+    padding: 4px 8px 4px 12px;
+    overflow: hidden;
+    
+    // Fallback for browsers without color-mix
+    @supports not (background: color-mix(in srgb, red 15%, white)) {
+      background: rgba(139, 92, 246, 0.15);
+    }
+    
+    // Left colored border
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--event-color, #8b5cf6);
+      border-radius: 5px 0 0 5px;
+    }
+    
+    .event-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-height: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .event-title {
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 1.2;
+      color: var(--event-color, #8b5cf6);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin: 0;
+    }
+
+    .event-time {
+      font-size: 10px;
+      line-height: 1.1;
+      color: color-mix(in srgb, var(--event-color, #8b5cf6) 70%, black);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin: 0;
+      
+      // Fallback for browsers without color-mix
+      @supports not (color: color-mix(in srgb, red 70%, black)) {
+        color: rgba(139, 92, 246, 0.7);
+      }
+    }
+
+    // Responsive sizing based on event height
+    // Very short events (less than 45 minutes)
+    &[style*="height: 1."] {
+      padding: 2px 6px 2px 10px;
+
+      .event-time {
+        display: none;
+      }
+      .event-title {
+        font-size: 10px;
+        line-height: 1.1;
+      }
+    }
+
+    // Short events (45-75 minutes)  
+    &[style*="height: 2."],
+    &[style*="height: 3."] {
+      .event-content {
+        justify-content: center;
+      }
+    }
+
+    // Medium to long events (75+ minutes)
+    &[style*="height: 4."],
+    &[style*="height: 5."],
+    &[style*="height: 6."],
+    &[style*="height: 7."],
+    &[style*="height: 8."],
+    &[style*="height: 9."],
+    &[style*="height: 1"]:not([style*="height: 1."]) {
+      padding: 4px 8px 4px 12px;
+
+      .event-title {
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .event-time {
+        font-size: 11px;
+      }
+    }
+    
+    // Hover effect for better UX
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 2px 8px color-mix(in srgb, var(--event-color, #8b5cf6) 25%, transparent);
+      transition: all 0.2s ease;
+      
+      // Fallback shadow for browsers without color-mix
+      @supports not (box-shadow: 0 2px 8px color-mix(in srgb, red 25%, transparent)) {
+        box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25);
+      }
+    }
+
+    // Focus state for accessibility
+    &:focus-visible {
+      outline: 2px solid var(--event-color, #8b5cf6);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Fixed Daily Calendar SCSS - robust layout with proper heights
+.daily--calendar {
+  &__grid {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-width: 500px;
+    color: var(--calendar-controls-color, #374151);
+    border: 1px solid var(--calendar-border, #e5e7eb);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    overflow: hidden;
+    background: white;
+  }
+
+  &__hour-column {
+    flex: 0 0 4rem;
+    display: flex;
+    flex-direction: column;
+    background: var(--day-header-bg, #ffffff);
+  }
+
+  &__time-header {
+    height: 54px;
+    border-right: 1px solid var(--calendar-border, #e5e7eb);
+    border-bottom: 1px solid var(--calendar-border, #e5e7eb);
+    background-color: var(--day-header-bg, #ffffff);
+    box-sizing: border-box;
+  }
+
   &__hour-cell {
-    flex: 0 0 3.4rem;
+    height: 3.4rem;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding: 4px 0;
+    padding-top: 4px;
     border-right: 1px solid var(--calendar-border, #e5e7eb);
     border-bottom: 1px solid var(--calendar-border, #e5e7eb);
-    background-color: var(--day-header-bg, #f9fafb);
+    background-color: var(--day-header-bg, #ffffff);
     box-sizing: border-box;
 
     span {
       color: var(--day-header-color, #6b7280);
       font-size: 0.75rem;
       font-weight: 500;
+      line-height: 1;
     }
   }
 
@@ -625,18 +740,167 @@ button {
     flex: 1;
     display: flex;
     flex-direction: column;
+    background: white;
+    min-height: 0; // Allow flex shrinking
   }
 
-  &__day-hour-cell,
-  &__half-hour-cell {
-    flex: 0 0 3.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border: 1px solid var(--calendar-border, #e5e7eb);
+  &__day-hour-cell {
+    height: 3.4rem;
+    border-bottom: 1px solid var(--calendar-border, #e5e7eb);
     background-color: var(--calendar-cells-bg, white);
     box-sizing: border-box;
-    padding: 4px;
+    padding: 2px 4px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    &:hover {
+      background-color: var(--calendar-cells-hover-bg, #f9fafb);
+    }
+  }
+
+  &__half-hour-cell {
+    height: 3.4rem;
+    border-bottom: 1px dashed var(--calendar-border-light, #f3f4f6);
+    background-color: var(--calendar-cells-bg, white);
+    box-sizing: border-box;
+    padding: 2px 4px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    &:hover {
+      background-color: var(--calendar-cells-hover-bg, #f9fafb);
+    }
+  }
+
+  // Cell container for events
+  .cell-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    
+    &.event-cell {
+      // Optional: Add subtle background for cells with events
+      // background-color: var(--calendar-cells-event-bg, #fafbff);
+    }
+  }
+
+  // Event daily pill styling - specifically designed for daily calendar
+  .calendar-event-pill {
+    // Core styling properties
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    min-height: 1.5rem;
+    box-sizing: border-box;
+    
+    // Beautiful background with subtle opacity
+    background: rgba(139, 92, 246, 0.12); // Simplified fallback background
+    border-radius: 4px;
+    padding: 8px 10px 8px 14px;
+    overflow: hidden;
+    
+    // Left colored border
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--event-color, #8b5cf6);
+      border-radius: 4px 0 0 4px;
+    }
+    
+    .event-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 100%;
+      min-height: 0;
+    }
+    
+    .event-title {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 1.3;
+      color: var(--event-color, #8b5cf6);
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .event-time {
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 1.2;
+      color: rgba(139, 92, 246, 0.75); // Simplified fallback
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    // Responsive sizing based on event height
+    &[style*="height: 1."] {
+      padding: 4px 8px 4px 12px;
+
+      .event-time {
+        display: none;
+      }
+      .event-title {
+        font-size: 10px;
+        line-height: 1.2;
+      }
+    }
+
+    &[style*="height: 2."],
+    &[style*="height: 3."] {
+      padding: 6px 10px 6px 14px;
+    }
+
+    &[style*="height: 4."],
+    &[style*="height: 5."],
+    &[style*="height: 6."],
+    &[style*="height: 7."],
+    &[style*="height: 8."],
+    &[style*="height: 9."],
+    &[style*="height: 1"]:not([style*="height: 1."]) {
+      padding: 8px 12px 8px 16px;
+
+      .event-title {
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .event-time {
+        font-size: 11px;
+        line-height: 1.2;
+      }
+    }
+    
+    // Beautiful hover effect
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); // Simplified shadow
+      transition: all 0.15s ease-out;
+      
+      // Expand left border on hover
+      &::before {
+        width: 4px;
+      }
+    }
+    
+    // Focus state for accessibility
+    &:focus-visible {
+      outline: 2px solid var(--event-color, #8b5cf6);
+      outline-offset: 2px;
+    }
   }
 }
 

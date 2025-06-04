@@ -4,6 +4,7 @@ import { CalendarGrid } from './CalendarGrid';
 import './CalendarGrid.scss';
 import { MonthlyCellRender } from './cellRender/MonthlyCellRender';
 import { WeeklyCellRender } from './cellRender/WeeklyCellRender';
+import { DailyCellRender } from './cellRender/DailyCellRender';
 
 const defaultStyles = {
   colorActualDay: '#fff',
@@ -103,17 +104,18 @@ export default function EventCalendar({
 
   // Select event handler
   const handleSelectEvent = (day) => {
-    const formattedDate = dayjs(day).format('YYYY-MM-DD');
-    const event = eventsData.find((event) => event.date === formattedDate) || null;
-    onSelectedEvent(event);
+    onSelectedEvent(day);
   };
 
-  // Renders each cell of the calendar
+   // Renders each cell of the calendar
   const montlyRenderCell = (day) => (
-    <MonthlyCellRender day={day} eventsData={eventsData} onSelect={handleSelectEvent} />
+    <MonthlyCellRender day={day} eventsData={eventsData} onSelect={(day)=>handleSelectEvent(day)} />
   );
   const weeklyRenderCell = (day, interval) => (
-    <WeeklyCellRender day={day} interval={interval} eventsData={eventsData} onSelect={handleSelectEvent}  className={"weekly"}/>
+    <WeeklyCellRender day={day} interval={interval} eventsData={eventsData} onSelect={(day)=>handleSelectEvent(day)}  className={"weekly"}/>
+  );
+  const dailyRenderCell = (day, interval) => (
+    <DailyCellRender day={day} interval={interval} eventsData={eventsData} onSelect={(day)=>handleSelectEvent(day)}  className={"daily"}/>
   );
 
   return (
@@ -122,6 +124,7 @@ export default function EventCalendar({
       <CalendarGrid
         montlyRenderCell={montlyRenderCell}
         weeklyRenderCell={weeklyRenderCell}
+        dailyRenderCell={dailyRenderCell}
         titleButton={titleButton}
         onAddEventClicked={addEvent}
         visibilityOptions={mergedVisibilityOptions}

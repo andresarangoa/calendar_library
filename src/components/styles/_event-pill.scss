@@ -1,0 +1,36 @@
+// -------------  _event-pill.scss  -------------
+@mixin event-pill(
+  $accent,                 // required
+  $bg-blend: 20%,          // tint strength
+  $gap: .25rem,
+  $margin-top: 4px,
+  $radius: 5px,
+  $bar-width: 4px          // ← extra knob for weekly vs monthly
+) {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  // spacing
+  margin-top: $margin-top;
+  gap: $gap;
+  padding: 4px 8px 4px 12px;      // room for the left bar
+
+  // shape & overflow
+  border-radius: $radius;
+  position: relative;
+  overflow: hidden;
+
+  // background & border
+  background: color-mix(in srgb, $accent $bg-blend, white);
+
+  // coloured bar on the left
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: $bar-width;
+    border-radius: 2px;
+    background: $accent;
+  }
+}

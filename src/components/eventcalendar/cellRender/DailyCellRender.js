@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 
-export const WeeklyCellRender = ({ day, eventsData, onSelect, interval, className = "" }) => {
+export const DailyCellRender = ({ day, eventsData, onSelect, interval, className = "" }) => {
   // Calculate the date and time for the specific cell
   const dayJsObj = dayjs(day);
   const currentDateTime = dayJsObj.hour(interval.hour).minute(interval.half ? 30 : 0);
@@ -36,10 +36,10 @@ export const WeeklyCellRender = ({ day, eventsData, onSelect, interval, classNam
   return (
     <div
       className={`cell-container ${eventsToRender.length ? 'event-cell' : ''}`}
-  
     >
       {/* Display events */}
       {eventsToRender.map((event, index) => {
+
         const eventStart = parseTime(event.time);
         const eventEnd = parseTime(event.endTime);
         const eventStartMinutes = eventStart.hour * 60 + eventStart.minutes;
@@ -61,7 +61,8 @@ export const WeeklyCellRender = ({ day, eventsData, onSelect, interval, classNam
             key={`${event.id || index}-${formattedDate}`}
             className={`calendar-event-pill ${className}`}
             style={{
-              '--event-color': event.color || '#1890FF',
+              '--event-color': event.color || '#8b5cf6',
+              backgroundColor: `color-mix(in srgb, ${event.color || '#8b5cf6'} 20%, white)`,
               position: 'absolute',
               top: `${topOffsetInRem}rem`,
               height: `${heightInRem}rem`,

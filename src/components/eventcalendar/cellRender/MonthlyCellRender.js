@@ -1,48 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
+import EventsPopup from '../eventPopup/EventPopup';
 
-export const MonthlyCellRender = ({ day, eventsData, onSelect }) => {
+export const MonthlyCellRender = ({ day, eventsData, onSelect, getEventColor }) => {
+  const [showPopup, setShowPopup] = useState(false);
+
   const currentDate = dayjs(day).format('YYYY-MM-DD');
-  const today = dayjs().format('YYYY-MM-DD'); // Get current date
-  const events = eventsData.filter((event) => event.date === currentDate);
-  const getEventColor = (event) => {
-    if (event.color) return event.color;
+  const today = dayjs().format('YYYY-MM-DD');
 
-    // Default color rotation if no color specified
-    const defaultColors = ['#10b981', '#8b5cf6', '#f59e0b', '#ef4444', '#3b82f6'];
-    const index = event.id ? event.id % defaultColors.length : 0;
-    return defaultColors[index];
-  };
+  const eventsToday = eventsData.filter(e => e.date === currentDate);
+
+  const sorted = eventsToday
+    .map(e => ({ ...e, color: e.color ?? getEventColor(e) }))
+    .sort((a, b) => a.time.localeCompare(b.time));
+
+  const visibleEvents = sorted.slice(0, 3);
+  const hiddenCount = sorted.length - visibleEvents.length;
+
   return (
-    <div
-      className={`cell-container ${events.length ? 'event-cell' : ''}`}
-      onClick={() => onSelect(day)}
-    >
-      {/* Highlight current day */}
-      <div className={`day-number ${currentDate === today ? 'current-day' : ''}`}>
-        <span>{day.format('D')}</span>
+    <>
+      <div
+        className={`cell-container ${sorted.length ? 'event-cell' : ''}`}
+        
+      >
+        {/* date number */}
+        <div className={`day-number ${currentDate === today ? 'current-day' : ''}`}>
+          <span>{day.format('D')}</span>
+        </div>
+
+        {/* first three events (already sorted) */}
+        {visibleEvents.map(evt => (
+          <div
+            onClick={() => onSelect(evt)}
+            key={`${evt.time}-${evt.title}`}
+            className="event-wrapper"
+            style={{ '--event-color': evt.color }}
+          >
+            <div className="event-time">{evt.time}</div>
+            <div className="event-title">{evt.title}</div>
+          </div>
+        ))}
+
+        {/* “+ n More” link */}
+        {hiddenCount > 0 && (
+          <div
+            className="more-events"
+            onClick={e => {
+              e.stopPropagation();   // don’t trigger onSelect
+              setShowPopup(true);
+            }}
+          >
+            +{hiddenCount} More
+          </div>
+        )}
       </div>
 
-      {/* Display events */}
-      {events.map((event, index) => (
-        <div key={index} className="event-wrapper" style={{
-          '--event-color': getEventColor(event)
-        }}>
-          <div className="event-time">{event.time}</div>
-          <div className="event-title-container">
-
-            <div className="event-title">{event.title}</div>
-
-            {/* Show number of events if greater than 0 */}
-            {event.numberEvents > 4 && (
-              <div className="event-circle">
-                <span>{event.numberEvents}</span>
-              </div>
-            )}
-          </div>
-
-        </div>
-      ))}
-    </div>
+      {/* modal with the full, sorted list */}
+      {showPopup && (
+        <EventsPopup
+          dayLabel={day}
+          events={sorted}
+          onEventClick={(evt) => {
+            onSelect(evt);      // whatever you need to do with it
+            setShowPopup(false);
+          }}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
+    </>
   );
 };

@@ -9,40 +9,114 @@ import DailyView from './dailyView/DailyView';
 // Extend dayjs with ISO week support
 dayjs.extend(isoWeek);
 
-// Helper function to generate days for the current month, including at least one week of the next month
-const generateMonthDays = (month) => {
-  const days = [];
-  const startDay = dayjs(month).startOf('month').startOf('isoWeek'); // Use ISO week for Monday start
-  const endDay = dayjs(month).add(1, 'month').startOf('month').endOf('isoWeek'); // Extend to the end of the ISO week
-
-  let day = startDay.clone();
-  while (day.isBefore(endDay, 'day') || day.isSame(endDay, 'day')) {
-    days.push(day);
-    day = day.add(1, 'day');
-  }
-
-  return days;
-};
-
 export function CalendarGrid({
   montlyRenderCell,
   weeklyRenderCell,
+  dailyRenderCell,
   titleButton = "+ Add Event",
   onAddEventClicked = () => { },
   visibilityOptions = [],
   onDailyEvent 
 }) {
-  const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
+  const [currentDate, setCurrentDate] = useState(dayjs());
   const [viewMode, setViewMode] = useState('monthly');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { filters: visibilityFilters } = visibilityOptions;
-  const handlePrevMonth = () => setCurrentMonth(currentMonth.subtract(1, 'month'));
-  const handleNextMonth = () => setCurrentMonth(currentMonth.add(1, 'month'));
-  const handleToday = () => setCurrentMonth(dayjs().startOf('month'));
+
+  // Dynamic navigation handlers based on view mode
+  const handlePrev = () => {
+    switch (viewMode) {
+      case 'monthly':
+        setCurrentDate(currentDate.subtract(1, 'month'));
+        break;
+      case 'weekly':
+        setCurrentDate(currentDate.subtract(1, 'week'));
+        break;
+      case 'daily':
+        setCurrentDate(currentDate.subtract(1, 'day'));
+        break;
+      case 'yearly':
+        setCurrentDate(currentDate.subtract(1, 'year'));
+        break;
+      default:
+        setCurrentDate(currentDate.subtract(1, 'month'));
+    }
+  };
+
+  const handleNext = () => {
+    switch (viewMode) {
+      case 'monthly':
+        setCurrentDate(currentDate.add(1, 'month'));
+        break;
+      case 'weekly':
+        setCurrentDate(currentDate.add(1, 'week'));
+        break;
+      case 'daily':
+        setCurrentDate(currentDate.add(1, 'day'));
+        break;
+      case 'yearly':
+        setCurrentDate(currentDate.add(1, 'year'));
+        break;
+      default:
+        setCurrentDate(currentDate.add(1, 'month'));
+    }
+  };
+
+  const handleToday = () => {
+    const today = dayjs();
+    switch (viewMode) {
+      case 'monthly':
+        setCurrentDate(today.startOf('month'));
+        break;
+      case 'weekly':
+      case 'daily':
+        setCurrentDate(today);
+        break;
+      case 'yearly':
+        setCurrentDate(today.startOf('year'));
+        break;
+      default:
+        setCurrentDate(today);
+    }
+  };
+
   const handleViewChange = (mode) => {
     setViewMode(mode);
     setDropdownVisible(false);
+    
+    // Adjust current date when switching views to maintain context
+    switch (mode) {
+      case 'monthly':
+        setCurrentDate(currentDate.startOf('month'));
+        break;
+      case 'weekly':
+      case 'daily':
+        // Keep current date as is for weekly/daily views
+        break;
+      case 'yearly':
+        setCurrentDate(currentDate.startOf('year'));
+        break;
+    }
   };
+
+  // Dynamic title based on view mode
+  const getTitle = () => {
+    switch (viewMode) {
+      case 'monthly':
+        return currentDate.format('MMMM YYYY');
+      case 'weekly':
+        const weekStart = currentDate.startOf('isoWeek');
+        const weekEnd = currentDate.endOf('isoWeek');
+        return `${weekStart.format('MMM D')} - ${weekEnd.format('MMM D, YYYY')}`;
+      case 'daily':
+        return currentDate.format('dddd, MMMM D, YYYY');
+      case 'yearly':
+        return currentDate.format('YYYY');
+      default:
+        return currentDate.format('MMMM YYYY');
+    }
+  };
+
   // Define available views
   const availableViews = Object.keys(visibilityFilters) // Get keys like ['yearly', 'monthly', 'weekly', 'daily']
     .filter((view) => visibilityFilters[view]) // Keep views with `true` in `viewConfig`
@@ -51,25 +125,23 @@ export function CalendarGrid({
     <div>
       {/* Calendar Controls */}
       <div className="calendar-controls">
-        {/* Left Aligned: Month Title */}
-        <div className="month-title">{currentMonth.format('MMMM YYYY')}</div>
+        {/* Left Aligned: Title */}
+        <div className="month-title">{getTitle()}</div>
 
         {/* Right Aligned: Navigation, Dropdown, and Add Event */}
         <div className="controls-right">
           {
-
             (visibilityOptions?.todayButton == true) ? (
               <div className="calendar-navigation">
-                <button className="arrow-button" onClick={handlePrevMonth}>{"<"}</button>
+                <button className="arrow-button" onClick={handlePrev}>{"<"}</button>
                 <button className="today-button" onClick={handleToday}>Today</button>
-                <button className="arrow-button" onClick={handleNextMonth}>{">"}</button>
+                <button className="arrow-button" onClick={handleNext}>{">"}</button>
               </div>
             ) : null
           }
           {
             (visibilityOptions?.dropdownFilter == true) ? (
               <div className="dropdown">
-
                 <button
                   className="dropdown-button"
                   onClick={() => setDropdownVisible(!dropdownVisible)}
@@ -99,17 +171,16 @@ export function CalendarGrid({
               </>
             ) : null
           }
-
         </div>
       </div>
 
       {/* Calendar Grid */}
       {viewMode === 'monthly' ? (
-        <MonthlyCalendar currentMonth={currentMonth} cellRender={montlyRenderCell} />
+        <MonthlyCalendar currentMonth={currentDate.startOf('month')} cellRender={montlyRenderCell} />
       ) : viewMode === 'weekly' ? (
-        <WeeklyView cellRender={weeklyRenderCell} />
+        <WeeklyView currentDate={currentDate} cellRender={weeklyRenderCell} />
       ) : viewMode === 'daily' ? (
-        <DailyView cellRender={weeklyRenderCell} montlyRenderCell={montlyRenderCell} onDailyEvent={onDailyEvent}/>
+        <DailyView currentDate={currentDate} cellRender={dailyRenderCell} onDailyEvent={onDailyEvent}/>
       ) : viewMode === 'yearly' ? (
         <></>
       ) : null}
