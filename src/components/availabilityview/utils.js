@@ -73,7 +73,7 @@ export const timeSlotDefaults = {
 // Profile section defaults
 export const profileDefaults = {
   styles: {
-    container: "cal-bg-white/10 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r- cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white cal-border-solid",
+    container: "cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r- cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white cal-border-solid cal-min-h-[612px]",
     logoWrapper: "cal-mb-6",
     logoContainer: "cal-w-16 cal-h-16 cal-rounded-full cal-flex cal-items-center cal-justify-center cal-mb-4",
     logoInner: "cal-w-8 cal-h-8 cal-bg-white cal-rounded-full cal-flex cal-items-center cal-justify-center",
@@ -96,7 +96,7 @@ export const profileDefaults = {
 export const profileMeetingDefaults = {
   styles: {
     ...profileDefaults.styles,
-    container: "cal-bg-white/10 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r-2 cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white/80 cal-border-solid",
+    container: "cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r-2 cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white/80 cal-border-solid",
     divider: "cal-h-px cal-bg-[#152226]/20 cal-my-6 cal-mx-1",
     infoSection: "cal-flex cal-flex-col cal-gap-4",
     infoItem: "cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600 cal-font-bold"
@@ -106,14 +106,14 @@ export const profileMeetingDefaults = {
 // Booking form defaults
 export const bookingFormDefaults = {
   styles: {
-    container: "cal-grid cal-min-h-[610px] cal-grid-cols-1 lg:cal-grid-cols-3 cal-h-full",
+    container: "cal-grid cal-min-h-[660px] cal-grid-cols-1 lg:cal-grid-cols-3 cal-h-full",
     leftPanel: "cal-col-span-1 cal-h-full",
     rightPanel: "cal-py-12 lg:cal-p-12 cal-bg-white/5 cal-col-span-2",
     formWrapper: "cal-h-full cal-flex cal-flex-col cal-mx-24",
     formContent: "cal-flex-1 cal-space-y-6",
     fieldLabel: "cal-block cal-text-sm cal-font-semibold cal-text-gray-700 cal-mb-2",
     input: "cal-w-full cal-px-4 cal-py-3 cal-bg-white/80 cal-border cal-border-white/30 cal-rounded-xl focus:cal-outline-none focus:cal-ring-2 focus:cal-ring-purple-400 focus:cal-border-transparent cal-transition-all cal-placeholder-gray-500",
-    textarea: "cal-w-full cal-px-4 cal-py-3 cal-bg-white/80 cal-border cal-border-white/30 cal-rounded-xl focus:cal-outline-none focus:cal-ring-2 focus:cal-ring-purple-400 focus:cal-border-transparent cal-transition-all cal-placeholder-gray-500 cal-resize-none",
+    textarea: "cal-w-full cal-px-4 cal-py-3 cal-bg-white/80 cal-border cal-border-white/30 cal-rounded-xl focus:cal-outline-none focus:cal-ring-2 focus:cal-ring-purple-400 focus:cal-border-transparent cal-transition-all cal-placeholder-gray-500 cal-resize-none cal-min",
     actionsWrapper: "cal-flex cal-gap-4 cal-items-center",
     termsText: "cal-w-2/5 cal-text-sm cal-text-gray-600",
     termsLink: "cal-text-purple-600 hover:cal-text-purple-700",
@@ -124,7 +124,7 @@ export const bookingFormDefaults = {
   fields: {
     name: { placeholder: "Enter name", label: "Your Name", required: true },
     email: { placeholder: "Enter email", label: "Email address", required: true },
-    description: { placeholder: "Enter description", label: "Description", rows: 4 }
+    description: { placeholder: "Enter description", label: "Description", rows: 6, type: "textarea" }
   }
 };
 
@@ -133,7 +133,7 @@ export const defaultTheme = {
   // Main container styles
   background: "cal-bg-gradient-to-br cal-from-purple-50 cal-via-white cal-to-pink-50 cal-w-full cal-min-h-screen cal-p-8 cal-flex cal-items-center cal-justify-center",
   container: "cal-bg-white/80 cal-backdrop-blur-xl cal-mx-auto cal-shadow-2xl cal-border cal-border-white/50",
-  minHeight: "cal-min-h-[700px]",
+  minHeight: "cal-min-h-[660px]",
   gridLayout: "cal-grid cal-grid-cols-12 cal-h-full cal-gap-0",
   
   // Responsive breakpoints
