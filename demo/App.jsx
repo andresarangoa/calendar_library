@@ -64,6 +64,11 @@ function App() {
     setSelectedDate(dayjs().format('YYYY-MM-DD')); // Assuming the current date
     console.log('Time Slot Selected:', timeSlot);
   };
+
+  const handleConfirmDate = (formData) => {
+    console.log(formData.name);
+    alert(`Name: ${formData.name}, Phone: ${formData.phone}, Email: ${formData.email}, Date: ${formData.date}, Time: ${formData.time}`);
+  }
   return (
     <div>
       <div className='container'>
@@ -72,7 +77,7 @@ function App() {
 
       </div>
       <div className="container">
-        <AvailabilityView date={selectedDate} time={selectedTime} handleTimeSlotSelect={handleTimeSlotSelect} />
+        <AvailabilityView date={selectedDate} time={selectedTime} handleTimeSlotSelect={handleTimeSlotSelect} handleFormSubmit={handleConfirmDate} />
       </div>
     </div>
   );

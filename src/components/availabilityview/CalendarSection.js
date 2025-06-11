@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const CalendarSection = ({ onDateSelect, selectedDate }) => {
-    const [currentDate, setCurrentDate] = useState(new Date(2025, 4, 15)); // May 15, 2025
+const CalendarSection = ({ onDateSelect, selectedDate, disablePastDays = true }) => {
+    const today = new Date(); // Get actual current date
+    const [currentDate, setCurrentDate] = useState(new Date()); // Start with today's month
   
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"];
@@ -37,10 +38,35 @@ const CalendarSection = ({ onDateSelect, selectedDate }) => {
     };
   
     const handleDateClick = (day) => {
-      if (day) {
+      if (day && !isPastDay(day)) {
         const selectedDateObj = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
         onDateSelect(selectedDateObj);
       }
+    };
+
+    // Check if a day is today
+    const isToday = (day) => {
+      return day === today.getDate() && 
+             currentDate.getMonth() === today.getMonth() &&
+             currentDate.getFullYear() === today.getFullYear();
+    };
+
+    // Check if a day is in the past (before today)
+    const isPastDay = (day) => {
+      if (!disablePastDays) return false;
+      
+      const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      
+      return dayDate < todayDate;
+    };
+
+    // Check if a day is selected
+    const isSelected = (day) => {
+      return selectedDate && 
+             selectedDate.getDate() === day && 
+             selectedDate.getMonth() === currentDate.getMonth() &&
+             selectedDate.getFullYear() === currentDate.getFullYear();
     };
   
     const days = getDaysInMonth(currentDate);
@@ -73,28 +99,29 @@ const CalendarSection = ({ onDateSelect, selectedDate }) => {
         <div className="cal-grid cal-grid-cols-7 cal-gap-2">
           {/* Week day headers */}
           {weekDays.map((day) => (
-            <div key={day} className="cal-text-center cal-text-sm cal-font-medium cal-text-gray-900 cal-py-3">
+            <div key={day} className="cal-text-center cal-text-sm cal-text-gray-900 cal-py-3 cal-font-semibold">
               {day}
             </div>
           ))}
   
           {/* Calendar days */}
           {days.map((day, index) => (
-            <div key={index} className="cal-aspect-square cal-flex cal-items-center cal-justify-center">
+            <div key={index} className="cal-aspect-square cal-flex cal-items-center cal-justify-center ">
               {day && (
                 <button
                   onClick={() => handleDateClick(day)}
-                  className={`cal-w-10 cal-h-10 cal-flex cal-items-center cal-justify-center cal-text-sm cal-font-medium cal-rounded-full cal-transition-all cal-relative ${
-                    selectedDate && selectedDate.getDate() === day && 
-                    selectedDate.getMonth() === currentDate.getMonth() &&
-                    selectedDate.getFullYear() === currentDate.getFullYear()
+                  disabled={isPastDay(day)}
+                  className={`cal-w-10 cal-h-10 cal-flex cal-items-center cal-justify-center cal-text-sm cal-font-bold  cal-rounded-full cal-transition-all cal-relative ${
+                    isPastDay(day)
+                      ? 'cal-bg-transparent cal-text-gray-500 cal-cursor-not-allowed'
+                      : isSelected(day)
                       ? 'cal-bg-gray-900 cal-text-white'
-                      : 'cal-bg-transparent cal-text-gray-700 hover:cal-border hover:cal-border-gray-300'
+                      : 'cal-bg-transparent cal-text-gray-700 hover:cal-border hover:cal-border-gray-300 cal-cursor-pointer'
                   }`}
                 >
                   {day}
-                  {day === 14 && (
-                    <div className="cal-absolute cal-bottom-1 cal-w-1 cal-h-1 cal-bg-gray-400 cal-rounded-full"></div>
+                  {isToday(day) && (
+                      <div className="cal-absolute cal-bottom-1 cal-w-1 cal-h-1 cal-bg-gray-500 cal-rounded-full"></div>
                   )}
                 </button>
               )}
@@ -103,6 +130,6 @@ const CalendarSection = ({ onDateSelect, selectedDate }) => {
         </div>
       </div>
     );
-  };
+};
   
   export default CalendarSection;

@@ -23,7 +23,9 @@ const fallbackProfile = {
   name: "John Doe",
   service: "EVO Introduction Call",
   subtitle: "Fitness Coach",
-  shortText: "Helping you reach your fitness goals.",
+  meetingLink: "https://example.com",
+  meetingLongTime: "30 minutes",
+  shortText: "Helping you reach your fitness goals."
 };
 
 /* ———————————————————————————————— */
