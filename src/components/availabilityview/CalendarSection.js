@@ -1,135 +1,230 @@
+// CalendarSection.jsx
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { calendarDefaults, mergeClasses } from './utils';
 
-const CalendarSection = ({ onDateSelect, selectedDate, disablePastDays = true }) => {
-    const today = new Date(); // Get actual current date
-    const [currentDate, setCurrentDate] = useState(new Date()); // Start with today's month
+const CalendarSection = ({ 
+  onDateSelect, 
+  selectedDate,
+  disablePastDays = calendarDefaults.disablePastDays,
+  monthNames = calendarDefaults.monthNames,
+  weekDays = calendarDefaults.weekDays,
+  theme = {},
+  customClasses = {},
+  animations = {},
+  icons = {},
+  customStyles = {},
+  renderDayContent,
+  shouldDisableDate,
+  onMonthChange,
+  minDate,
+  maxDate,
+  highlightedDates = [],
+  customNavigation,
+  locale = 'en-US'
+}) => {
+  const today = new Date();
+  const [currentDate, setCurrentDate] = useState(new Date());
   
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"];
+  // Merge styles with defaults
+  const styles = {
+    ...calendarDefaults.styles,
+    ...customStyles
+  };
   
-    const getDaysInMonth = (date) => {
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const firstDay = new Date(year, month, 1);
-      const lastDay = new Date(year, month + 1, 0);
-      const daysInMonth = lastDay.getDate();
-      const startingDayOfWeek = firstDay.getDay();
-  
-      const days = [];
-      
-      // Add empty cells for days before the first day of the month
-      for (let i = 0; i < startingDayOfWeek; i++) {
-        days.push(null);
-      }
-      
-      // Add all days of the month
-      for (let day = 1; day <= daysInMonth; day++) {
-        days.push(day);
-      }
-      
-      return days;
-    };
-  
-    const navigateMonth = (direction) => {
-      const newDate = new Date(currentDate);
-      newDate.setMonth(currentDate.getMonth() + direction);
-      setCurrentDate(newDate);
-    };
-  
-    const handleDateClick = (day) => {
-      if (day && !isPastDay(day)) {
-        const selectedDateObj = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-        onDateSelect(selectedDateObj);
-      }
-    };
+  // Icon configuration
+  const iconConfig = {
+    size: 16,
+    ...icons
+  };
 
-    // Check if a day is today
-    const isToday = (day) => {
-      return day === today.getDate() && 
-             currentDate.getMonth() === today.getMonth() &&
-             currentDate.getFullYear() === today.getFullYear();
-    };
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
 
-    // Check if a day is in the past (before today)
-    const isPastDay = (day) => {
-      if (!disablePastDays) return false;
-      
-      const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-      const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      
-      return dayDate < todayDate;
-    };
+    const days = [];
+    
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push(null);
+    }
+    
+    // Add all days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      days.push(day);
+    }
+    
+    return days;
+  };
 
-    // Check if a day is selected
-    const isSelected = (day) => {
-      return selectedDate && 
-             selectedDate.getDate() === day && 
-             selectedDate.getMonth() === currentDate.getMonth() &&
-             selectedDate.getFullYear() === currentDate.getFullYear();
-    };
+  const navigateMonth = (direction) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(currentDate.getMonth() + direction);
+    
+    // Check min/max date constraints
+    if (minDate && newDate < new Date(minDate.getFullYear(), minDate.getMonth(), 1)) return;
+    if (maxDate && newDate > new Date(maxDate.getFullYear(), maxDate.getMonth(), 1)) return;
+    
+    setCurrentDate(newDate);
+    onMonthChange?.(newDate);
+  };
+
+  const handleDateClick = (day) => {
+    if (day && !isDateDisabled(day)) {
+      const selectedDateObj = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      onDateSelect(selectedDateObj);
+    }
+  };
+
+  // Check if a day is today
+  const isToday = (day) => {
+    return day === today.getDate() && 
+           currentDate.getMonth() === today.getMonth() &&
+           currentDate.getFullYear() === today.getFullYear();
+  };
+
+  // Check if a day is disabled
+  const isDateDisabled = (day) => {
+    const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    
+    // Custom disable logic
+    if (shouldDisableDate && shouldDisableDate(dayDate)) return true;
+    
+    // Past days logic
+    if (disablePastDays && isPastDay(day)) return true;
+    
+    // Min/max date constraints
+    if (minDate && dayDate < minDate) return true;
+    if (maxDate && dayDate > maxDate) return true;
+    
+    return false;
+  };
+
+  // Check if a day is in the past
+  const isPastDay = (day) => {
+    if (!disablePastDays) return false;
+    
+    const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    
+    return dayDate < todayDate;
+  };
+
+  // Check if a day is selected
+  const isSelected = (day) => {
+    return selectedDate && 
+           selectedDate.getDate() === day && 
+           selectedDate.getMonth() === currentDate.getMonth() &&
+           selectedDate.getFullYear() === currentDate.getFullYear();
+  };
   
-    const days = getDaysInMonth(currentDate);
-    const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  
-    return (
-      <div className="cal-h-full cal-bg-white/5 cal-backdrop-blur-xl cal-p-8">
-        {/* Calendar Header */}
-        <div className="cal-flex cal-items-center cal-justify-between cal-mb-8">
-          <h2 className="cal-text-xl cal-font-medium cal-text-gray-900">
-            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-          </h2>
-          <div className="cal-flex cal-items-center cal-gap-1">
+  // Check if a day is highlighted
+  const isHighlighted = (day) => {
+    return highlightedDates.some(date => 
+      date.getDate() === day && 
+      date.getMonth() === currentDate.getMonth() &&
+      date.getFullYear() === currentDate.getFullYear()
+    );
+  };
+
+  const getDayButtonClass = (day) => {
+    const baseClass = styles.dayButton.base;
+    
+    if (isDateDisabled(day)) return mergeClasses(baseClass, styles.dayButton.disabled, customClasses.dayButtonDisabled);
+    if (isSelected(day)) return mergeClasses(baseClass, styles.dayButton.selected, customClasses.dayButtonSelected);
+    if (isHighlighted(day)) return mergeClasses(baseClass, styles.dayButton.highlighted || styles.dayButton.default, customClasses.dayButtonHighlighted);
+    
+    return mergeClasses(baseClass, styles.dayButton.default, customClasses.dayButton);
+  };
+
+  const days = getDaysInMonth(currentDate);
+
+  return (
+    <div className={mergeClasses(styles.container, customClasses.container)}>
+      {/* Calendar Header */}
+      <div className={mergeClasses(styles.header, customClasses.header)}>
+        <h2 className={mergeClasses(styles.monthTitle, customClasses.monthTitle)}>
+          {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+        </h2>
+        
+        {customNavigation ? (
+          customNavigation(currentDate, navigateMonth)
+        ) : (
+          <div className={mergeClasses(styles.navigationButtons, customClasses.navigationButtons)}>
             <button 
               onClick={() => navigateMonth(-1)}
-              className="cal-p-2 cal-bg-transparent hover:cal-shadow-lg cal-rounded-lg cal-transition-all"
+              disabled={minDate && currentDate <= new Date(minDate.getFullYear(), minDate.getMonth(), 1)}
+              className={mergeClasses(styles.navButton, customClasses.navButton)}
+              aria-label="Previous month"
             >
-              <ChevronLeft size={16} className="cal-text-gray-600" />
+              <ChevronLeft size={iconConfig.size} className={mergeClasses(styles.navIcon, customClasses.navIcon)} />
             </button>
             <button 
               onClick={() => navigateMonth(1)}
-              className="cal-p-2 cal-bg-transparent hover:cal-shadow-lg cal-rounded-lg cal-transition-all"
+              disabled={maxDate && currentDate >= new Date(maxDate.getFullYear(), maxDate.getMonth(), 1)}
+              className={mergeClasses(styles.navButton, customClasses.navButton)}
+              aria-label="Next month"
             >
-              <ChevronRight size={16} className="cal-text-gray-600" />
+              <ChevronRight size={iconConfig.size} className={mergeClasses(styles.navIcon, customClasses.navIcon)} />
             </button>
           </div>
-        </div>
-  
-        {/* Calendar Grid */}
-        <div className="cal-grid cal-grid-cols-7 cal-gap-2">
-          {/* Week day headers */}
-          {weekDays.map((day) => (
-            <div key={day} className="cal-text-center cal-text-sm cal-text-gray-900 cal-py-3 cal-font-semibold">
-              {day}
-            </div>
-          ))}
-  
-          {/* Calendar days */}
-          {days.map((day, index) => (
-            <div key={index} className="cal-aspect-square cal-flex cal-items-center cal-justify-center ">
-              {day && (
-                <button
-                  onClick={() => handleDateClick(day)}
-                  disabled={isPastDay(day)}
-                  className={`cal-w-10 cal-h-10 cal-flex cal-items-center cal-justify-center cal-text-sm cal-font-bold  cal-rounded-full cal-transition-all cal-relative ${
-                    isPastDay(day)
-                      ? 'cal-bg-transparent cal-text-gray-500 cal-cursor-not-allowed'
-                      : isSelected(day)
-                      ? 'cal-bg-gray-900 cal-text-white'
-                      : 'cal-bg-transparent cal-text-gray-700 hover:cal-border hover:cal-border-gray-300 cal-cursor-pointer'
-                  }`}
-                >
-                  {day}
-                  {isToday(day) && (
-                      <div className="cal-absolute cal-bottom-1 cal-w-1 cal-h-1 cal-bg-gray-500 cal-rounded-full"></div>
-                  )}
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
+        )}
       </div>
-    );
+
+      {/* Calendar Grid */}
+      <div className={mergeClasses(styles.grid, customClasses.grid)}>
+        {/* Week day headers */}
+        {weekDays.map((day) => (
+          <div 
+            key={day} 
+            className={mergeClasses(styles.weekDayHeader, customClasses.weekDayHeader)}
+          >
+            {day}
+          </div>
+        ))}
+
+        {/* Calendar days */}
+        {days.map((day, index) => (
+          <div 
+            key={index} 
+            className={mergeClasses(styles.dayCell, customClasses.dayCell)}
+          >
+            {day && (
+              <button
+                onClick={() => handleDateClick(day)}
+                disabled={isDateDisabled(day)}
+                className={getDayButtonClass(day)}
+                aria-label={`${monthNames[currentDate.getMonth()]} ${day}, ${currentDate.getFullYear()}`}
+                aria-selected={isSelected(day)}
+                aria-disabled={isDateDisabled(day)}
+              >
+                {renderDayContent ? (
+                  renderDayContent(day, {
+                    isToday: isToday(day),
+                    isSelected: isSelected(day),
+                    isDisabled: isDateDisabled(day),
+                    isHighlighted: isHighlighted(day),
+                    date: new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
+                  })
+                ) : (
+                  <>
+                    {day}
+                    {isToday(day) && (
+                      <div className={mergeClasses(styles.todayMarker, customClasses.todayMarker)} />
+                    )}
+                  </>
+                )}
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
-  
-  export default CalendarSection;
+
+export default CalendarSection;

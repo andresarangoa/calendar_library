@@ -1,57 +1,175 @@
-import React from 'react';
-import { Clock, Copy } from 'lucide-react';
+// ProfileSection.jsx
+import React, { useState } from 'react';
+import { Clock, Copy, Check } from 'lucide-react';
+import { profileDefaults, mergeClasses } from './utils';
 
 const ProfileSection = ({
-    image,
-    name,
-    service,
-    subtitle,
-    meetingLink,
-    meetingLongTime,
-    shortText
-}) => (
-    <div className="cal-bg-white/10 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 
-            cal-flex cal-flex-col cal-h-full cal-border-r- cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white cal-border-solid  ">
-        {/* Logo */}
-        <div className="cal-mb-6">
-            <div className="cal-w-16 cal-h-16 cal-rounded-full cal-flex cal-items-center cal-justify-center cal-mb-4">
-                <div className="cal-w-8 cal-h-8 cal-bg-white cal-rounded-full cal-flex cal-items-center cal-justify-center">
-                    <img
-                        src={image}
-                        alt={name}
-                        className="cal-w-16 cal-h-16 cal-rounded-full cal-object-cover cal-mb-4 cal-border-2 cal-border-black cal-border-solid"
-                    />
-                </div>
+  image,
+  name,
+  service,
+  subtitle,
+  meetingLink,
+  meetingLongTime,
+  shortText,
+  theme = {},
+  customClasses = {},
+  animations = {},
+  customStyles = {},
+  icons = profileDefaults.icons,
+  showCopyButton = true,
+  onCopyLink,
+  renderLogo,
+  renderTitle,
+  renderDescription,
+  renderActions,
+  additionalInfo = [],
+  customButtons = [],
+  layout = 'vertical' // 'vertical' | 'horizontal' | 'compact'
+}) => {
+  const [copied, setCopied] = useState(false);
+  
+  // Merge styles with defaults
+  const styles = {
+    ...profileDefaults.styles,
+    ...customStyles
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(meetingLink);
+      setCopied(true);
+      onCopyLink?.(meetingLink);
+      
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  const layoutClasses = {
+    vertical: styles.container,
+    horizontal: mergeClasses(styles.container, 'cal-flex-row cal-items-center cal-justify-between'),
+    compact: mergeClasses(styles.container, 'cal-p-4')
+  };
+
+  return (
+    <div className={mergeClasses(layoutClasses[layout] || layoutClasses.vertical, customClasses.container)}>
+      {/* Logo Section */}
+      {renderLogo ? (
+        renderLogo({ image, name, service })
+      ) : (
+        <div className={mergeClasses(styles.logoWrapper, customClasses.logoWrapper)}>
+          <div className={mergeClasses(styles.logoContainer, customClasses.logoContainer)}>
+            <div className={mergeClasses(styles.logoInner, customClasses.logoInner)}>
+              <img
+                src={image}
+                alt={name}
+                className={mergeClasses(styles.image, customClasses.image)}
+                onError={(e) => {
+                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
+                }}
+              />
             </div>
-            <h2 className="cal-text-xl cal-font-bold cal-mb-1">{service}</h2>
-        </div>
-
-        {/* Duration */}
-        <div className="cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600 cal-mb-4 cal-font-semibold">
-            <Clock size={16} />
-            <span>{meetingLongTime}</span>
-        </div>
-
-        {/* Title */}
-        <div className="cal-mb-6">
-            <h1 className="cal-text-2xl cal-font-bold cal-leading-tight cal-mb-2 cal-text-gray-800">
-                {`Schedule a Meeting with ${name}`}
-            </h1>
-            <p className="cal-text-gray-600 cal-text-sm cal-leading-relaxed">
-                {shortText}
+          </div>
+          <h2 className={mergeClasses(styles.serviceTitle, customClasses.serviceTitle)}>
+            {service}
+          </h2>
+          {subtitle && (
+            <p className={mergeClasses('cal-text-sm cal-text-gray-600', customClasses.subtitle)}>
+              {subtitle}
             </p>
+          )}
         </div>
+      )}
 
-        {/* Copy Link Button */}
-        <div className="cal-mt-auto cal-pb-2">
-            <button 
-            onClick={() => navigator.clipboard.writeText(meetingLink)}
-            className="cal-flex cal-items-center cal-my-10 cal-justify-center cal-gap-1 cal-w-30 cal-py-2 cal-bg-white/40 cal-backdrop-blur-sm cal-rounded-xl cal-text-gray-800 hover:cal-text-gray-900 hover:cal-bg-white/60 cal-transition-all cal-font-semibold cal-text-sm cal-shadow-lg cal-border cal-border-white/30">
-                <Copy size={14} />
-                Copy Link
-            </button>
+      {/* Duration */}
+      {meetingLongTime && (
+        <div className={mergeClasses(styles.duration, customClasses.duration)}>
+          <Clock size={icons.size} strokeWidth={icons.strokeWidth} />
+          <span>{meetingLongTime}</span>
         </div>
+      )}
+
+      {/* Title Section */}
+      {renderTitle ? (
+        renderTitle({ name, service })
+      ) : (
+        <div className={mergeClasses(styles.titleSection, customClasses.titleSection)}>
+          <h1 className={mergeClasses(styles.mainTitle, customClasses.mainTitle)}>
+            {`Schedule a Meeting with ${name}`}
+          </h1>
+          {renderDescription ? (
+            renderDescription(shortText)
+          ) : (
+            <p className={mergeClasses(styles.description, customClasses.description)}>
+              {shortText}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Additional Info */}
+      {additionalInfo.length > 0 && (
+        <div className={mergeClasses('cal-space-y-2 cal-mb-4', customClasses.additionalInfo)}>
+          {additionalInfo.map((info, index) => (
+            <div key={index} className="cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600">
+              {info.icon && <span>{info.icon}</span>}
+              <span>{info.text}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Actions Section */}
+      {renderActions ? (
+        renderActions({ meetingLink, handleCopyLink, copied })
+      ) : (
+        <div className={mergeClasses(styles.copyButtonWrapper, customClasses.copyButtonWrapper)}>
+          {showCopyButton && (
+            <button 
+              onClick={handleCopyLink}
+              className={mergeClasses(
+                styles.copyButton,
+                customClasses.copyButton,
+                copied && 'cal-bg-green-500 cal-text-white hover:cal-bg-green-600'
+              )}
+              aria-label={copied ? 'Link copied' : 'Copy meeting link'}
+            >
+              {copied ? (
+                <>
+                  <Check size={14} />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <Copy size={14} />
+                  Copy Link
+                </>
+              )}
+            </button>
+          )}
+          
+          {/* Custom Buttons */}
+          {customButtons.map((button, index) => (
+            <button
+              key={index}
+              onClick={button.onClick}
+              className={mergeClasses(
+                styles.copyButton,
+                'cal-mt-2',
+                button.className,
+                customClasses.customButton
+              )}
+              disabled={button.disabled}
+            >
+              {button.icon && <span>{button.icon}</span>}
+              {button.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
-);
+  );
+};
 
 export default ProfileSection;

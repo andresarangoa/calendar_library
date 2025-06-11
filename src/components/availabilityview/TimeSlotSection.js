@@ -1,54 +1,178 @@
+// TimeSlotSection.jsx
 import React from 'react';
+import { timeSlotDefaults, defaultAvailability, mergeClasses } from './utils';
 
-const timeSlotsHarcoded = [
-  '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM',
-  '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM',
-  '11:00 PM', '10:00 PM', '9:00 PM', '8:00 PM', '7:00 PM'
-];
+const TimeSlotSection = ({ 
+  selectedDate, 
+  onTimeSelect, 
+  selectedTime, 
+  timeSlots = defaultAvailability,
+  theme = {},
+  customClasses = {},
+  animations = {},
+  customStyles = {},
+  formatDate = timeSlotDefaults.formatDate,
+  renderTimeSlot,
+  renderHeader,
+  shouldDisableTime,
+  groupTimeSlots = false,
+  timeSlotGroups = {
+    morning: { label: 'Morning', range: [0, 12] },
+    afternoon: { label: 'Afternoon', range: [12, 17] },
+    evening: { label: 'Evening', range: [17, 24] }
+  },
+  scrollBehavior = 'smooth',
+  maxHeight = '530px',
+  hideScrollbar = true,
+  emptyStateMessage = 'No time slots available',
+  renderEmptyState
+}) => {
+  // Merge styles with defaults
+  const styles = {
+    ...timeSlotDefaults.styles,
+    ...customStyles
+  };
+  
+  // Custom scroll container styles
+  const scrollStyles = hideScrollbar ? {
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
+    '&::-webkit-scrollbar': { display: 'none' }
+  } : {};
 
-const TimeSlotSection = ({ selectedDate, onTimeSelect, selectedTime, timeSlots = timeSlotsHarcoded }) => {
-  const formatDate = (date) => {
-    if (!date) return '';
-    const options = { weekday: 'short', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+  // Group time slots if enabled
+  const getGroupedTimeSlots = () => {
+    if (!groupTimeSlots) return { all: timeSlots };
+    
+    const groups = {};
+    
+    timeSlots.forEach(time => {
+      const hour = parseInt(time.split(':')[0]);
+      const adjustedHour = time.includes('PM') && hour !== 12 ? hour + 12 : hour;
+      
+      for (const [key, group] of Object.entries(timeSlotGroups)) {
+        if (adjustedHour >= group.range[0] && adjustedHour < group.range[1]) {
+          if (!groups[key]) groups[key] = { ...group, slots: [] };
+          groups[key].slots.push(time);
+          break;
+        }
+      }
+    });
+    
+    return groups;
   };
 
-  return (
-    <div className="cal-h-full cal-bg-white/5 cal-backdrop-blur-xl cal-p-6 cal-flex 
-        cal-flex-col cal-border-r-0 cal-border-l-1 cal-border-t-0 cal-border-b-0 
-        cal-border-white/80 cal-border-solid">
-      <h3 className="cal-text-lg cal-font-semibold cal-text-gray-800 cal-mb-4">
-        {formatDate(selectedDate)}
-      </h3>
+  const isTimeDisabled = (time) => {
+    if (shouldDisableTime) {
+      return shouldDisableTime(time, selectedDate);
+    }
+    return false;
+  };
 
-      {/* Hide scrollbar completely and fix button width */}
-      <div
-        className="cal-max-h-[530px] cal-overflow-y-auto cal--mr-6 cal-pr-6"
-        style={{
-          scrollbarWidth: 'none', /* Firefox */
-          msOverflowStyle: 'none', /* IE and Edge */
-        }}
-      >
-        <style jsx>{`
-            div::-webkit-scrollbar {
-              display: none; /* Chrome, Safari, Opera */
-            }
-          `}</style>
-        <div className="cal-space-y-2 cal-pr-2">
-          {timeSlots.map((time, index) => (
-            <button
-              key={index}
-              onClick={() => onTimeSelect(time)}
-              className={`cal-w-full cal-p-3 cal-mx-2 cal-my-2 cal-text-sm cal-font-semibold cal-rounded-lg cal-border cal-transition-all cal-backdrop-blur-sm ${selectedTime === time
-                  ? 'cal-bg-purple-600 cal-text-white cal-border-purple-600'
-                  : 'cal-bg-white/40 cal-text-gray-700 cal-border-white/30 hover:cal-border-white/50 hover:cal-bg-white/60'
-                }`}
-            >
-              {time}
-            </button>
-          ))}
+  const getSlotButtonClass = (time) => {
+    const baseClass = styles.slotButton.base;
+    
+    if (isTimeDisabled(time)) {
+      return mergeClasses(baseClass, styles.slotButton.disabled || styles.slotButton.default, customClasses.slotButtonDisabled);
+    }
+    
+    if (selectedTime === time) {
+      return mergeClasses(baseClass, styles.slotButton.selected, customClasses.slotButtonSelected);
+    }
+    
+    return mergeClasses(baseClass, styles.slotButton.default, customClasses.slotButton);
+  };
+
+  const groupedSlots = getGroupedTimeSlots();
+  const hasSlots = timeSlots && timeSlots.length > 0;
+
+  return (
+    <div className={mergeClasses(styles.container, customClasses.container)}>
+      {renderHeader ? (
+        renderHeader(selectedDate, formatDate)
+      ) : (
+        <h3 className={mergeClasses(styles.header, customClasses.header)}>
+          {formatDate(selectedDate)}
+        </h3>
+      )}
+
+      {!hasSlots ? (
+        renderEmptyState ? renderEmptyState() : (
+          <div className={mergeClasses('cal-flex cal-items-center cal-justify-center cal-h-full cal-text-gray-500', customClasses.emptyState)}>
+            {emptyStateMessage}
+          </div>
+        )
+      ) : (
+        <div
+          className={mergeClasses(styles.scrollContainer, customClasses.scrollContainer)}
+          style={{ 
+            maxHeight, 
+            ...scrollStyles,
+            scrollBehavior 
+          }}
+        >
+          {hideScrollbar && (
+            <style jsx>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+          )}
+          
+          <div className={mergeClasses(styles.slotList, customClasses.slotList)}>
+            {groupTimeSlots ? (
+              Object.entries(groupedSlots).map(([groupKey, group]) => (
+                group.slots && group.slots.length > 0 && (
+                  <div key={groupKey} className={mergeClasses('cal-mb-4', customClasses.slotGroup)}>
+                    {group.label && (
+                      <h4 className={mergeClasses('cal-text-xs cal-font-semibold cal-text-gray-600 cal-mb-2 cal-uppercase', customClasses.groupLabel)}>
+                        {group.label}
+                      </h4>
+                    )}
+                    <div className="cal-space-y-2">
+                      {group.slots.map((time, index) => (
+                        <button
+                          key={`${groupKey}-${index}`}
+                          onClick={() => !isTimeDisabled(time) && onTimeSelect(time)}
+                          disabled={isTimeDisabled(time)}
+                          className={getSlotButtonClass(time)}
+                          aria-label={`Select time ${time}`}
+                          aria-selected={selectedTime === time}
+                          aria-disabled={isTimeDisabled(time)}
+                        >
+                          {renderTimeSlot ? renderTimeSlot(time, {
+                            isSelected: selectedTime === time,
+                            isDisabled: isTimeDisabled(time),
+                            date: selectedDate
+                          }) : time}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )
+              ))
+            ) : (
+              timeSlots.map((time, index) => (
+                <button
+                  key={index}
+                  onClick={() => !isTimeDisabled(time) && onTimeSelect(time)}
+                  disabled={isTimeDisabled(time)}
+                  className={getSlotButtonClass(time)}
+                  aria-label={`Select time ${time}`}
+                  aria-selected={selectedTime === time}
+                  aria-disabled={isTimeDisabled(time)}
+                >
+                  {renderTimeSlot ? renderTimeSlot(time, {
+                    isSelected: selectedTime === time,
+                    isDisabled: isTimeDisabled(time),
+                    date: selectedDate
+                  }) : time}
+                </button>
+              ))
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
