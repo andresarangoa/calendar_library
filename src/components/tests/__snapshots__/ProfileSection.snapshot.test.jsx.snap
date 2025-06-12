@@ -1,0 +1,366 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ProfileSection Snapshots should match snapshot with additional info 1`] = `
+<div
+  class="cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r-1 cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white/60 cal-border-solid cal-min-h-[612px]"
+>
+  <div
+    class="cal-mb-6"
+  >
+    <div
+      class="cal-w-16 cal-h-16 cal-rounded-full cal-flex cal-items-center cal-justify-center cal-mb-4"
+    >
+      <div
+        class="cal-w-8 cal-h-8 cal-bg-white cal-rounded-full cal-flex cal-items-center cal-justify-center"
+      >
+        <img
+          alt="John Doe"
+          class="cal-w-16 cal-h-16 cal-rounded-full cal-object-cover cal-mb-4 cal-border-2 cal-border-black cal-border-solid"
+          src="test.jpg"
+        />
+      </div>
+    </div>
+    <h2
+      class="cal-text-xl cal-font-bold cal-mb-1"
+    >
+      Consultation
+    </h2>
+    <p
+      class="cal-text-sm cal-text-gray-600"
+    >
+      Professional
+    </p>
+  </div>
+  <div
+    class="cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600 cal-mb-4 cal-font-semibold"
+  >
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-clock"
+      fill="none"
+      height="16"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2.5"
+      viewBox="0 0 24 24"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+      />
+      <polyline
+        points="12 6 12 12 16 14"
+      />
+    </svg>
+    <span>
+      30 minutes
+    </span>
+  </div>
+  <div
+    class="cal-mb-6"
+  >
+    <h1
+      class="cal-text-2xl cal-font-bold cal-leading-tight cal-mb-2 cal-text-gray-800"
+    >
+      Schedule a Meeting with John Doe
+    </h1>
+    <p
+      class="cal-text-gray-600 cal-text-sm cal-leading-relaxed"
+    >
+      Test description
+    </p>
+  </div>
+  <div
+    class="cal-space-y-2 cal-mb-4"
+  >
+    <div
+      class="cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600"
+    >
+      <span>
+        📍
+      </span>
+      <span>
+        Online
+      </span>
+    </div>
+    <div
+      class="cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600"
+    >
+      <span>
+        💰
+      </span>
+      <span>
+        $50
+      </span>
+    </div>
+  </div>
+  <div
+    class="cal-mt-auto cal-pb-2"
+  >
+    <button
+      aria-label="Copy meeting link"
+      class="cal-flex cal-items-center cal-my-10 cal-justify-center cal-gap-1 cal-w-30 cal-py-2 cal-bg-white/40 cal-backdrop-blur-sm cal-rounded-xl cal-text-gray-800 hover:cal-text-gray-900 hover:cal-bg-white/60 cal-transition-all cal-font-semibold cal-text-sm cal-shadow-lg cal-border cal-border-white/30"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-copy"
+        fill="none"
+        height="14"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="14"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          height="14"
+          rx="2"
+          ry="2"
+          width="14"
+          x="8"
+          y="8"
+        />
+        <path
+          d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+        />
+      </svg>
+      Copy Link
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ProfileSection Snapshots should match snapshot with custom buttons 1`] = `
+<div
+  class="cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r-1 cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white/60 cal-border-solid cal-min-h-[612px]"
+>
+  <div
+    class="cal-mb-6"
+  >
+    <div
+      class="cal-w-16 cal-h-16 cal-rounded-full cal-flex cal-items-center cal-justify-center cal-mb-4"
+    >
+      <div
+        class="cal-w-8 cal-h-8 cal-bg-white cal-rounded-full cal-flex cal-items-center cal-justify-center"
+      >
+        <img
+          alt="John Doe"
+          class="cal-w-16 cal-h-16 cal-rounded-full cal-object-cover cal-mb-4 cal-border-2 cal-border-black cal-border-solid"
+          src="test.jpg"
+        />
+      </div>
+    </div>
+    <h2
+      class="cal-text-xl cal-font-bold cal-mb-1"
+    >
+      Consultation
+    </h2>
+    <p
+      class="cal-text-sm cal-text-gray-600"
+    >
+      Professional
+    </p>
+  </div>
+  <div
+    class="cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600 cal-mb-4 cal-font-semibold"
+  >
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-clock"
+      fill="none"
+      height="16"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2.5"
+      viewBox="0 0 24 24"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+      />
+      <polyline
+        points="12 6 12 12 16 14"
+      />
+    </svg>
+    <span>
+      30 minutes
+    </span>
+  </div>
+  <div
+    class="cal-mb-6"
+  >
+    <h1
+      class="cal-text-2xl cal-font-bold cal-leading-tight cal-mb-2 cal-text-gray-800"
+    >
+      Schedule a Meeting with John Doe
+    </h1>
+    <p
+      class="cal-text-gray-600 cal-text-sm cal-leading-relaxed"
+    >
+      Test description
+    </p>
+  </div>
+  <div
+    class="cal-mt-auto cal-pb-2"
+  >
+    <button
+      aria-label="Copy meeting link"
+      class="cal-flex cal-items-center cal-my-10 cal-justify-center cal-gap-1 cal-w-30 cal-py-2 cal-bg-white/40 cal-backdrop-blur-sm cal-rounded-xl cal-text-gray-800 hover:cal-text-gray-900 hover:cal-bg-white/60 cal-transition-all cal-font-semibold cal-text-sm cal-shadow-lg cal-border cal-border-white/30"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-copy"
+        fill="none"
+        height="14"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="14"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          height="14"
+          rx="2"
+          ry="2"
+          width="14"
+          x="8"
+          y="8"
+        />
+        <path
+          d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+        />
+      </svg>
+      Copy Link
+    </button>
+    <button
+      class="cal-flex cal-items-center cal-my-10 cal-justify-center cal-gap-1 cal-w-30 cal-py-2 cal-bg-white/40 cal-backdrop-blur-sm cal-rounded-xl cal-text-gray-800 hover:cal-text-gray-900 hover:cal-bg-white/60 cal-transition-all cal-font-semibold cal-text-sm cal-shadow-lg cal-border cal-border-white/30 cal-mt-2"
+    >
+      View Profile
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ProfileSection Snapshots should match snapshot with default props 1`] = `
+<div
+  class="cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r-1 cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white/60 cal-border-solid cal-min-h-[612px]"
+>
+  <div
+    class="cal-mb-6"
+  >
+    <div
+      class="cal-w-16 cal-h-16 cal-rounded-full cal-flex cal-items-center cal-justify-center cal-mb-4"
+    >
+      <div
+        class="cal-w-8 cal-h-8 cal-bg-white cal-rounded-full cal-flex cal-items-center cal-justify-center"
+      >
+        <img
+          alt="John Doe"
+          class="cal-w-16 cal-h-16 cal-rounded-full cal-object-cover cal-mb-4 cal-border-2 cal-border-black cal-border-solid"
+          src="test.jpg"
+        />
+      </div>
+    </div>
+    <h2
+      class="cal-text-xl cal-font-bold cal-mb-1"
+    >
+      Consultation
+    </h2>
+    <p
+      class="cal-text-sm cal-text-gray-600"
+    >
+      Professional
+    </p>
+  </div>
+  <div
+    class="cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600 cal-mb-4 cal-font-semibold"
+  >
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-clock"
+      fill="none"
+      height="16"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2.5"
+      viewBox="0 0 24 24"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+      />
+      <polyline
+        points="12 6 12 12 16 14"
+      />
+    </svg>
+    <span>
+      30 minutes
+    </span>
+  </div>
+  <div
+    class="cal-mb-6"
+  >
+    <h1
+      class="cal-text-2xl cal-font-bold cal-leading-tight cal-mb-2 cal-text-gray-800"
+    >
+      Schedule a Meeting with John Doe
+    </h1>
+    <p
+      class="cal-text-gray-600 cal-text-sm cal-leading-relaxed"
+    >
+      Test description
+    </p>
+  </div>
+  <div
+    class="cal-mt-auto cal-pb-2"
+  >
+    <button
+      aria-label="Copy meeting link"
+      class="cal-flex cal-items-center cal-my-10 cal-justify-center cal-gap-1 cal-w-30 cal-py-2 cal-bg-white/40 cal-backdrop-blur-sm cal-rounded-xl cal-text-gray-800 hover:cal-text-gray-900 hover:cal-bg-white/60 cal-transition-all cal-font-semibold cal-text-sm cal-shadow-lg cal-border cal-border-white/30"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-copy"
+        fill="none"
+        height="14"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="14"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          height="14"
+          rx="2"
+          ry="2"
+          width="14"
+          x="8"
+          y="8"
+        />
+        <path
+          d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+        />
+      </svg>
+      Copy Link
+    </button>
+  </div>
+</div>
+`;

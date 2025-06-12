@@ -53,7 +53,7 @@ export const calendarDefaults = {
 // Time slot section defaults
 export const timeSlotDefaults = {
   styles: {
-    container: "cal-h-full cal-bg-white/5 cal-backdrop-blur-xl cal-p-6 cal-flex cal-flex-col cal-border-r-0 cal-border-l-1 cal-border-t-0 cal-border-b-0 cal-border-white/80 cal-border-solid",
+    container: "cal-h-full cal-bg-white/5 cal-backdrop-blur-xl cal-p-6 cal-flex cal-flex-col cal-border-r-0 cal-border-l-1 cal-border-t-0 cal-border-b-0 cal-border-white/60 cal-border-solid",
     header: "cal-text-lg cal-font-semibold cal-text-gray-800 cal-mb-4",
     scrollContainer: "cal-max-h-[530px] cal-overflow-y-auto cal--mr-6 cal-pr-6",
     slotList: "cal-space-y-2 cal-pr-2",
@@ -73,7 +73,7 @@ export const timeSlotDefaults = {
 // Profile section defaults
 export const profileDefaults = {
   styles: {
-    container: "cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r- cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white cal-border-solid cal-min-h-[612px]",
+    container: "cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r-1 cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white/60 cal-border-solid cal-min-h-[612px]",
     logoWrapper: "cal-mb-6",
     logoContainer: "cal-w-16 cal-h-16 cal-rounded-full cal-flex cal-items-center cal-justify-center cal-mb-4",
     logoInner: "cal-w-8 cal-h-8 cal-bg-white cal-rounded-full cal-flex cal-items-center cal-justify-center",
@@ -96,7 +96,7 @@ export const profileDefaults = {
 export const profileMeetingDefaults = {
   styles: {
     ...profileDefaults.styles,
-    container: "cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r-2 cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white/80 cal-border-solid",
+    container: "cal-bg-white/30 cal-backdrop-blur-xl cal-p-6 cal-text-gray-800 cal-flex cal-flex-col cal-h-full cal-border-r-1 cal-border-l-0 cal-border-t-0 cal-border-b-0 cal-border-white/80 cal-border-solid",
     divider: "cal-h-px cal-bg-[#152226]/20 cal-my-6 cal-mx-1",
     infoSection: "cal-flex cal-flex-col cal-gap-4",
     infoItem: "cal-flex cal-items-center cal-gap-2 cal-text-sm cal-text-gray-600 cal-font-bold"
